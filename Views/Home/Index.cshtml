@@ -1,24 +1,150 @@
-﻿<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS, and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="margin-top-10">
+    <a href="#" class="btn btn-sm green" data-bind="click: $root.showModel">Thêm mới <i class="fa fa-plus"></i></a>
 </div>
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>ASP.NET Web API is a framework that makes it easy to build HTTP services that reach
-        a broad range of clients, including browsers and mobile devices. ASP.NET Web API
-        is an ideal platform for building RESTful applications on the .NET Framework.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301870">Learn more &raquo;</a></p>
+<div class="portlet box green margin-top-10">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-cogs"></i>Danh sách
+        </div>
+        <div class="tools">
+            <a href="javascript:;" class="collapse">
+            </a>
+            <a href="#portlet-config" data-toggle="modal" class="config">
+            </a>
+            <a href="javascript:;" class="reload">
+            </a>
+            <a href="javascript:;" class="remove">
+            </a>
+        </div>
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301871">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301872">Learn more &raquo;</a></p>
+    <div class="portlet-body flip-scroll">
+      
+        <table class="table table-bordered table-striped table-condensed flip-content" >
+            <thead class="flip-content">
+                <tr>
+                    <th style="width:5%;text-align: center;">STT</th>
+                    <th style="width:30%;text-align: center;">Nhóm/Loại</th>
+                    <th style="width:7%;text-align: center;">Thứ tự</th>
+                    <th style="width:40%;text-align: center;">Thuộc nhóm</th>
+                    <th style="width:10%;text-align: center;">Trạng thái</th>
+                    <th style="text-align: center;">Tác vụ</th>
+                </tr>
+            </thead>
+            <tbody data-bind="foreach: categories ">
+                <tr>
+                    <td style="text-align: center;">
+                    <span data-bind="text: $index() +1"></span>
+                    </td>
+                    <td style="text-align: center;"> <span data-bind="text: Name"></span></td>
+                    <td style="text-align: center;"><span data-bind="text: OrderID"></span></td>
+                    <td style="text-align: center;">
+                        <select class="form-control" data-bind="
+                                        value: ParentID,
+                                        options: $root.categories ,
+                                        optionsText: 'Name',
+                                        optionsValue: 'ID',
+                                        optionsCaption: 'Chọn danh mục...',">
+                        </select>
+                    </td>
+                    <td style="text-align: center;"><span data-bind="text: IsShow() ? 'Hoạt động' : 'Khóa', css: !IsShow()? 'text-danger':'text-info' "></span></td>
+                    <td style="text-align: center;">
+                        <div class="btn-group">
+                            <i class="fa fa-hand-o-up" style="cursor: pointer; " data-toggle="dropdown"></i>
+                            <ul class="dropdown-menu" role="menu">
+                                <li>
+                                    <a href="#" data-bind="click: $root.edit">
+                                        Chỉnh sửa
+                                    </a>
+
+                                </li>
+                                <li>
+                                    <a href="#" data-bind="click: $root.confirmRemove">
+                                        Xóa
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+      
     </div>
 </div>
+
+<div id="ghiLai" class="modal fade" data-bind="with: selectedCategory">
+
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">Ghi lại dữ liệu</h4>
+            </div>
+
+            <div class="modal-body">
+                <div class="scroller" style="height:300px" data-always-visible="1" data-rail-visible1="1">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="name">Tên danh mục</label>
+                                <input data-bind="value: Name" class="form-control" type="text" />
+                            </div>
+                            <div>
+                                <label for="price">Vị trí</label>
+                                <input data-bind="value: OrderID" class="form-control" type="text" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="price">Danh mục cha</label>
+                                <select class="form-control" data-bind="
+                                        value: ParentID,
+                                        options: $root.categories ,
+                                        optionsText: 'Name',
+                                        optionsValue: 'ID',
+                                        optionsCaption: 'Chọn danh mục...',">
+                                </select>
+                            </div>
+                            <div>
+                                <label for="price">Biểu tượng</label>
+                                <input data-bind="value: Icon" class="form-control" type="text" />
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+
+                            <div class="form-group">
+                                <label>Mô tả</label>
+                                <textarea class="form-control" data-bind="value: Descripton" rows="3"></textarea>
+                            </div>
+                            <div class="form-check">
+                                <label class="form-check-label">Trạng thái</label>
+                                <div>
+                                <input type="checkbox" class="form-check-input" data-bind="checked: IsShow">
+                                <label class="form-check-label">Hoạt động</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          
+            <div class="modal-footer">
+                <!-- ko if: $root.mode() === "create" -->
+                <button type="button" class="btn green" data-bind="click: $root.create">Thêm mới</button>
+                <!-- /ko -->
+                <!-- ko if: $root.mode() === "update" -->
+                <button type="button" class="btn green" data-bind="click: $root.update">Chỉnh sửa</button>
+                <!-- /ko -->
+            </div>
+           
+        </div>
+    </div>
+</div>
+
+<script src="~/ApiJs/liveDeviceCategory.js"></script>
