@@ -2,11 +2,25 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+    <div class="page-bar">
+        <ul class="page-breadcrumb">
+            <li>
+                <i class="fa fa-home"></i>
+                <a href="#">Hệ thống</a>
+                <i class="fa fa-angle-right"></i>
+            </li>
+            <li>
+                <a href="#">Quản lý thiết bị</a>
+            </li>
+        </ul>
+        <div class="page-toolbar">
+        </div>
+</div>
 
 <div class="portlet box green margin-top-10">
     <div class="portlet-title">
         <div class="caption">
-            <i class="fa fa-cogs"></i>Quản lý thiết bị
+            <i class="fa fa-cogs"></i>Lựa chọn
         </div>
         <div class="tools">
             <a href="javascript:;" class="collapse">
@@ -46,81 +60,92 @@
                         </div>
                         <div class="col-md-9 col-sm-12">
                             <div class="portlet light bordered">
-                                <div class="margin-top-10">
-
-                                    <a href="#" class="btn btn-sm green" data-bind="click: $root.showModel">Thêm mới <i class="fa fa-plus"></i></a>
+                                <div class="note note-info" data-bind="visible: $root.selectedGroup() == null" style="display: none;">
+                                    <h4 class="block"> Thông báo! Hãy chọn loại thiết bị cần cập nhật...</h4>
                                 </div>
-                                <div class="portlet box green margin-top-10">
+                                <div class="portlet light" data-bind="visible: $root.selectedGroup() != null, with: $root.selectedGroup">
                                     <div class="portlet-title">
-                                        <div class="caption">
-                                            <i class="fa fa-cogs"></i>Quản lý thiết bị
-                                        </div>
-                                        <div class="tools">
-                                            <a href="javascript:;" class="collapse">
-                                            </a>
-                                            <a href="#portlet-config" data-toggle="modal" class="config">
-                                            </a>
-                                            <a href="javascript:;" class="reload">
-                                            </a>
-                                            <a href="javascript:;" class="remove">
-                                            </a>
+                                        <div class="caption caption-md">
+                                            <i class="fa fa-folder-open"></i>
+                                            <span class="caption-subject bold uppercase" data-bind="text: NAME"></span>
                                         </div>
                                     </div>
-                                    <div class="portlet-body flip-scroll">
+                                    <div class="portlet-body">
+                                        <div class="margin-top-10">
+                                            <a href="#" class="btn btn-sm green" data-bind="click: $root.showModel">Thêm mới <i class="fa fa-plus"></i></a>
+                                        </div>
+                                        <div class="portlet box green margin-top-10">
+                                            <div class="portlet-title">
+                                                <div class="caption">
+                                                    <i class="fa fa-cogs"></i>Danh sách thiết bị
+                                                </div>
+                                                <div class="tools">
+                                                    <a href="javascript:;" class="collapse">
+                                                    </a>
+                                                    <a href="#portlet-config" data-toggle="modal" class="config">
+                                                    </a>
+                                                    <a href="javascript:;" class="reload">
+                                                    </a>
+                                                    <a href="javascript:;" class="remove">
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="portlet-body flip-scroll">
 
-                                        <table class="table table-bordered table-striped table-condensed flip-content">
-                                            <thead class="flip-content">
-                                                <tr>
-                                                    <th style="width: 10%; text-align: center;">Tác vụ</th>
-                                                    <th style="width:10%;text-align: center;">Tên</th>
-                                                    <th style="width:30%;text-align: center;">IMEI</th>
-                                                    <th style="width:10%;text-align: center;">Ngày hết hạn</th>
-                                                    <th style="text-align: center;">Thuộc nhóm</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody data-bind="foreach: deviceByCategory">
-                                                <tr>
-                                                    <td style="text-align: center;">
-                                                        <div class="btn-group">
-                                                            <i class="fa fa-hand-o-up" style="cursor: pointer; " data-toggle="dropdown"></i>
-                                                            <ul class="dropdown-menu" role="menu">
-                                                                <li>
-                                                                    <a href="#" data-bind="click: $root.edit">
-                                                                        Chỉnh sửa
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="#" data-bind="click: $root.confirmRemove">
-                                                                        Xóa
-                                                                    </a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </td>
+                                                <table class="table table-bordered table-striped table-condensed flip-content">
+                                                    <thead class="flip-content">
+                                                        <tr>
+                                                            <th style="width: 10%; text-align: center;">Tác vụ</th>
+                                                            <th style="width:10%;text-align: center;">Tên</th>
+                                                            <th style="width:30%;text-align: center;">IMEI</th>
+                                                            <th style="width:15%;text-align: center;">Ngày hết hạn</th>
+                                                            <th style="text-align: center;">Thuộc nhóm</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody data-bind="foreach: $root.deviceByCategory">
+                                                        <tr>
+                                                            <td style="text-align: center;">
+                                                                <div class="btn-group">
+                                                                    <i class="fa fa-hand-o-up" style="cursor: pointer; " data-toggle="dropdown"></i>
+                                                                    <ul class="dropdown-menu" role="menu">
+                                                                        <li>
+                                                                            <a href="#" data-bind="click: $root.edit">
+                                                                                Chỉnh sửa
+                                                                            </a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="#" data-bind="click: $root.confirmRemove">
+                                                                                Xóa
+                                                                            </a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </td>
 
-                                                    <td style="text-align: center;">
-                                                        <span data-bind="text: Name"></span>
-                                                        <br />
-                                                        <span class="text-muted" data-bind="text: Description"></span>
-                                                    </td>
-                                                    <td style="text-align: center;"><span data-bind="text: IMEI"></span></td>
-                                                    <td style="text-align: center;"><span data-bind="text: ExpDate"></span></td>
-                                                    <td style="text-align: center;">
-                                                        <select class="form-control" data-bind="
+                                                            <td style="text-align: center;">
+                                                                <span data-bind="text: Name"></span>
+                                                                <br />
+                                                                <span class="text-muted" data-bind="text: Description"></span>
+                                                            </td>
+                                                            <td style="text-align: center;"><span data-bind="text: IMEI"></span></td>
+                                                            <td style="text-align: center;"><span data-bind="text: moment(ExpDate()).format('DD/MM/YYYY')"></span></td>
+                                                            <td style="text-align: center;">
+                                                                <select class="form-control" data-bind="
                                                                         value: LiveCategoryID,
                                                                         options: $root.categories ,
                                                                         optionsText: 'Name',
                                                                         optionsValue: 'ID',
                                                                         optionsCaption: 'Chọn danh mục...',">
-                                                        </select>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
+                                                                </select>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
 
-                                    </div>
+                                            </div>
+                                        </div>
+                                    </div>                                                            
                                 </div>
-
                             </div>
                         </div>
                     </div>

@@ -3,6 +3,20 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<div class="page-bar">
+        <ul class="page-breadcrumb">
+            <li>
+                <i class="fa fa-home"></i>
+                <a href="#">Hệ thống</a>
+                <i class="fa fa-angle-right"></i>
+            </li>
+            <li>
+                <a href="#">Loại thiết bị</a>
+            </li>
+        </ul>
+        <div class="page-toolbar">
+        </div>
+</div>
 
 <div class="margin-top-10">
     <a href="#" class="btn btn-sm green" data-bind="click: $root.showModel">Thêm mới <i class="fa fa-plus"></i></a>
@@ -10,7 +24,7 @@
 <div class="portlet box green margin-top-10">
     <div class="portlet-title">
         <div class="caption">
-            <i class="fa fa-cogs"></i>Quản lý loại thiết bị
+            <i class="fa fa-cogs"></i>Danh sách thiết bị
         </div>
         <div class="tools">
             <a href="javascript:;" class="collapse">

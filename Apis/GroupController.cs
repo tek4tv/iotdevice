@@ -169,7 +169,7 @@ namespace Tek4TV.Devices.Apis
             }
         }
         [Route("{idGroup}/device/{idDevice}")]
-        public HttpResponseMessage DeleteByGroup(int idDevice, int idGroup)
+        public HttpResponseMessage DeleteDeviceByGroup(int idDevice, int idGroup)
         {
             try
             {             
@@ -187,7 +187,7 @@ namespace Tek4TV.Devices.Apis
             }
         }
         [Route("{idGroup}/device/{idDevice}")]
-        public HttpResponseMessage PostByGroup(int idDevice, int idGroup)
+        public HttpResponseMessage PostDeviceByGroup(int idDevice, int idGroup)
         {
             try
             {
@@ -245,6 +245,28 @@ namespace Tek4TV.Devices.Apis
                 group.LivePlaylists.Remove(playlist);
                 dbContext.SaveChanges();
 
+                return Request.CreateResponse(HttpStatusCode.OK, "true");
+            }
+            catch (Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e.Message);
+            }
+        }
+        [Route("{idGroup}/playlist/{idPlaylist}")]
+        public HttpResponseMessage PostPlaylistByGroup(int idPlaylist, int idGroup)
+        {
+            try
+            {
+                LivePlaylist livePlaylist = new LivePlaylist { ID = idPlaylist };
+                dbContext.LivePlaylists.Add(livePlaylist);
+                dbContext.LivePlaylists.Attach(livePlaylist);
+
+                LiveGroup liveGroup = new LiveGroup { ID = idGroup };
+                dbContext.LiveGroups.Add(liveGroup);
+                dbContext.LiveGroups.Attach(liveGroup);
+                livePlaylist.LiveGroups.Add(liveGroup);
+
+                dbContext.SaveChanges();
                 return Request.CreateResponse(HttpStatusCode.OK, "true");
             }
             catch (Exception e)

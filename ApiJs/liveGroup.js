@@ -197,7 +197,6 @@
             
         });
     }
-
     self.selectedDevice = ko.observable();
     self.showInfo = function () {
         $.ajax({
@@ -207,7 +206,6 @@
             self.selectedDevice(data);
         });
     }
-
     self.removeDevice = function (item) {
         var idGroup = self.selectedDeviceByGroup().ID();
         var idDevice = item.ID();     
@@ -218,8 +216,7 @@
             dataType: 'json'
         }).success(function (data) {
             self.loadDeviceByGroup(self.selectedDeviceByGroup());
-        });
-       
+        });      
     }
     self.confirmRemoveDevice = function (item) {
         var result = confirm("Bạn muốn xóa chứ ??");
@@ -227,7 +224,6 @@
             self.removeDevice(item);
         }
     }
-
     self.addDevice= function (item) {
         var idGroup = self.selectedDeviceByGroup().ID();
         var idDevice = item.ID();
@@ -240,7 +236,6 @@
             $('#save-DeviceByGroup').modal('hide');
         });        
     }
-
     self.confirmAddDevice = function (item) {
         var result = confirm("Bạn muốn thêm chứ ??");
         if (result) {
@@ -254,8 +249,7 @@
     // lịch phát sóng
     self.selectedPlaylistByGroup = ko.observable();
     self.getPlaylistByGroup = ko.observableArray();
-    self.loadPlaylistByGroup = function (item) {    
-        
+    self.loadPlaylistByGroup = function (item) {          
         $.ajax({
             url: '/api/group/playlist/' + item.ID(),
             type: 'GET',
@@ -267,14 +261,12 @@
                 self.getPlaylistByGroup.push(self.convertToKoObject(item))
             });
             console.log(self.getPlaylistByGroup())
-
         })
     }
 
     self.removePlaylist = function (item) {
         var idGroup = self.selectedPlaylistByGroup().ID();
         var idPlaylist = item.ID();
-
         $.ajax({
             url: '/api/group/' + idGroup + '/playlist/' + idPlaylist,
             type: 'DELETE',
@@ -283,12 +275,47 @@
         }).success(function (data) {
             self.loadPlaylistByGroup(self.selectedPlaylistByGroup());
         });
-
     }
     self.confirmRemovePlaylist = function (item) {
         var result = confirm("Bạn muốn xóa chứ ??");
         if (result) {
             self.removePlaylist(item);
+        }
+    }
+    self.showModelPlaylist = function () {
+        $('#save-playlistByGroup').modal('show');
+    } 
+    self.playlists = ko.observableArray();
+    self.getPlaylists = function () {
+        $.ajax({
+            url: '/api/playlist/all',
+            type: 'GET'
+        }).done(function (items) {
+            self.playlists.removeAll();
+            $.each(items, function (index, item) {
+                self.playlists.push(self.convertToKoObject(item))
+            });
+           
+        });
+    }
+    self.addPlaylist = function (item) {
+        var idGroup = self.selectedPlaylistByGroup().ID();
+        var idPlaylist = item.ID();
+        $.ajax({
+            url: '/api/group/' + idGroup + '/playlist/' + idPlaylist,
+            type: 'POST',
+            contentType: 'application/json',
+            dataType: 'json'
+        }).success(function (data) {
+            self.loadPlaylistByGroup(self.selectedPlaylistByGroup());
+            $('#save-playlistByGroup').modal('hide');
+        });
+    }
+    self.confirmAddPlaylist = function (item) {
+        var result = confirm("Bạn muốn thêm chứ ??");
+        if (result) {
+            self.addPlaylist(item);
+           // self.loadDeviceByGroup(self.selectedDeviceByGroup());
         }
     }
 
@@ -331,11 +358,9 @@
 $(function () {
     var groupPlaylistModel = new GroupPlaylistModel();
     groupPlaylistModel.getGroupAll();
-    
-  //  var playlistModel = new PlaylistModel();
+    groupPlaylistModel.getPlaylists();   
     groupPlaylistModel.getTreeGroups();
     groupPlaylistModel.getAllDevices();
-
     ko.applyBindings(groupPlaylistModel);
 });
 

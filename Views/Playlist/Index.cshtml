@@ -3,13 +3,27 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="fa fa-home"></i>
+            <a href="#">Hệ thống</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a href="#">Lịch phát sóng</a>
+        </li>
+    </ul>
+    <div class="page-toolbar">
+    </div>
+</div>
 <div class="margin-top-10">
     <a href="#" class="btn btn-sm green" data-bind="click: $root.showModel">Thêm mới <i class="fa fa-plus"></i></a>
 </div>
 <div class="portlet box green margin-top-10">
     <div class="portlet-title">
         <div class="caption">
-            <i class="fa fa-cogs"></i>Danh sách lịch phát sóng
+            <i class="fa fa-cogs"></i>Danh sách lịch
         </div>
         <div class="tools">
             <a href="javascript:;" class="collapse">
@@ -53,11 +67,11 @@
                             </ul>
                         </div>
                     </td>
-                    <td style="text-align: center;"><span  data-bind="text:  $index() +1 "></span></td>
-                    <td style="text-align: center;"><span   data-bind="text: Name "></span></td>
-                    <td style="text-align: center;"><span  data-bind="text: moment(StartPlaylist()).format('DD-MM-YYYY')"> </span></td>
-                    <td style="text-align: center;"><span   data-bind="text:  moment(EndPlaylist()).format('DD-MM-YYYY')"></span></td>
-                    <td style="text-align: center;"><span   data-bind="text:   IsPublish() ? 'Hoạt động' : 'Khóa', css: !IsPublish()? 'text-danger':'text-info' "></span></td>
+                    <td style="text-align: center;"><span data-bind="text:  $index() +1 "></span></td>
+                    <td style="text-align: center;"><span data-bind="text: Name "></span></td>
+                    <td style="text-align: center;"><span data-bind="text: moment(StartPlaylist()).format('DD-MM-YYYY')"> </span></td>
+                    <td style="text-align: center;"><span data-bind="text:  moment(EndPlaylist()).format('DD-MM-YYYY')"></span></td>
+                    <td style="text-align: center;"><span data-bind="text:   IsPublish() ? 'Hoạt động' : 'Khóa', css: !IsPublish()? 'text-danger':'text-info' "></span></td>
                 </tr>
             </tbody>
         </table>
@@ -85,7 +99,7 @@
                             <div class="form-group margin-top-15">
                                 <label for="price">Bắt đầu</label>
                                 <input data-bind="value: StartPlaylist" class="form-control " type="datetime-local" />
-                                
+
                             </div>
                         </div>
                         <div class="col-md-6">

@@ -3,11 +3,25 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="fa fa-home"></i>
+            <a href="#">Hệ thống</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a href="#">Nhóm thiết bị</a>
+        </li>
+    </ul>
+    <div class="page-toolbar">
+    </div>
+</div>
 
 <div class="portlet box green margin-top-10">
     <div class="portlet-title">
         <div class="caption">
-            <i class="fa fa-cogs"></i>Nhóm thiết bị - lịch phát sóng
+            <i class="fa fa-cogs"></i>Lựa chọn
         </div>
         <div class="tools">
             <a href="javascript:;" class="collapse">
@@ -61,103 +75,114 @@
                         </div>
                         <div class="col-md-9 col-sm-12">
                             <div class="portlet light bordered">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="tabbable-line boxless tabbable-reversed">
-                                            <ul class="nav nav-tabs">
-                                                <li class="active">
-                                                    <a href="#tab_3" data-toggle="tab">
-                                                        Thiết bị
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="#tab_4" data-toggle="tab">
-                                                        Lịch phát sóng
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                            <div class="tab-content">
-                                                <div class="tab-pane active" id="tab_3">
-                                                    <div class="portlet box green">
-                                                        <div class="portlet-body flip-scroll">
-                                                            <div class="margin-bottom-10">
-                                                                <a href="#" class="btn btn-sm green" data-bind="click: $root.showDeviceByGroup">Thêm mới <i class="fa fa-plus"></i></a>
-                                                            </div>
-                                                            <div>
-                                                                <table class="table table-bordered table-striped table-condensed flip-content">
-                                                                    <thead class="flip-content">
-                                                                        <tr>
-                                                                            <th style="width: 5%; text-align: center;">#</th>
-                                                                            <th style="width:20%;text-align: center;">Tên thiết bị</th>
-                                                                            <th style="width:35%;text-align: center;">IMEI</th>
-                                                                            <th style="width: 20%; text-align: center;">Nhóm</th>
-                                                                            <th style="text-align: center;">Ngày hết hạn</th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody data-bind="foreach: getDeviceByGroup">
-                                                                        <tr>
-                                                                            <td style="text-align: center;">
-                                                                                <button class="btn btn-sm btn-info" data-bind="click: $root.confirmRemoveDevice">
-                                                                                    <i class="fa fa-trash"></i>
-                                                                                </button>
-                                                                            </td>
-                                                                            <td style="text-align: center;">
-                                                                                <span data-bind="text: Name"></span>
-                                                                                <br />
-                                                                                <span class="text-muted" data-bind="text: Description"></span>
-                                                                            </td>
-                                                                            <td style="text-align: center;">
-                                                                                <span data-bind="text: IMEI"></span>
-                                                                            </td>
-                                                                            <td style="text-align: center;">
-                                                                                <span data-bind="text: LiveCategoryID"></span>
-                                                                            </td>
-                                                                            <td style="text-align: center;">
-                                                                                <span data-bind="text: ExpDate"></span>
-                                                                            </td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
+                                <div class="note note-info" data-bind="visible: $root.selectedDeviceByGroup() == null" style="display: none;">
+                                    <h4 class="block"> Thông báo! Hãy chọn nhóm cần cập nhật...</h4>
+                                </div>
+                                <div class="portlet light" data-bind="visible: $root.selectedDeviceByGroup() != null, with: $root.selectedDeviceByGroup">
+                                    <div class="portlet-title">
+                                        <div class="caption caption-md">
+                                            <i class="fa fa-folder-open"></i>
+                                            <span class="caption-subject bold uppercase" data-bind="text: NAME"></span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="tabbable-line boxless tabbable-reversed">
+                                                <ul class="nav nav-tabs">
+                                                    <li class="active">
+                                                        <a href="#tab_3" data-toggle="tab">
+                                                            Thiết bị
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#tab_4" data-toggle="tab">
+                                                            Lịch phát sóng
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                                <div class="tab-content">
+                                                    <div class="tab-pane active" id="tab_3">
+                                                        <div class="portlet box green">
+                                                            <div class="portlet-body flip-scroll">
+                                                                <div class="margin-bottom-10">
+                                                                    <a href="#" class="btn btn-sm green" data-bind="click: $root.showDeviceByGroup">Thêm mới <i class="fa fa-plus"></i></a>
+                                                                </div>
+                                                                <div>
+                                                                    <table class="table table-bordered table-striped table-condensed flip-content">
+                                                                        <thead class="flip-content">
+                                                                            <tr>
+                                                                                <th style="width: 5%; text-align: center;">#</th>
+                                                                                <th style="width:20%;text-align: center;">Tên thiết bị</th>
+                                                                                <th style="width:35%;text-align: center;">IMEI</th>
+                                                                                <th style="width: 20%; text-align: center;">Nhóm</th>
+                                                                                <th style="text-align: center;">Ngày hết hạn</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody data-bind="foreach: $root.getDeviceByGroup">
+                                                                            <tr>
+                                                                                <td style="text-align: center;">
+                                                                                    <button class="btn btn-sm btn-info" data-bind="click: $root.confirmRemoveDevice">
+                                                                                        <i class="fa fa-trash"></i>
+                                                                                    </button>
+                                                                                </td>
+                                                                                <td style="text-align: center;">
+                                                                                    <span data-bind="text: Name"></span>
+                                                                                    <br />
+                                                                                    <span class="text-muted" data-bind="text: Description"></span>
+                                                                                </td>
+                                                                                <td style="text-align: center;">
+                                                                                    <span data-bind="text: IMEI"></span>
+                                                                                </td>
+                                                                                <td style="text-align: center;">
+                                                                                    <span data-bind="text: LiveCategoryID"></span>
+                                                                                </td>
+                                                                                <td style="text-align: center;">
+                                                                                    <span data-bind="text: ExpDate"></span>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="tab-pane" id="tab_4">
-                                                    <div class="portlet box green">
-                                                        <div class="portlet-body flip-scroll">
-                                                            <div class="margin-bottom-10">
-                                                                <a href="#" class="btn btn-sm green" data-bind="click: $root.showDeviceByGroup">Thêm mới <i class="fa fa-plus"></i></a>
-                                                            </div>
-                                                            <div>
-                                                                <table class="table table-bordered table-striped table-condensed flip-content">
-                                                                    <thead class="flip-content">
-                                                                        <tr>
-                                                                            <th style="width: 5%; text-align: center;">#</th>
-                                                                            <th style="width:20%;text-align: center;">Lịch phát sóng</th>
-                                                                            <th style="width:35%;text-align: center;">Bắt đầu</th>
-                                                                            <th style="width: 20%; text-align: center;">Kết thúc</th>
+                                                    <div class="tab-pane" id="tab_4">
+                                                        <div class="portlet box green">
+                                                            <div class="portlet-body flip-scroll">
+                                                                <div class="margin-bottom-10">
+                                                                    <a href="#" class="btn btn-sm green" data-bind="click: $root.showModelPlaylist">Thêm mới <i class="fa fa-plus"></i></a>
+                                                                </div>
+                                                                <div>
+                                                                    <table class="table table-bordered table-striped table-condensed flip-content">
+                                                                        <thead class="flip-content">
+                                                                            <tr>
+                                                                                <th style="width: 5%; text-align: center;">#</th>
+                                                                                <th style="width:20%;text-align: center;">Lịch phát sóng</th>
+                                                                                <th style="width:35%;text-align: center;">Bắt đầu</th>
+                                                                                <th style="width: 20%; text-align: center;">Kết thúc</th>
 
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody data-bind="foreach: getPlaylistByGroup">
-                                                                        <tr>
-                                                                            <td style="text-align: center;">
-                                                                                <button class="btn btn-sm btn-info" data-bind="click: $root.confirmRemovePlaylist">
-                                                                                    <i class="fa fa-trash"></i>
-                                                                                </button>
-                                                                            </td>
-                                                                            <td style="text-align: center;">
-                                                                                <span data-bind="text: Name"></span>
-                                                                            </td>
-                                                                            <td style="text-align: center;">
-                                                                                <span data-bind="text: moment(StartPlaylist()).format('DD/MM/YYYY HH:mm')"></span>
-                                                                            </td>
-                                                                            <td style="text-align: center;">
-                                                                                <span data-bind="text: moment(EndPlaylist()).format('DD/MM/YYYY HH:mm')"></span>
-                                                                            </td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody data-bind="foreach: $root.getPlaylistByGroup">
+                                                                            <tr>
+                                                                                <td style="text-align: center;">
+                                                                                    <button class="btn btn-sm btn-info" data-bind="click: $root.confirmRemovePlaylist">
+                                                                                        <i class="fa fa-trash"></i>
+                                                                                    </button>
+                                                                                </td>
+                                                                                <td style="text-align: center;">
+                                                                                    <span data-bind="text: Name"></span>
+                                                                                </td>
+                                                                                <td style="text-align: center;">
+                                                                                    <span data-bind="text: moment(StartPlaylist()).format('DD/MM/YYYY HH:mm')"></span>
+                                                                                </td>
+                                                                                <td style="text-align: center;">
+                                                                                    <span data-bind="text: moment(EndPlaylist()).format('DD/MM/YYYY HH:mm')"></span>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -357,7 +382,7 @@
         </div>
     </div>
 </div>
-<div id="#save-playlistByGrou" class="modal fade bs-modal-lg in">
+<div id="save-playlistByGroup" class="modal fade bs-modal-lg in">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -376,16 +401,16 @@
                                     <th scope="col">Kết thúc</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody data-bind="foreach: playlists">
                                 <tr>
                                     <td>
-                                        <button class="btn btn-danger btn-large" data-bind="">
+                                        <button class="btn btn-danger btn-large" data-bind="click: $root.confirmAddPlaylist">
                                             <i class="fa fa-plus"></i>
                                         </button>
                                     </td>
-                                    <td><span></span></td>
-                                    <td><span></span></td>
-                                    <td><span></span></td>
+                                    <td><span data-bind="text: Name"></span></td>
+                                    <td><span data-bind="text: moment(StartPlaylist()).format('DD/MM/YYYY HH:mm')"></span></td>
+                                    <td><span data-bind="text: moment(EndPlaylist()).format('DD/MM/YYYY HH:mm')"></span></td>
                                 </tr>                              
                             </tbody>
                         </table>
