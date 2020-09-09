@@ -8,11 +8,24 @@ using Tek4TV.Devices.Models;
 
 namespace Tek4TV.Devices.Apis
 {
-    [RoutePrefix("api/Playlist")]
+    [RoutePrefix("api/playlist")]
     public class PlaylistController : ApiController
     {
         DevicesContext dbContext = new DevicesContext();
-        [Route("All")]
+        [Route("info")]
+        public HttpResponseMessage GetInfo()
+        {
+            try
+            {
+                var output = new LivePlaylist();
+                return Request.CreateResponse(HttpStatusCode.OK, output, Configuration.Formatters.JsonFormatter);
+            }
+            catch (Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e.Message);
+            }
+        }
+        [Route("all")]
         public HttpResponseMessage GetAllPlaylists()
         {
             try
@@ -61,6 +74,7 @@ namespace Tek4TV.Devices.Apis
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e.Message);
             }
         }
+        [Route("add")]
         public HttpResponseMessage PostPlaylist(LivePlaylist livePlaylist)
         {
             try

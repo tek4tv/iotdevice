@@ -8,11 +8,24 @@ using Tek4TV.Devices.Models;
 
 namespace Tek4TV.Devices.Apis
 {
-    [RoutePrefix("api/Group")]
+    [RoutePrefix("api/group")]
     public class GroupController : ApiController
     {
         DevicesContext dbContext = new DevicesContext();
-        [Route("All")]
+        [Route("info")]
+        public HttpResponseMessage GetInfo()
+        {
+            try
+            {
+                var output = new LiveGroup();           
+                return Request.CreateResponse(HttpStatusCode.OK, output, Configuration.Formatters.JsonFormatter);
+            }
+            catch (Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e.Message);
+            }
+        }
+        [Route("all")]
         public HttpResponseMessage GetAllGroups()
         {
             try
@@ -61,6 +74,7 @@ namespace Tek4TV.Devices.Apis
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e.Message);
             }
         }
+        [Route("add")]
         public HttpResponseMessage PostGroup(LiveGroup liveGroup)
         {
             try
@@ -99,13 +113,11 @@ namespace Tek4TV.Devices.Apis
                     dbContext.SaveChanges();
                     return Request.CreateResponse(HttpStatusCode.OK, item);
                 }
-
             }
             catch (Exception e)
             {
                 return Request.CreateResponse(HttpStatusCode.NotFound, "The update was not successful");
             }
-
         }
         [Route("{id}")]
         public HttpResponseMessage DeleteGroup(int Id)
@@ -128,6 +140,116 @@ namespace Tek4TV.Devices.Apis
             catch (Exception e)
             {
                 return Request.CreateResponse(HttpStatusCode.NotFound, "The delete was not successful");
+            }
+        }
+        [Route("device/{id}")]
+        public HttpResponseMessage GetDeviceByGroup(int Id)
+        {
+            try
+            {
+                var output = from d in dbContext.LiveDevices
+                             where d.LiveGroups.Any(g => g.ID == Id)
+                             select new 
+                             {
+                                 d.ID,
+                                 d.IMEI,
+                                 d.LinkStream,
+                                 d.Name,
+                                 d.Description,
+                                 d.LiveCategoryID,
+                                 d.ExpDate
+                             };
+                return Request.CreateResponse(HttpStatusCode.OK, output, Configuration.Formatters.JsonFormatter);
+
+
+            }
+            catch (Exception e)
+            {
+                return Request.CreateResponse(HttpStatusCode.NotFound, "The delete was not successful");
+            }
+        }
+        [Route("{idGroup}/device/{idDevice}")]
+        public HttpResponseMessage DeleteByGroup(int idDevice, int idGroup)
+        {
+            try
+            {             
+                var group = dbContext.LiveGroups.Find(idGroup);
+                var device = dbContext.LiveDevices.Find(idDevice);
+                dbContext.Entry(group).Collection("LiveDevices").Load();
+                group.LiveDevices.Remove(device);
+                dbContext.SaveChanges();
+
+                return Request.CreateResponse(HttpStatusCode.OK, "true");
+            }
+            catch (Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e.Message);
+            }
+        }
+        [Route("{idGroup}/device/{idDevice}")]
+        public HttpResponseMessage PostByGroup(int idDevice, int idGroup)
+        {
+            try
+            {
+                LiveDevice liveDevice = new LiveDevice { ID = idDevice };
+                dbContext.LiveDevices.Add(liveDevice);
+                dbContext.LiveDevices.Attach(liveDevice);
+
+                LiveGroup liveGroup = new LiveGroup { ID = idGroup };
+                dbContext.LiveGroups.Add(liveGroup);
+                dbContext.LiveGroups.Attach(liveGroup);
+
+                liveDevice.LiveGroups.Add(liveGroup);
+
+                dbContext.SaveChanges();
+
+                return Request.CreateResponse(HttpStatusCode.OK, "true");
+            }
+            catch (Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e.Message);
+            }
+        }
+        [Route("playlist/{id}")]
+        public HttpResponseMessage GetPlaylistByGroup(int Id)
+        {
+            try
+            {
+                var output = from pl in dbContext.LivePlaylists
+                             where pl.LiveGroups.Any(g => g.ID == Id)
+                             select new
+                             {
+                                 pl.ID,
+                                 pl.Name,
+                                 pl.StartPlaylist,
+                                 pl.EndPlaylist,
+                                 pl.Playlist,
+                                 pl.IsPublish,
+                                 pl.IsDelete
+                             };
+                return Request.CreateResponse(HttpStatusCode.OK, output, Configuration.Formatters.JsonFormatter);
+            }
+            catch (Exception e)
+            {
+                return Request.CreateResponse(HttpStatusCode.NotFound, "The delete was not successful");
+            }
+        }
+        [Route("{idGroup}/playlist/{idPlaylist}")]
+        public HttpResponseMessage DeletePlaylistByGroup(int idPlaylist, int idGroup)
+        {
+            try
+            {
+                var group = dbContext.LiveGroups.Find(idGroup);
+                var playlist = dbContext.LivePlaylists.Find(idPlaylist);
+                dbContext.Entry(group).Collection("LivePlaylists").Load();
+                group.LivePlaylists.Remove(playlist);
+                dbContext.SaveChanges();
+
+                return Request.CreateResponse(HttpStatusCode.OK, "true");
+            }
+            catch (Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e.Message);
             }
         }
 

@@ -3,14 +3,13 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 <div class="margin-top-10">
     <a href="#" class="btn btn-sm green" data-bind="click: $root.showModel">Thêm mới <i class="fa fa-plus"></i></a>
 </div>
 <div class="portlet box green margin-top-10">
     <div class="portlet-title">
         <div class="caption">
-            <i class="fa fa-cogs"></i>Quản lý loại thiết bị
+            <i class="fa fa-cogs"></i>Danh sách lịch phát sóng
         </div>
         <div class="tools">
             <a href="javascript:;" class="collapse">
@@ -24,20 +23,18 @@
         </div>
     </div>
     <div class="portlet-body flip-scroll">
-      
-        <table class="table table-bordered table-striped table-condensed flip-content" >
+        <table class="table table-bordered table-striped table-condensed flip-content">
             <thead class="flip-content">
                 <tr>
                     <th style="width: 5%; text-align: center;">#</th>
                     <th style="width:5%;text-align: center;">STT</th>
-                    <th style="width:30%;text-align: center;">Nhóm/Loại</th>
-                    <th style="width:7%;text-align: center;">Thứ tự</th>
-                    <th style="width:40%;text-align: center;">Thuộc nhóm</th>
+                    <th style="width:25%;text-align: center;">Tên</th>
+                    <th style="width:25%;text-align: center;">Thời gian bắt đầu</th>
+                    <th style="width:25%;text-align: center;">Thời gian kết thúc</th>
                     <th style="text-align: center;">Trạng thái</th>
-
                 </tr>
             </thead>
-            <tbody data-bind="foreach: categories ">
+            <tbody data-bind="foreach: playlists ">
                 <tr>
                     <td style="text-align: center;">
                         <div class="btn-group">
@@ -56,34 +53,19 @@
                             </ul>
                         </div>
                     </td>
-                    <td style="text-align: center;">
-                        <span data-bind="text: $index() +1"></span>
-                    </td>
-                    <td style="text-align: center;">
-                        <span data-bind="text: Name"></span>
-                        <br />
-                        <span class="text-muted" data-bind="text: Descripton"></span>
-                    </td>
-                    <td style="text-align: center;"><span data-bind="text: OrderID"></span></td>
-                    <td style="text-align: center;">
-                        <select class="form-control" data-bind="
-                                        value: ParentID,
-                                        options: $root.categories ,
-                                        optionsText: 'Name',
-                                        optionsValue: 'ID',
-                                        optionsCaption: 'Chọn danh mục...',">
-                        </select>
-                    </td>
-                    <td style="text-align: center;"><span data-bind="text: IsShow() ? 'Hoạt động' : 'Khóa', css: !IsShow()? 'text-danger':'text-info' "></span></td>
-
+                    <td style="text-align: center;"><span  data-bind="text:  $index() +1 "></span></td>
+                    <td style="text-align: center;"><span   data-bind="text: Name "></span></td>
+                    <td style="text-align: center;"><span  data-bind="text: moment(StartPlaylist()).format('DD-MM-YYYY')"> </span></td>
+                    <td style="text-align: center;"><span   data-bind="text:  moment(EndPlaylist()).format('DD-MM-YYYY')"></span></td>
+                    <td style="text-align: center;"><span   data-bind="text:   IsPublish() ? 'Hoạt động' : 'Khóa', css: !IsPublish()? 'text-danger':'text-info' "></span></td>
                 </tr>
             </tbody>
         </table>
-      
+
     </div>
 </div>
 
-<div id="ghiLai" class="modal fade" data-bind="with: selectedCategory">
+<div id="ghiLai" class="modal fade" data-bind="with: selectedPlaylist">
 
     <div class="modal-dialog">
         <div class="modal-content">
@@ -91,53 +73,44 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                 <h4 class="modal-title">Ghi lại dữ liệu</h4>
             </div>
+
             <div class="modal-body">
                 <div class="scroller" style="height:300px" data-always-visible="1" data-rail-visible1="1">
                     <div class="row">
                         <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="name">Tên danh mục</label>
+                            <div class="form-group margin-top-15">
+                                <label for="name">Tên </label>
                                 <input data-bind="value: Name" class="form-control" type="text" />
                             </div>
-                            <div>
-                                <label for="price">Vị trí</label>
-                                <input data-bind="value: OrderID" class="form-control" type="text" />
+                            <div class="form-group margin-top-15">
+                                <label for="price">Bắt đầu</label>
+                                <input data-bind="value: StartPlaylist" class="form-control " type="datetime-local" />
+                                
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="price">Danh mục cha</label>
-                                <select class="form-control" data-bind="
-                                        value: ParentID,
-                                        options: $root.categories ,
-                                        optionsText: 'Name',
-                                        optionsValue: 'ID',
-                                        optionsCaption: 'Chọn danh mục...',">
-                                </select>
+                            <div class="form-group margin-top-15">
+                                <label for="price">Tên chương trình</label>
+                                <input data-bind="value: Playlist" class="form-control" type="text" />
                             </div>
-                            <div>
-                                <label for="price">Biểu tượng</label>
-                                <input data-bind="value: Icon" class="form-control" type="text" />
+                            <div class="form-group margin-top-15">
+                                <label for="price">Kết thúc</label>
+                                <input data-bind="value: EndPlaylist" class="form-control" type="datetime-local" />
                             </div>
                         </div>
                         <div class="col-md-12">
-
-                            <div class="form-group">
-                                <label>Mô tả</label>
-                                <textarea class="form-control" data-bind="value: Descripton" rows="3"></textarea>
-                            </div>
                             <div class="form-check">
                                 <label class="form-check-label">Trạng thái</label>
                                 <div>
-                                <input type="checkbox" class="form-check-input" data-bind="checked: IsShow">
-                                <label class="form-check-label">Hoạt động</label>
+                                    <input type="checkbox" class="form-check-input" data-bind="checked: IsPublish">
+                                    <label class="form-check-label">Hoạt động</label>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-          
+
             <div class="modal-footer">
                 <!-- ko if: $root.mode() === "create" -->
                 <button type="button" class="btn green" data-bind="click: $root.create">Thêm mới</button>
@@ -146,9 +119,9 @@
                 <button type="button" class="btn green" data-bind="click: $root.update">Chỉnh sửa</button>
                 <!-- /ko -->
             </div>
-           
+
         </div>
     </div>
 </div>
 
-<script src="~/ApiJs/liveDeviceCategory.js"></script>
+<script src="~/ApiJs/playList.js"></script>

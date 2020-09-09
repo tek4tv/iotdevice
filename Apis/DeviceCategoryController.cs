@@ -137,7 +137,6 @@ namespace Tek4TV.Devices.Apis
                     dbContext.SaveChanges();
                     return Request.CreateResponse(HttpStatusCode.OK, item);
                 }
-
             }
             catch (Exception e)
             {

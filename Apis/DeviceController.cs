@@ -9,11 +9,24 @@ using Tek4TV.Devices.Models;
 
 namespace Tek4TV.Devices.Apis
 {
-    [RoutePrefix("api/Device")]
+    [RoutePrefix("api/device")]
     public class DeviceController : ApiController
     {
         DevicesContext dbContext = new DevicesContext();
-        [Route("All")]
+        [Route("info")]
+        public HttpResponseMessage GetInfo()
+        {
+            try
+            {
+                var output = new LiveDevice();
+                return Request.CreateResponse(HttpStatusCode.OK, output, Configuration.Formatters.JsonFormatter);
+            }
+            catch (Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e.Message);
+            }
+        }
+        [Route("all")]
         public HttpResponseMessage GetAllDevices()
         {
             try
@@ -37,14 +50,14 @@ namespace Tek4TV.Devices.Apis
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e.Message);
             }
         }
-        [Route("{id}")]
+        [Route("category/{id}")]
         public HttpResponseMessage GetDevice(int Id)
         {
             try
             {
                 var items = dbContext.LiveDevices;
                 var output = from item in items
-                             where item.ID == Id
+                             where item.LiveCategoryID == Id
                              select new
                              {
                                  item.ID,
@@ -62,6 +75,7 @@ namespace Tek4TV.Devices.Apis
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e.Message);
             }
         }
+        [Route("add")]
         public HttpResponseMessage PostDevice(LiveDevice liveDevice)
         {
             try
@@ -79,53 +93,7 @@ namespace Tek4TV.Devices.Apis
                 return Request.CreateResponse(HttpStatusCode.NotFound, "Not Insert");
             }
         }
-        [Route("{idDevice}/Group/{idGroup}")]
-        public HttpResponseMessage PostToGroup(int idDevice, int idGroup)
-        {          
-            try
-            {
-                LiveDevice liveDevice = new LiveDevice { ID = idDevice };
-                dbContext.LiveDevices.Add(liveDevice);
-                dbContext.LiveDevices.Attach(liveDevice);
-
-                LiveGroup liveGroup = new LiveGroup { ID = idGroup };
-                dbContext.LiveGroups.Add(liveGroup);
-                dbContext.LiveGroups.Attach(liveGroup);
-
-                liveDevice.LiveGroups.Add(liveGroup);
-
-                // remove duplicate
-               /* LiveGroup removeduplicate = dbContext.LiveGroups.Find(idGroup);
-                liveDevice.LiveGroups.Remove(removeduplicate);*/
-                dbContext.SaveChanges();
-
-                return Request.CreateResponse(HttpStatusCode.OK, "true");
-            }catch (Exception e)
-            {
-                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e.Message);
-            }
-        }
-        [Route("{idDevice}/Group/{idGroup}")]
-        public HttpResponseMessage PutToGroup(int idDevice, int idGroup)
-        {
-            try
-            {
-                LiveDevice liveDevice = dbContext.LiveDevices.Find(idDevice);
-                LiveGroup idGroupChange = dbContext.LiveGroups.Find(idGroup);
-                liveDevice.LiveGroups.Add(idGroupChange);
-            
-                // remove duplicate
-                //LiveGroup removeduplicate = dbContext.LiveGroups.Find(idGroup);
-                liveDevice.LiveGroups.Remove(idGroupChange);
-                dbContext.SaveChanges();
-
-                return Request.CreateResponse(HttpStatusCode.OK, "true");
-            }
-            catch (Exception e)
-            {
-                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e.Message);
-            }
-        }
+             
         [Route("{id}")]
         public HttpResponseMessage PutDevice(LiveDevice liveDevice, int Id)
         {
@@ -177,24 +145,5 @@ namespace Tek4TV.Devices.Apis
                 return Request.CreateResponse(HttpStatusCode.NotFound, "Bad request");
             }
         }
-        [Route("{idDevice}/Group/{idGroup}")]
-        public HttpResponseMessage DeleteToGroup(int idDevice, int idGroup)
-        {
-            try
-            {
-                var divece = dbContext.LiveDevices.Find(idDevice);
-                var group = dbContext.LiveGroups.Find(idGroup);
-                dbContext.Entry(divece).Collection("LiveGroups").Load();
-                divece.LiveGroups.Remove(group);
-                dbContext.SaveChanges();
-
-                return Request.CreateResponse(HttpStatusCode.OK, "true");
-            }
-            catch (Exception e)
-            {
-                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e.Message);
-            }
-        }
-
     }
 }

@@ -1,0 +1,194 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="portlet box green margin-top-10">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-cogs"></i>Quản lý thiết bị
+        </div>
+        <div class="tools">
+            <a href="javascript:;" class="collapse">
+            </a>
+            <a href="#portlet-config" data-toggle="modal" class="config">
+            </a>
+            <a href="javascript:;" class="reload">
+            </a>
+            <a href="javascript:;" class="remove">
+            </a>
+        </div>
+    </div>
+    <div class="portlet-body flip-scroll">
+        <div class="row margin-top-5">
+            <div class="col-md-12">
+                <div class="tabbable-line boxless tabbable-reversed">
+                    <div class="row">
+                        <div class="col-md-3 col-sm-12">
+                            <div class="portlet light bordered">
+                                <div class="portlet-title">
+                                    <div class="caption">
+                                        <i class="fa fa-folder-open"></i>
+                                        <span class="caption-subject bold uppercase">Loại thiết bị</span>
+                                    </div>
+                                </div>
+                                <div class="portlet-body">
+                                    <div class="form-group">
+                                        <div class="visible-md visible-lg">
+                                            <div id="tree_group2" class="tree-demo">
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-9 col-sm-12">
+                            <div class="portlet light bordered">
+                                <div class="margin-top-10">
+
+                                    <a href="#" class="btn btn-sm green" data-bind="click: $root.showModel">Thêm mới <i class="fa fa-plus"></i></a>
+                                </div>
+                                <div class="portlet box green margin-top-10">
+                                    <div class="portlet-title">
+                                        <div class="caption">
+                                            <i class="fa fa-cogs"></i>Quản lý thiết bị
+                                        </div>
+                                        <div class="tools">
+                                            <a href="javascript:;" class="collapse">
+                                            </a>
+                                            <a href="#portlet-config" data-toggle="modal" class="config">
+                                            </a>
+                                            <a href="javascript:;" class="reload">
+                                            </a>
+                                            <a href="javascript:;" class="remove">
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="portlet-body flip-scroll">
+
+                                        <table class="table table-bordered table-striped table-condensed flip-content">
+                                            <thead class="flip-content">
+                                                <tr>
+                                                    <th style="width: 10%; text-align: center;">Tác vụ</th>
+                                                    <th style="width:10%;text-align: center;">Tên</th>
+                                                    <th style="width:30%;text-align: center;">IMEI</th>
+                                                    <th style="width:10%;text-align: center;">Ngày hết hạn</th>
+                                                    <th style="text-align: center;">Thuộc nhóm</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody data-bind="foreach: deviceByCategory">
+                                                <tr>
+                                                    <td style="text-align: center;">
+                                                        <div class="btn-group">
+                                                            <i class="fa fa-hand-o-up" style="cursor: pointer; " data-toggle="dropdown"></i>
+                                                            <ul class="dropdown-menu" role="menu">
+                                                                <li>
+                                                                    <a href="#" data-bind="click: $root.edit">
+                                                                        Chỉnh sửa
+                                                                    </a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="#" data-bind="click: $root.confirmRemove">
+                                                                        Xóa
+                                                                    </a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </td>
+
+                                                    <td style="text-align: center;">
+                                                        <span data-bind="text: Name"></span>
+                                                        <br />
+                                                        <span class="text-muted" data-bind="text: Description"></span>
+                                                    </td>
+                                                    <td style="text-align: center;"><span data-bind="text: IMEI"></span></td>
+                                                    <td style="text-align: center;"><span data-bind="text: ExpDate"></span></td>
+                                                    <td style="text-align: center;">
+                                                        <select class="form-control" data-bind="
+                                                                        value: LiveCategoryID,
+                                                                        options: $root.categories ,
+                                                                        optionsText: 'Name',
+                                                                        optionsValue: 'ID',
+                                                                        optionsCaption: 'Chọn danh mục...',">
+                                                        </select>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="ghiLai" class="modal fade" data-bind="with: selectedDevice">
+
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">Ghi lại dữ liệu</h4>
+            </div>
+
+            <div class="modal-body">
+                <div class="scroller" style="height:300px" data-always-visible="1" data-rail-visible1="1">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group margin-top-10">
+                                <label for="name">Tên thiết bị</label>
+                                <input class="form-control" type="text" placeholder="Nhập tên" data-bind="value: Name" />
+                            </div>
+                            <div class="form-group margin-top-20">
+                                <label for="price">Mã IMEI</label>
+                                <input class="form-control" type="text" placeholder="Nhập tên" data-bind="value: IMEI" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group margin-top-10">
+                                <label for="price">Link Stream</label>
+                                <input class="form-control" type="text" placeholder="Link Stream" data-bind="value: LinkStream" />
+                            </div>
+                            <div class="form-group margin-top-20">
+                                <label for="price">Hạn sử dụng</label>
+                                <input type="datetime-local" class="form-control" data-bind="value: ExpDate" data-date-format="dd-mm-yyyy">
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Mô tả</label>
+                                <textarea class="form-control" rows="3" data-bind="value:  Description"></textarea>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <!-- ko if: $root.mode() === "create" -->
+                <button type="button" class="btn green" data-bind="click: $root.create">Thêm mới</button>
+                <!-- /ko -->
+                <!-- ko if: $root.mode() === "update" -->
+                <button type="button" class="btn green" data-bind="click: $root.update">Chỉnh sửa</button>
+                <!-- /ko -->
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<script src="~/ApiJs/liveDevice.js"></script>
