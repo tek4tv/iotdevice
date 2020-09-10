@@ -141,18 +141,17 @@
     }
 
     self.update = function (item) {
-       
         $.ajax({
             url: '/api/device/' + item.ID(),
             type: 'PUT',
             data: ko.mapping.toJSON(item),
             contentType: 'application/json',
             dataType: 'json'
-        }).success(function (data) {           
+        }).success(function (data) {
+            $('#ghiLai').modal('hide');
             self.loadDeviceByGroup(self.selectedGroup());
-           // $('#ghiLai').modal('hide');
+
         });
-        $('#ghiLai').modal('hide');
     }
 
     function getGroupModel(data) {

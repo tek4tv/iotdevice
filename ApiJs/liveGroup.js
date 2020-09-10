@@ -83,8 +83,6 @@
     }
 
     self.update = function (item) {
-        console.log('ọ')
-        $('#ghilai-group').modal('hide');
         $.ajax({
             url: '/api/group/' + item.ID(),
             type: 'PUT',
@@ -93,8 +91,9 @@
             dataType: 'json'
         }).success(function (data) {
             self.getGroupAll();
+            $('#ghilai-group').modal('hide');
+
         });
-       
     }
 
 
@@ -235,7 +234,6 @@
             dataType: 'json'
         }).success(function (data) {
             $('#save-DeviceByGroup').modal('hide');
-            self.loadDeviceByGroup(self.selectedDeviceByGroup());
         });        
     }
     self.confirmAddDevice = function (item) {

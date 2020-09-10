@@ -92,10 +92,10 @@
             contentType: 'application/json',
             dataType: 'json'
         }).success(function (data) {
-           
             self.getPlaylists();
+            $('#ghiLai').modal('hide');
+
         });
-        $('#ghiLai').modal('hide');
     }
 }
 $(function () {
