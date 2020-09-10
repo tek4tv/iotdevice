@@ -83,8 +83,7 @@
             $.each(data, function (index, item) {
                 self.deviceByCategory.push(self.convertToKoObject(item))
             });
-            console.log(self.deviceByCategory())
-           
+          
         })
     }
     self.showInfo = function () {
@@ -110,10 +109,16 @@
             type: 'POST',
             data: ko.mapping.toJSON(item),
             contentType: 'application/json',
-            dataType: 'json'
-        }).success(function (data) {
-            $('#ghiLai').modal('hide');
-            self.loadDeviceByGroup(self.selectedGroup());
+            dataType: 'json',
+            success: function (data) {
+                $('#ghiLai').modal('hide');
+                self.loadDeviceByGroup(self.selectedGroup());
+                toastr.success("Đã thêm mới dữ liệu", "Thành công!");
+            },
+            error: function () {
+                toastr.error("Đã có lỗi", "Thất bại!");
+            }
+               
         });
     }
     self.remove = function (item) {
@@ -122,9 +127,14 @@
             url: '/api/Device/' + id,
             type: 'DELETE',
             contentType: 'application/json',
-            dataType: 'json'
-        }).success(function (data) {
-            self.loadDeviceByGroup(self.selectedGroup());
+            dataType: 'json',
+            success: function (data) {
+                self.loadDeviceByGroup(self.selectedGroup());
+                toastr.success("Đã xóa dữ liệu", "Thành công!");
+            },
+            error: function () {
+                toastr.error("Đã có lỗi", "Thất bại!");
+            }
         });
     }
     self.confirmRemove = function (item) {
@@ -146,11 +156,15 @@
             type: 'PUT',
             data: ko.mapping.toJSON(item),
             contentType: 'application/json',
-            dataType: 'json'
-        }).success(function (data) {
-            $('#ghiLai').modal('hide');
-            self.loadDeviceByGroup(self.selectedGroup());
-
+            dataType: 'json',
+            success: function (data) {
+                $('#ghiLai').modal('hide');
+                self.loadDeviceByGroup(self.selectedGroup());
+                toastr.success("Đã sửa dữ liệu", "Thành công!");
+            },
+            error: function () {
+                toastr.error("Đã có lỗi", "Thất bại!");
+            }
         });
     }
 

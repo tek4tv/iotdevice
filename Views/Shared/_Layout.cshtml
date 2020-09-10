@@ -8,17 +8,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content="width=device-width, initial-scale=1" name="viewport" />
     <meta content="" name="description" />
-    <meta content="" name="author" /> 
+    <meta content="" name="author" />
     <link href="~/assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
     <link href="~/assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
     <link href="~/assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="~/assets/global/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css" />
-    <link href="~/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />  
+    <link href="~/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
     <link href="~/assets/global/plugins/jstree/dist/themes/default/style.css" rel="stylesheet" />
     <link href="~/assets/global/plugins/fullcalendar/fullcalendar.min.css" rel="stylesheet" type="text/css" />
     <link href="~/assets/global/plugins/jqvmap/jqvmap/jqvmap.css" rel="stylesheet" type="text/css" />
     <link href="~/assets/admin/pages/css/tasks.css" rel="stylesheet" type="text/css" />
     <link href="~/assets/global/css/components.css" id="style_components" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../assets/global/plugins/bootstrap-toastr/toastr.min.css" />
     <link href="~/assets/global/css/plugins.css" rel="stylesheet" type="text/css" />
     <link href="~/assets/admin/layout/css/layout.css" rel="stylesheet" type="text/css" />
     <link href="~/assets/admin/layout/css/themes/darkblue.css" rel="stylesheet" type="text/css" id="style_color" />
@@ -31,22 +32,22 @@
 </head>
 
 <body class="page-header-fixed page-quick-sidebar-over-content page-sidebar-closed-hide-logo page-container-bg-solid">
-    <div class="page-header navbar navbar-fixed-top">     
+    <div class="page-header navbar navbar-fixed-top">
         <div class="page-header-inner">
-           
+
             <div class="page-logo">
                 <a href="index.html">
                     <img src="~/assets/admin/layout/img/logo.png" alt="logo" class="logo-default" />
                 </a>
                 <div class="menu-toggler sidebar-toggler hide">
                 </div>
-            </div>          
+            </div>
             <a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse">
             </a>
-          
+
             <div class="top-menu">
                 <ul class="nav navbar-nav pull-right">
-                  
+
                     <li class="dropdown dropdown-extended dropdown-notification" id="header_notification_bar">
                         <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                             <i class="icon-bell"></i>
@@ -164,7 +165,7 @@
                             </li>
                         </ul>
                     </li>
-                    
+
                     <li class="dropdown dropdown-extended dropdown-inbox" id="header_inbox_bar">
                         <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                             <i class="icon-envelope-open"></i>
@@ -422,31 +423,31 @@
                     <!-- END QUICK SIDEBAR TOGGLER -->
                 </ul>
             </div>
-           
+
         </div>
-       
+
     </div>
 
     <div class="clearfix">
     </div>
-   
+
     <div class="page-container">
-       
+
         <div class="page-sidebar-wrapper">
-          
+
             <div class="page-sidebar navbar-collapse collapse">
-              
-                <ul class="page-sidebar-menu " data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
-                 
+
+                <ul class="page-sidebar-menu page-sidebar-menu-closed" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
+
                     <li class="sidebar-toggler-wrapper ">
-                      
+
                         <div class="sidebar-toggler ">
                         </div>
-                        
+
                     </li>
-                    
+
                     <li class="sidebar-search-wrapper">
-                   
+
                         <form class="sidebar-search " action="extra_search.html" method="POST">
                             <a href="javascript:;" class="remove">
                                 <i class="icon-close"></i>
@@ -458,7 +459,7 @@
                                 </span>
                             </div>
                         </form>
-                        
+
                     </li>
                     <li class="start active open">
                         <a href="javascript:;">
@@ -468,7 +469,7 @@
                             <span class="arrow open"></span>
                         </a>
                         <ul class="sub-menu">
-                            <li >
+                            <li>
                                 <a href="/Home/Index">
                                     <i class="fa fa-folder-o"></i>
                                     Loại thiết bị
@@ -480,13 +481,13 @@
                                     Quản lý thiết bị
                                 </a>
                             </li>
-                            <li >
+                            <li>
                                 <a href="/Playlist/Index">
                                     <i class="fa fa-list"></i>
                                     Lịch phát sóng
                                 </a>
                             </li>
-                            <li >
+                            <li>
                                 <a href="/Group/Index">
                                     <i class="fa fa-th"></i>
                                     Nhóm thiết bị
@@ -495,10 +496,10 @@
 
                         </ul>
                     </li>
-                </ul>              
+                </ul>
             </div>
         </div>
-       
+
         <div class="page-content-wrapper">
             <div class="page-content">
                 <!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->
@@ -521,12 +522,12 @@
                     </div>
                     <!-- /.modal-dialog -->
                 </div>
-               
-                
+
+
                 @RenderBody()
             </div>
         </div>
-       
+
         <a href="javascript:;" class="page-quick-sidebar-toggler"><i class="icon-close"></i></a>
         <div class="page-quick-sidebar-wrapper">
             <div class="page-quick-sidebar">
@@ -1195,7 +1196,7 @@
         </div>
         <!-- END QUICK SIDEBAR -->
     </div>
-  
+
     <div class="page-footer">
         <div class="page-footer-inner">
             2014 &copy; Metronic by keenthemes. <a href="http://themeforest.net/item/metronic-responsive-admin-dashboard-template/4021469?ref=keenthemes" title="Purchase Metronic just for 27$ and get lifetime updates for free" target="_blank">Purchase Metronic!</a>
@@ -1204,7 +1205,7 @@
             <i class="icon-arrow-up"></i>
         </div>
     </div>
-   
+
     <script src="~/assets/global/plugins/jquery.min.js" type="text/javascript"></script>
     <script src="~/assets/global/plugins/jquery-migrate.min.js" type="text/javascript"></script>
     <script src="~/assets/global/plugins/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
@@ -1216,13 +1217,14 @@
     <script src="~/assets/global/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
     <script src="~/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
     <script src="~/assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
-    <script src="~/assets/global/plugins/jquery.pulsate.min.js" type="text/javascript"></script>  
+    <script src="~/assets/global/plugins/jquery.pulsate.min.js" type="text/javascript"></script>
     <script src="~/assets/global/plugins/fullcalendar/fullcalendar.min.js" type="text/javascript"></script>
     <script src="~/assets/global/plugins/jquery-easypiechart/jquery.easypiechart.min.js" type="text/javascript"></script>
     <script src="~/assets/global/plugins/jquery.sparkline.min.js" type="text/javascript"></script>
     <script src="~/assets/global/scripts/metronic.js" type="text/javascript"></script>
     <script src="~/assets/admin/layout/scripts/layout.js" type="text/javascript"></script>
     <script src="~/assets/admin/layout/scripts/quick-sidebar.js" type="text/javascript"></script>
+    <script src="../../assets/global/plugins/bootstrap-toastr/toastr.min.js"></script>
     <script src="~/assets/admin/layout/scripts/demo.js" type="text/javascript"></script>
     <script src="~/assets/admin/pages/scripts/index.js" type="text/javascript"></script>
     <script src="~/assets/admin/pages/scripts/tasks.js" type="text/javascript"></script>

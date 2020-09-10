@@ -51,11 +51,17 @@
             type: 'POST',
             data: ko.mapping.toJSON(item),
             contentType: 'application/json',
-            dataType: 'json'
-        }).success(function (data) {
-            self.getGroupAll();
-            $('#ghilai-group').modal('hide');
-        });
+            dataType: 'json',
+            success: function (data) {
+                self.getGroupAll();
+                $('#ghilai-group').modal('hide');
+                toastr.success("Đã thêm mới dữ liệu", "Thành công!");
+            },
+            error: function () {
+                toastr.error("Đã có lỗi", "Thất bại!");
+            }
+                
+        }).success();
     }
 
     self.removeGroup = function (item) {
@@ -64,10 +70,15 @@
             url: '/api/group/' + id,
             type: 'DELETE',
             contentType: 'application/json',
-            dataType: 'json'
-        }).success(function (data) {
-            self.getGroupAll();
-        });
+            dataType: 'json',
+            success: function (data) {
+                self.getGroupAll();
+                toastr.success("Đã xóa dữ liệu", "Thành công!");
+            },
+            error: function () {
+                toastr.error("Đã có lỗi", "Thất bại!");
+            }
+        }).success();
     }
     self.confirmRemoveGroup = function (item) {
         var result = confirm("Bạn muốn xóa chứ ??");
@@ -88,11 +99,15 @@
             type: 'PUT',
             data: ko.mapping.toJSON(item),
             contentType: 'application/json',
-            dataType: 'json'
-        }).success(function (data) {
-            self.getGroupAll();
-            $('#ghilai-group').modal('hide');
-
+            dataType: 'json',
+            success: function (data) {
+                self.getGroupAll();
+                $('#ghilai-group').modal('hide');
+                toastr.success("Đã sửa dữ liệu", "Thành công!");
+            },
+            error: function () {
+                toastr.error("Đã có lỗi", "Thất bại!");
+            }
         });
     }
 
@@ -177,8 +192,6 @@
             $.each(data, function (index, item) {
                 self.getDeviceByGroup.push(self.convertToKoObject(item))
             });
-            console.log(self.getDeviceByGroup())
-
         })
     }
     self.showDeviceByGroup = function () {
@@ -213,9 +226,14 @@
             url: '/api/group/'+idGroup+'/device/' + idDevice,
             type: 'DELETE',
             contentType: 'application/json',
-            dataType: 'json'
-        }).success(function (data) {
-            self.loadDeviceByGroup(self.selectedDeviceByGroup());
+            dataType: 'json',
+            success: function (data) {
+                self.loadDeviceByGroup(self.selectedDeviceByGroup());
+                toastr.success("Đã xóa dữ liệu", "Thành công!");
+            },
+            error: function () {
+                toastr.error("Đã có lỗi", "Thất bại!");
+            }
         });      
     }
     self.confirmRemoveDevice = function (item) {
@@ -231,9 +249,14 @@
             url: '/api/group/' + idGroup + '/device/' + idDevice,
             type: 'POST',
             contentType: 'application/json',
-            dataType: 'json'
-        }).success(function (data) {
-            $('#save-DeviceByGroup').modal('hide');
+            dataType: 'json',
+            success: function (data) {
+                $('#save-DeviceByGroup').modal('hide');
+                toastr.success("Đã thêm mới dữ liệu", "Thành công!");
+            },
+            error: function () {
+                toastr.error("Đã có lỗi", "Thất bại!");
+            }
         });        
     }
     self.confirmAddDevice = function (item) {
@@ -271,9 +294,14 @@
             url: '/api/group/' + idGroup + '/playlist/' + idPlaylist,
             type: 'DELETE',
             contentType: 'application/json',
-            dataType: 'json'
-        }).success(function (data) {
-            self.loadPlaylistByGroup(self.selectedPlaylistByGroup());
+            dataType: 'json',
+            success: function (data) {
+                self.loadPlaylistByGroup(self.selectedPlaylistByGroup());
+                toastr.success("Đã xóa dữ liệu", "Thành công!");
+            },
+            error: function () {
+                toastr.error("Đã có lỗi", "Thất bại!");
+            }
         });
     }
     self.confirmRemovePlaylist = function (item) {
@@ -305,10 +333,15 @@
             url: '/api/group/' + idGroup + '/playlist/' + idPlaylist,
             type: 'POST',
             contentType: 'application/json',
-            dataType: 'json'
-        }).success(function (data) {
-            self.loadPlaylistByGroup(self.selectedPlaylistByGroup());
-            $('#save-playlistByGroup').modal('hide');
+            dataType: 'json',
+            success: function (data) {
+                self.loadPlaylistByGroup(self.selectedPlaylistByGroup());
+                $('#save-playlistByGroup').modal('hide');
+                toastr.success("Đã thêm mới dữ liệu", "Thành công!");
+            },
+            error: function () {
+                toastr.error("Đã có lỗi", "Thất bại!");
+            }
         });
     }
     self.confirmAddPlaylist = function (item) {
