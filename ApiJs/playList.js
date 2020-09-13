@@ -112,6 +112,31 @@
             }
         });
     }
+
+    self.events = ko.observableArray();
+    self.loadDetail = function (item) {
+        $.getJSON("https://dev.tek4tv.vn/api/device/playlist/1?=IwAR1TFpgkPs7XrWfnPgUle3O45uQbcVac9G-BLLCiHbgfM8sRbM-7iyPBU4s",
+            function (data) {
+                console.log(data);
+            });
+       // $('#loading').modal('show');
+       // self.events.removeAll();
+       /* $.getJSON('https://dev.tek4tv.vn/api/device/playlist/1?fbclid=IwAR1TFpgkPs7XrWfnPgUle3O45uQbcVac9G-BLLCiHbgfM8sRbM-7iyPBU4s', function (data) {
+            console.log(data);*/
+           /* $.each(data, function (idx, item) {
+                item.Edit = false;
+                self.events.push(self.convertToKoObject(item))
+            });*/
+           // self.events(self.events().sort(function (l, r) { return l.Index() - r.Index() }));
+           // $('#loading').modal('hide');
+       // })   
+    }
+    
+    self.loadPlaylistById = function (item) {
+        self.selectedPlaylist(item);
+        self.loadDetail(self.selectedPlaylist());
+       
+    }
 }
 $(function () {
     var playlistModel = new PlaylistModel();

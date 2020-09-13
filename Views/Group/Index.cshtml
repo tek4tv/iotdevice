@@ -17,25 +17,7 @@
     <div class="page-toolbar">
     </div>
 </div>
-
-<div class="portlet box green margin-top-10">
-    <div class="portlet-title">
-        <div class="caption">
-            <i class="fa fa-cogs"></i>Lựa chọn
-        </div>
-        <div class="tools">
-            <a href="javascript:;" class="collapse">
-            </a>
-            <a href="#portlet-config" data-toggle="modal" class="config">
-            </a>
-            <a href="javascript:;" class="reload">
-            </a>
-            <a href="javascript:;" class="remove">
-            </a>
-        </div>
-    </div>
-</div>
-<div class="row">
+<div class="row margin-top-15">
     <div class="col-md-12">
         <div class="tabbable-line boxless tabbable-reversed">
             <ul class="nav nav-tabs">
@@ -108,7 +90,7 @@
                                                                     <a href="#" class="btn btn-sm green" data-bind="click: $root.showDeviceByGroup">Thêm mới <i class="fa fa-plus"></i></a>
                                                                 </div>
                                                                 <div>
-                                                                    <table class="table table-bordered table-striped table-condensed flip-content">
+                                                                    <table class="table table-hover">
                                                                         <thead class="flip-content">
                                                                             <tr>
                                                                                 <th style="width: 5%; text-align: center;">#</th>
@@ -153,7 +135,7 @@
                                                                     <a href="#" class="btn btn-sm green" data-bind="click: $root.showModelPlaylist">Thêm mới <i class="fa fa-plus"></i></a>
                                                                 </div>
                                                                 <div>
-                                                                    <table class="table table-bordered table-striped table-condensed flip-content">
+                                                                    <table class="table table-hover">
                                                                         <thead class="flip-content">
                                                                             <tr>
                                                                                 <th style="width: 5%; text-align: center;">#</th>
@@ -202,7 +184,7 @@
                                 <a href="#" class="btn btn-sm green" data-bind="click: $root.showModelGroup">Thêm mới <i class="fa fa-plus"></i></a>
                             </div>
                             <div>
-                                <table class="table table-bordered table-striped table-condensed flip-content">
+                                <table class="table table-hover">
                                     <thead class="flip-content">
                                         <tr>
                                             <th style="width: 5%; text-align: center;">#</th>
@@ -234,7 +216,6 @@
                                             </td>
                                             <td style="text-align: center;">
                                                 <span data-bind="text: $index() +1"></span>
-
                                             </td>
                                             <td style="text-align: center;">
                                                 <span data-bind="text: Name"></span>
@@ -256,7 +237,6 @@
                                                     optionsCaption: 'Chọn danh mục...',">
                                                 </select>
                                             </td>
-
                                         </tr>
                                     </tbody>
                                 </table>
@@ -272,7 +252,6 @@
         </div>
     </div>
 </div>
-
 <div id="ghilai-group" class="modal fade" data-bind="with: selectedGroup">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -340,11 +319,21 @@
 <div id="save-DeviceByGroup" class="modal fade bs-modal-lg in">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header" data-bind="with: $root.selectedDeviceByGroup">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                <h4> Danh sách thiết bị</h4>
+                <h4 data-bind="text: NAME"> </h4>
             </div>
             <div class="modal-body">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-btn">
+                            <button data-bind="click: $root.autoSearchDevice" type="button" class="btn waves-effect waves-light btn-info">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </span>
+                        <input data-bind="value: $root.keySearch, valueUpdate: 'afterkeydown'" type="text" id="myInput" class="form-control" placeholder="Tìm kiếm thiết bị...">
+                    </div>
+                </div>
                 <div class="form-group">
                     <div>
                         <div class="scroller" style="height: 337px;" data-always-visible="1" data-rail-visible1="0" data-handle-color="#D7DCE2">
@@ -373,26 +362,34 @@
                                     </a>
                                 </li>
                             </ul>
-
                         </div>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </div>
 <div id="save-playlistByGroup" class="modal fade bs-modal-lg in">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header" data-bind="with: $root.selectedDeviceByGroup">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                <h4> Danh sách thiết bị</h4>
+                <h4 data-bind="text: NAME"> </h4>
             </div>
             <div class="modal-body">
                 <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-btn">
+                            <button data-bind="click: $root.autoSearchDevice" type="button" class="btn waves-effect waves-light btn-info">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </span>
+                        <input data-bind="value: $root.keySearch, valueUpdate: 'afterkeydown'" type="text" id="myInput" class="form-control" placeholder="Tìm kiếm thiết bị...">
+                    </div>
+                </div>
+                <div class="form-group">
                     <div>
-                        <table class="table table-striped">
+                        <table class="table table-hover">
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>
@@ -411,13 +408,12 @@
                                     <td><span data-bind="text: Name"></span></td>
                                     <td><span data-bind="text: moment(StartPlaylist()).format('DD/MM/YYYY HH:mm')"></span></td>
                                     <td><span data-bind="text: moment(EndPlaylist()).format('DD/MM/YYYY HH:mm')"></span></td>
-                                </tr>                              
+                                </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </div>

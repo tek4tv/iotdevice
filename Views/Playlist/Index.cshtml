@@ -17,77 +17,107 @@
     <div class="page-toolbar">
     </div>
 </div>
-<div class="margin-top-10">
-    <a href="#" class="btn btn-sm green" data-bind="click: $root.showModel">Thêm mới <i class="fa fa-plus"></i></a>
-</div>
-<div class="portlet box green margin-top-10">
-    <div class="portlet-title">
-        <div class="caption">
-            <i class="fa fa-cogs"></i>Danh sách lịch
-        </div>
-        <div class="tools">
-            <a href="javascript:;" class="collapse">
-            </a>
-            <a href="#portlet-config" data-toggle="modal" class="config">
-            </a>
-            <a href="javascript:;" class="reload">
-            </a>
-            <a href="javascript:;" class="remove">
-            </a>
-        </div>
-    </div>
+
+<div class="portlet box green margin-top-10">  
     <div class="portlet-body flip-scroll">
-        <table class="table table-bordered table-striped table-condensed flip-content">
-            <thead class="flip-content">
-                <tr>
-                    <th style="width: 5%; text-align: center;">#</th>
-                    <th style="width:5%;text-align: center;">STT</th>
-                    <th style="width:25%;text-align: center;">Tên</th>
-                    <th style="width:25%;text-align: center;">Thời gian bắt đầu</th>
-                    <th style="width:25%;text-align: center;">Thời gian kết thúc</th>
-                    <th style="text-align: center;">Trạng thái</th>
-                </tr>
-            </thead>
-            <tbody data-bind="foreach: playlists ">
-                <tr>
-                    <td style="text-align: center;">
-                        <div class="btn-group">
-                            <i class="fa fa-hand-o-up" style="cursor: pointer; " data-toggle="dropdown"></i>
-                            <ul class="dropdown-menu" role="menu">
-                                <li>
-                                    <a href="#" data-bind="click: $root.edit">
-                                        Chỉnh sửa
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" data-bind="click: $root.confirmRemove">
-                                        Xóa
-                                    </a>
-                                </li>
-                            </ul>
+        <div class="row margin-top-5">
+            <div class="col-md-12">
+                <div class="tabbable-line boxless tabbable-reversed">
+                    <div class="row">
+                        <div class="col-md-4 col-sm-12">
+                            <div class="portlet light bordered">
+                                <div class="portlet-title">
+                                    <div class="caption">Quản lý lịch phát sóng</div>
+                                </div>
+                                <div class="portlet-body">
+                                    <div>
+                                        <a href="#" class="btn btn-sm green" data-bind="click: $root.showModel">Thêm mới <i class="fa fa-plus"></i></a>
+                                    </div>
+                                    <div class="margin-top-10">
+                                        <table class="table table-hover">
+                                            <thead class="flip-content">
+                                                <tr>
+                                                    <th style="width: 5%; text-align: center;">#</th>
+                                                    <th style="width:25%;text-align: center;">Tên</th>
+                                                    <th style="width:25%;text-align: center;">Bắt đầu</th>
+                                                    <th style="width:25%;text-align: center;">Kết thúc</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody data-bind="foreach: playlists ">
+                                                <tr>
+                                                    <td style="text-align: center;">
+                                                        <div class="btn-group">
+                                                            <i class="fa fa-hand-o-up" style="cursor: pointer; " data-toggle="dropdown"></i>
+                                                            <ul class="dropdown-menu" role="menu">
+                                                                <li>
+                                                                    <a href="#" data-bind="click: $root.edit">
+                                                                        Chỉnh sửa
+                                                                    </a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="#" data-bind="click: $root.confirmRemove">
+                                                                        Xóa
+                                                                    </a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </td>
+                                                    <td style="text-align: center;"><a href="#" data-bind="click: $root.loadPlaylistById,text: Name" ></a></td>
+                                                    <td style="text-align: center;"><span data-bind="text: moment(StartPlaylist()).format('DD-MM-YYYY')"> </span></td>
+                                                    <td style="text-align: center;"><span data-bind="text:  moment(EndPlaylist()).format('DD-MM-YYYY')"></span></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>                                                          
+                            </div>
                         </div>
-                    </td>
-                    <td style="text-align: center;"><span data-bind="text:  $index() +1 "></span></td>
-                    <td style="text-align: center;"><span data-bind="text: Name "></span></td>
-                    <td style="text-align: center;"><span data-bind="text: moment(StartPlaylist()).format('DD-MM-YYYY')"> </span></td>
-                    <td style="text-align: center;"><span data-bind="text:  moment(EndPlaylist()).format('DD-MM-YYYY')"></span></td>
-                    <td style="text-align: center;"><span data-bind="text:   IsPublish() ? 'Hoạt động' : 'Khóa', css: !IsPublish()? 'text-danger':'text-info' "></span></td>
-                </tr>
-            </tbody>
-        </table>
-
+                        <div class="col-md-8 col-sm-12" data-bind="with: $root.selectedPlaylist">
+                            <div class="portlet light bordered">
+                                <div class="portlet-title">
+                                    <div class="caption" data-bind="text: Name">Quản lý lịch phát sóng</div>
+                                </div>
+                                <div class="portlet-body" >
+                                    <div class="form-group" ></div>
+                                    <div class="form-group table-responsive">
+                                        <table class="table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width:5%">#</th>
+                                                    <th style="width:60%">Tên chương trình</th>
+                                                    <th style="width:10%">Thời lượng</th>
+                                                    <th style="width:10%">Bắt đầu</th>
+                                                    <th style="width:10%">Kết thúc</th>
+                                                    <th>#</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>1</td>
+                                                    <td>chuong trinh 1</td>
+                                                    <td>aaa</td>
+                                                    <td>aaa</td>
+                                                    <td>â</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>      
     </div>
 </div>
-
 <div id="ghiLai" class="modal fade" data-bind="with: selectedPlaylist">
-
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                 <h4 class="modal-title">Ghi lại dữ liệu</h4>
             </div>
-
             <div class="modal-body">
                 <div class="scroller" style="height:300px" data-always-visible="1" data-rail-visible1="1">
                     <div class="row">
@@ -124,7 +154,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="modal-footer">
                 <!-- ko if: $root.mode() === "create" -->
                 <button type="button" class="btn green" data-bind="click: $root.create">Thêm mới</button>
@@ -133,9 +162,7 @@
                 <button type="button" class="btn green" data-bind="click: $root.update">Chỉnh sửa</button>
                 <!-- /ko -->
             </div>
-
         </div>
     </div>
 </div>
-
 <script src="~/ApiJs/playList.js"></script>

@@ -2,7 +2,7 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-    <div class="page-bar">
+<div class="page-bar">
         <ul class="page-breadcrumb">
             <li>
                 <i class="fa fa-home"></i>
@@ -16,11 +16,10 @@
         <div class="page-toolbar">
         </div>
 </div>
-
 <div class="portlet box green margin-top-10">
     <div class="portlet-title">
         <div class="caption">
-            <i class="fa fa-cogs"></i>Lựa chọn
+            <i class="fa fa-cogs"></i>Danh sách thiết bị
         </div>
         <div class="tools">
             <a href="javascript:;" class="collapse">
@@ -53,7 +52,6 @@
 
                                             </div>
                                         </div>
-
                                     </div>
                                 </div>
                             </div>
@@ -74,30 +72,14 @@
                                         <div class="margin-top-10">
                                             <a href="#" class="btn btn-sm green" data-bind="click: $root.showModel">Thêm mới <i class="fa fa-plus"></i></a>
                                         </div>
-                                        <div class="portlet box green margin-top-10">
-                                            <div class="portlet-title">
-                                                <div class="caption">
-                                                    <i class="fa fa-cogs"></i>Danh sách thiết bị
-                                                </div>
-                                                <div class="tools">
-                                                    <a href="javascript:;" class="collapse">
-                                                    </a>
-                                                    <a href="#portlet-config" data-toggle="modal" class="config">
-                                                    </a>
-                                                    <a href="javascript:;" class="reload">
-                                                    </a>
-                                                    <a href="javascript:;" class="remove">
-                                                    </a>
-                                                </div>
-                                            </div>
+                                        <div class="portlet box  margin-top-10">                                        
                                             <div class="portlet-body flip-scroll">
-
-                                                <table class="table table-bordered table-striped table-condensed flip-content">
+                                                <table class="table table-hover">
                                                     <thead class="flip-content">
                                                         <tr>
                                                             <th style="width: 10%; text-align: center;">Tác vụ</th>
-                                                            <th style="width:10%;text-align: center;">Tên</th>
-                                                            <th style="width:30%;text-align: center;">IMEI</th>
+                                                            <th style="width:20%;text-align: center;">Tên</th>
+                                                            <th style="width:35%;text-align: center;">IMEI</th>
                                                             <th style="width:15%;text-align: center;">Ngày hết hạn</th>
                                                             <th style="text-align: center;">Thuộc nhóm</th>
                                                         </tr>
@@ -123,7 +105,7 @@
                                                             </td>
 
                                                             <td style="text-align: center;">
-                                                                <span data-bind="text: Name"></span>
+                                                                <span data-bind="text: Name" style="color:#006666"></span>
                                                                 <br />
                                                                 <span class="text-muted" data-bind="text: Description"></span>
                                                             </td>
@@ -154,7 +136,6 @@
         </div>
     </div>
 </div>
-
 <div id="ghiLai" class="modal fade" data-bind="with: selectedDevice">
 
     <div class="modal-dialog">
@@ -214,6 +195,4 @@
         </div>
     </div>
 </div>
-
-
 <script src="~/ApiJs/liveDevice.js"></script>
