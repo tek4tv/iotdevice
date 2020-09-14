@@ -131,7 +131,7 @@
             Edit: true,
             Start: "00:00:00",
             End: "00:00:00",
-            ID: -1,
+            ID: 0,
             Index: 0,
             Name: "Live stream input",
             Path: "rtmp://...",
@@ -143,11 +143,16 @@
         self.valueLives.unshift(self.valueLive())
         console.log(self.valueLives())
     }
-    self.editEvent = function () {
+    self.editEvent = function (item) {
+        console.log(item);
+        console.log('ok');
+       self.valueLive(item);
        self.mode('editLive');
        $('#addLive').modal('show');
     }
-
+    self.removeEvent = function (item) {
+        self.valueLives.remove(item);
+    }
 }
 $(function () {
     var playlistModel = new PlaylistModel();
