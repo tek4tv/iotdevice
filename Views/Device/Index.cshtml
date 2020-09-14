@@ -3,18 +3,18 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="page-bar">
-        <ul class="page-breadcrumb">
-            <li>
-                <i class="fa fa-home"></i>
-                <a href="#">Hệ thống</a>
-                <i class="fa fa-angle-right"></i>
-            </li>
-            <li>
-                <a href="#">Quản lý thiết bị</a>
-            </li>
-        </ul>
-        <div class="page-toolbar">
-        </div>
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="fa fa-home"></i>
+            <a href="#">Hệ thống</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a href="#">Quản lý thiết bị</a>
+        </li>
+    </ul>
+    <div class="page-toolbar">
+    </div>
 </div>
 <div class="portlet box green margin-top-10">
     <div class="portlet-title">
@@ -72,7 +72,7 @@
                                         <div class="margin-top-10">
                                             <a href="#" class="btn btn-sm green" data-bind="click: $root.showModel">Thêm mới <i class="fa fa-plus"></i></a>
                                         </div>
-                                        <div class="portlet box  margin-top-10">                                        
+                                        <div class="portlet box  margin-top-10">
                                             <div class="portlet-body flip-scroll">
                                                 <table class="table table-hover">
                                                     <thead class="flip-content">
@@ -110,7 +110,7 @@
                                                                 <span class="text-muted" data-bind="text: Description"></span>
                                                             </td>
                                                             <td style="text-align: center;"><span data-bind="text: IMEI"></span></td>
-                                                            <td style="text-align: center;"><span data-bind="text: moment(ExpDate()).format('DD/MM/YYYY')"></span></td>
+                                                            <td style="text-align: center;"><span data-bind="text: moment(ExpDate()).fromNow()"></span></td>
                                                             <td style="text-align: center;">
                                                                 <select class="form-control" data-bind="
                                                                         value: LiveCategoryID,
@@ -126,7 +126,7 @@
 
                                             </div>
                                         </div>
-                                    </div>                                                            
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -195,4 +195,7 @@
         </div>
     </div>
 </div>
-<script src="~/ApiJs/liveDevice.js"></script>
+@section scripts {
+    <script src="~/ApiJs/liveDeviceViewModel.js"></script>
+
+}

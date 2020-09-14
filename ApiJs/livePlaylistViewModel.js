@@ -113,29 +113,45 @@
         });
     }
 
-    self.events = ko.observableArray();
-    self.loadDetail = function (item) {
-        $.getJSON("https://dev.tek4tv.vn/api/device/playlist/1?=IwAR1TFpgkPs7XrWfnPgUle3O45uQbcVac9G-BLLCiHbgfM8sRbM-7iyPBU4s",
-            function (data) {
-                console.log(data);
-            });
-       // $('#loading').modal('show');
-       // self.events.removeAll();
-       /* $.getJSON('https://dev.tek4tv.vn/api/device/playlist/1?fbclid=IwAR1TFpgkPs7XrWfnPgUle3O45uQbcVac9G-BLLCiHbgfM8sRbM-7iyPBU4s', function (data) {
-            console.log(data);*/
-           /* $.each(data, function (idx, item) {
-                item.Edit = false;
-                self.events.push(self.convertToKoObject(item))
-            });*/
-           // self.events(self.events().sort(function (l, r) { return l.Index() - r.Index() }));
-           // $('#loading').modal('hide');
-       // })   
-    }
-    
     self.loadPlaylistById = function (item) {
-        self.selectedPlaylist(item);
-        self.loadDetail(self.selectedPlaylist());
-       
+        self.selectedPlaylist(item);    
+    }
+
+    self.modalAddPlaylist = function () {       
+        $('#addPlaylist').modal('show');
+    }
+
+    self.valueLive = ko.observable();
+    self.valueLives = ko.observableArray();
+    self.modalAddLive = function () {
+        self.mode('addLive');
+        var obj = {
+            Category: { ID: - 1, Name: 'Live' },
+            Duration: "02:00:00",
+            Edit: true,
+            Start: "00:00:00",
+            End: "00:00:00",
+            ID: 0,
+            Index: 0,
+            Name: "Live stream input",
+            Path: "rtmp://...",
+        };
+        self.valueLive(self.convertToKoObject(obj));     
+        $('#addLive').modal('show');
+    }
+    self.savePlaylist = function (item) {
+        self.valueLives.unshift(self.valueLive())
+        console.log(self.valueLives())
+    }
+    self.editEvent = function (item) {
+        console.log(item);
+        console.log('ok');
+       self.valueLive(item);
+       self.mode('editLive');
+       $('#addLive').modal('show');
+    }
+    self.removeEvent = function (item) {
+        self.valueLives.remove(item);
     }
 }
 $(function () {

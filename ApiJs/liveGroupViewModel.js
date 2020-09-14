@@ -352,6 +352,44 @@
         }
     }
 
+    // searching devices
+    self.keySearch = ko.observable(); 
+    self.resultAutoSearch = ko.observableArray();
+    self.autoSearchDevice = function () {
+        var valueString = self.keySearch();
+        console.log(valueString.length);        
+        $.ajax({
+            url: "/api/device/search/" + valueString,
+            type: 'get',
+            success: function (data) {
+                self.resultAutoSearch.removeAll();
+                $.each(data, function (index, item) {
+                    self.resultAutoSearch.push(self.convertToKoObject(item))
+                })
+                console.log(self.resultAutoSearch());
+            }
+        });
+    }
+
+    // searching playlist
+    self.keySearchPlaylist = ko.observable();
+    self.resultAutoSearchPlaylist = ko.observableArray();
+    self.autoSearchPlaylist = function () {
+        var valueString = self.keySearchPlaylist();
+       
+        $.ajax({
+            url: "/api/playlist/search/" + valueString,
+            type: 'get',
+            success: function (data) {
+                self.resultAutoSearchPlaylist.removeAll();
+                $.each(data, function (index, item) {
+                    self.resultAutoSearchPlaylist.push(self.convertToKoObject(item))
+                })
+                console.log(self.resultAutoSearchPlaylist());
+            }
+        });
+    }
+
 
     function getGroupModel(data) {      
         var items = getNestedGroup(0, data);

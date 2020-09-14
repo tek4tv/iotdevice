@@ -143,7 +143,5 @@ namespace Tek4TV.Devices.Apis
                 return Request.CreateResponse(HttpStatusCode.NotFound, "Bad request");
             }
         }
-
-
     }
 }
