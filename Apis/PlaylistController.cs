@@ -49,6 +49,34 @@ namespace Tek4TV.Devices.Apis
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e.Message);
             }
         }
+        [Route("search/{content}")]
+        public HttpResponseMessage GetByContent(string content)
+        {
+            try
+            {
+                var items = dbContext.LivePlaylists;
+                var output = from item in items
+                             select new
+                             {
+                                 item.ID,
+                                 item.Name,
+                                 item.StartPlaylist,
+                                 item.EndPlaylist,
+                                 item.Playlist,
+                                 item.IsPublish,
+                                 item.IsDelete
+                             };
+                if (!string.IsNullOrEmpty(content))
+                {
+                    output = output.Where(x => x.Name.Contains(content));
+                }                 
+                return Request.CreateResponse(HttpStatusCode.OK, output, Configuration.Formatters.JsonFormatter);
+            }
+            catch (Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e.Message);
+            }
+        }
         [Route("{id}")]
         public HttpResponseMessage GetPlaylist(int Id)
         {

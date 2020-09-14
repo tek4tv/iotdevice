@@ -13,6 +13,42 @@ namespace Tek4TV.Devices.Apis
     public class DeviceController : ApiController
     {
         DevicesContext dbContext = new DevicesContext();
+        public bool checkIMEI(int id)
+        {
+            var items = dbContext.LiveDevices.Where(x => x.ID == id);
+            var outputs = from item in items
+                         select new
+                         {
+                             item.IMEI
+                         };
+            foreach (var output in outputs )
+            {
+                if (output.IMEI == null)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+        public bool checkExpDate(int id)
+        {
+            DateTime date =  DateTime.Now;
+
+            var items = dbContext.LiveDevices.Where(x => x.ID == id);
+            var outputs = from item in items
+                          select new
+                          {
+                              item.ExpDate
+                          };
+            foreach (var output in outputs)
+            {
+                if (output.ExpDate < date)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
         [Route("info")]
         public HttpResponseMessage GetInfo()
         {
@@ -43,6 +79,34 @@ namespace Tek4TV.Devices.Apis
                                  item.LiveCategoryID,
                                  item.ExpDate
                              };
+                return Request.CreateResponse(HttpStatusCode.OK, output, Configuration.Formatters.JsonFormatter);
+            }
+            catch (Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e.Message);
+            }
+        }
+        [Route("search/{content}")]
+        public HttpResponseMessage GetByContent(string content)
+        {
+            try
+            {
+                var items = dbContext.LiveDevices;
+                var output = from item in items
+                             select new
+                             {
+                                 item.ID,
+                                 item.IMEI,
+                                 item.LinkStream,
+                                 item.Name,
+                                 item.Description,
+                                 item.LiveCategoryID,
+                                 item.ExpDate
+                             };
+                if (!string.IsNullOrEmpty(content))
+                {
+                    output = output.Where(x => x.IMEI.Contains(content) || x.Name.Contains(content));
+                }                   
                 return Request.CreateResponse(HttpStatusCode.OK, output, Configuration.Formatters.JsonFormatter);
             }
             catch (Exception e)

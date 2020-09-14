@@ -4,18 +4,18 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="page-bar">
-        <ul class="page-breadcrumb">
-            <li>
-                <i class="fa fa-home"></i>
-                <a href="#">Hệ thống</a>
-                <i class="fa fa-angle-right"></i>
-            </li>
-            <li>
-                <a href="#">Loại thiết bị</a>
-            </li>
-        </ul>
-        <div class="page-toolbar">
-        </div>
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="fa fa-home"></i>
+            <a href="#">Hệ thống</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a href="#">Loại thiết bị</a>
+        </li>
+    </ul>
+    <div class="page-toolbar">
+    </div>
 </div>
 <div class="margin-top-10">
     <a href="#" class="btn btn-sm green" data-bind="click: $root.showModel">Thêm mới <i class="fa fa-plus"></i></a>
@@ -36,8 +36,8 @@
             </a>
         </div>
     </div>
-    <div class="portlet-body flip-scroll">     
-        <table class="table table-hover" >
+    <div class="portlet-body flip-scroll">
+        <table class="table table-hover">
             <thead class="flip-content">
                 <tr>
                     <th style="width: 5%; text-align: center;">#</th>
@@ -91,7 +91,7 @@
                 </tr>
             </tbody>
         </table>
-      
+
     </div>
 </div>
 
@@ -141,15 +141,15 @@
                             <div class="form-check">
                                 <label class="form-check-label">Trạng thái</label>
                                 <div>
-                                <input type="checkbox" class="form-check-input" data-bind="checked: IsShow">
-                                <label class="form-check-label">Hoạt động</label>
+                                    <input type="checkbox" class="form-check-input" data-bind="checked: IsShow">
+                                    <label class="form-check-label">Hoạt động</label>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-          
+
             <div class="modal-footer">
                 <!-- ko if: $root.mode() === "create" -->
                 <button type="button" class="btn green" data-bind="click: $root.create">Thêm mới</button>
@@ -158,9 +158,10 @@
                 <button type="button" class="btn green" data-bind="click: $root.update">Chỉnh sửa</button>
                 <!-- /ko -->
             </div>
-           
+
         </div>
     </div>
 </div>
-
-<script src="~/ApiJs/liveDeviceCategory.js"></script>
+@section scripts {
+    <script src="~/ApiJs/liveDeviceCategoryViewModel.js"></script> 
+}
