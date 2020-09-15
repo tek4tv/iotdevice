@@ -154,10 +154,9 @@ namespace Tek4TV.Devices.Apis
                 return Request.CreateResponse(HttpStatusCode.OK);
             }catch (Exception e)
             {
-                return Request.CreateResponse(HttpStatusCode.NotFound, "Not Insert");
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, e.Message);
             }
-        }
-             
+        }          
         [Route("{id}")]
         public HttpResponseMessage PutDevice(LiveDevice liveDevice, int Id)
         {
@@ -182,10 +181,9 @@ namespace Tek4TV.Devices.Apis
             }
             catch (Exception e)
             {
-                return Request.CreateResponse(HttpStatusCode.NotFound, "Not update");
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, e.Message);
             }
-        }
-       
+        }       
         [Route("{id}")]
         public HttpResponseMessage DeleteDevice(int Id)
         {
@@ -206,7 +204,7 @@ namespace Tek4TV.Devices.Apis
             }
             catch (Exception e)
             {
-                return Request.CreateResponse(HttpStatusCode.NotFound, "Bad request");
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, e.Message);
             }
         }
     }

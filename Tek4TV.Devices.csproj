@@ -150,6 +150,7 @@
     <Compile Include="Apis\DeviceCategoryController.cs" />
     <Compile Include="Apis\DeviceController.cs" />
     <Compile Include="Apis\GroupController.cs" />
+    <Compile Include="Apis\IOTController.cs" />
     <Compile Include="Apis\PlaylistController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />

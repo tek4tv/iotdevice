@@ -424,6 +424,7 @@
         //all[index].order = index;
         return getNestedGroup(++index, all);
     };
+    }
 }
 
 $(function () {
