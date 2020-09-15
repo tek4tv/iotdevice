@@ -89,7 +89,7 @@ namespace Tek4TV.Devices.Apis
             }
             catch (Exception e)
             {
-                return Request.CreateResponse(HttpStatusCode.NotFound, "The add was not successful");
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, e.Message);
             }
         }
         [Route("{id}")]
@@ -116,7 +116,7 @@ namespace Tek4TV.Devices.Apis
             }
             catch (Exception e)
             {
-                return Request.CreateResponse(HttpStatusCode.NotFound, "The update was not successful");
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, e.Message);
             }
         }
         [Route("{id}")]
@@ -139,7 +139,7 @@ namespace Tek4TV.Devices.Apis
             }
             catch (Exception e)
             {
-                return Request.CreateResponse(HttpStatusCode.NotFound, "The delete was not successful");
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, e.Message);
             }
         }
         [Route("device/{id}")]
@@ -165,7 +165,7 @@ namespace Tek4TV.Devices.Apis
             }
             catch (Exception e)
             {
-                return Request.CreateResponse(HttpStatusCode.NotFound, "The delete was not successful");
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, e.Message);
             }
         }
         [Route("{idGroup}/device/{idDevice}")]
@@ -231,7 +231,7 @@ namespace Tek4TV.Devices.Apis
             }
             catch (Exception e)
             {
-                return Request.CreateResponse(HttpStatusCode.NotFound, "The delete was not successful");
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, e.Message);
             }
         }
         [Route("{idGroup}/playlist/{idPlaylist}")]
@@ -274,6 +274,5 @@ namespace Tek4TV.Devices.Apis
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e.Message);
             }
         }
-
     }
 }

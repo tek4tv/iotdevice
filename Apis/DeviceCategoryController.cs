@@ -91,7 +91,7 @@ namespace Tek4TV.Devices.Apis
             }
             catch (Exception e)
             {
-                return Request.CreateResponse(HttpStatusCode.NotFound, "Value not insert");
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, e.Message);
             }                
         }
         [Route("{id}")]
@@ -118,7 +118,7 @@ namespace Tek4TV.Devices.Apis
                 }
             }catch (Exception e)
             {
-                return Request.CreateResponse(HttpStatusCode.NotFound, "The update was not successful");
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, e.Message);
             }
         }
         [Route("{id}")]
@@ -140,7 +140,7 @@ namespace Tek4TV.Devices.Apis
             }
             catch (Exception e)
             {
-                return Request.CreateResponse(HttpStatusCode.NotFound, "Bad request");
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, e.Message);
             }
         }
     }

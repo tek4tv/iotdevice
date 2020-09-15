@@ -1,16 +1,23 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http;
 using Tek4TV.Devices.Models;
 
 namespace Tek4TV.Devices.Apis
 {
+   
     [RoutePrefix("api/playlist")]
     public class PlaylistController : ApiController
     {
+       
         DevicesContext dbContext = new DevicesContext();
         [Route("info")]
         public HttpResponseMessage GetInfo()
@@ -117,7 +124,7 @@ namespace Tek4TV.Devices.Apis
             }
             catch (Exception e)
             {
-                return Request.CreateResponse(HttpStatusCode.NotFound, "The add was not successful");
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, e.Message);
             }
         }
         [Route("{id}")]
@@ -141,13 +148,11 @@ namespace Tek4TV.Devices.Apis
                     dbContext.SaveChanges();
                     return Request.CreateResponse(HttpStatusCode.OK, item);
                 }
-
             }
             catch (Exception e)
             {
-                return Request.CreateResponse(HttpStatusCode.NotFound, "The update was not successful");
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, e.Message);
             }
-
         }
         [Route("{id}")]
         public HttpResponseMessage DeletePlaylist(int Id)
@@ -165,12 +170,11 @@ namespace Tek4TV.Devices.Apis
                     dbContext.SaveChanges();
                     return Request.CreateResponse(HttpStatusCode.OK, item);
                 }
-
             }
             catch (Exception e)
             {
-                return Request.CreateResponse(HttpStatusCode.NotFound, "The delete was not successful");
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, e.Message);
             }
-        }
+        }      
     }
 }

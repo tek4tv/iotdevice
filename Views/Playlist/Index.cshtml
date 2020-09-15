@@ -17,7 +17,6 @@
     <div class="page-toolbar">
     </div>
 </div>
-
 <div class="portlet box green margin-top-10">
     <div class="portlet-body flip-scroll">
         <div class="row margin-top-5">
@@ -77,12 +76,13 @@
                                 <div class="portlet-title">
                                     <div class="caption">
                                         <i class="icon-layers"></i>
+                                       
                                         <span data-bind="text: Name"></span>
                                     </div>
                                 </div>
                                 <div class="portlet-body">
                                     <div class="form-group">
-                                        <button class="btn btn-sm btn-danger" type="button"><i class="fa fa-check"></i> <span>Lưu chỉnh sửa</span></button>
+                                        <button data-bind="click: $root.addNewPlaylist" class="btn btn-sm btn-danger" type="button"><i class="fa fa-check"></i> <span>Lưu chỉnh sửa</span></button>
                                         <button data-bind="click: $root.modalAddPlaylist" class="btn btn-sm btn-info" type="button"><i class="fa fa-plus"></i> <span>Thêm mới</span></button>
                                         <button data-bind="click: $root.modalAddLive" class="btn btn-sm btn-info" type="button"><i class="fa fa-rss"></i> <span>Thêm Live</span></button>
                                     </div>
@@ -98,6 +98,7 @@
                                                     <th style="width:20%">#</th>
                                                 </tr>
                                             </thead>
+                                           
                                             <tbody data-bind="foreach: $root.valueLives">
                                                 <tr>
                                                     <td data-bind="text: Index "></td>
@@ -112,6 +113,7 @@
                                                     </td>
                                                 </tr>
                                             </tbody>
+                                            
                                         </table>
                                     </div>
                                 </div>
@@ -133,21 +135,19 @@
             <div class="modal-body">
                 <div class="scroller" style="height:300px" data-always-visible="1" data-rail-visible1="1">
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <div class="form-group margin-top-15">
                                 <label for="name">Tên </label>
                                 <input data-bind="value: Name" class="form-control" type="text" />
                             </div>
+                        </div>
+                        <div class="col-md-6">                            
                             <div class="form-group margin-top-15">
                                 <label for="price">Bắt đầu</label>
                                 <input data-bind="value: StartPlaylist" class="form-control " type="datetime-local" />
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-group margin-top-15">
-                                <label for="price">Tên chương trình</label>
-                                <input data-bind="value: Playlist" class="form-control" type="text" />
-                            </div>
+                        <div class="col-md-6">                          
                             <div class="form-group margin-top-15">
                                 <label for="price">Kết thúc</label>
                                 <input data-bind="value: EndPlaylist" class="form-control" type="datetime-local" />
@@ -224,17 +224,20 @@
                                         </div>
                                     </div>
                                     <div class="portlet-body">
-                                        <div class="caption">
-                                            <span> Danh mục chương trình</span>
+                                        <div class="form-group">
+                                            <div>
+                                                <div id="treeCat" class="tree-demo">
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-9">
-                                <div class="portlet light bordered">
+                                <div class="portlet light bordered" data-bind="with: $root.selectdCat">
                                     <div class="portlet-title">
                                         <div class="caption">
-                                            <span> Danh mục chương trình</span>
+                                            <span data-bind="text: NAME"> </span>
                                         </div>
                                     </div>
                                     <div class="portlet-body">
@@ -287,7 +290,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Tên chương trình</label>
-                                <input class="form-control" type="text" data-bind="value: Name" />
+                                <input class="form-control"  type="text" data-bind="value: Name" />
                             </div>
                             <div class="form-group">
                                 <label>Link</label>
