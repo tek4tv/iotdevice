@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -75,8 +74,7 @@
                             <div class="portlet light bordered">
                                 <div class="portlet-title">
                                     <div class="caption">
-                                        <i class="icon-layers"></i>
-                                       
+                                        <i class="icon-layers"></i>                                     
                                         <span data-bind="text: Name"></span>
                                     </div>
                                 </div>
@@ -189,6 +187,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
+                                  
                                     <div class="input-group date-picker input-daterange" data-date="10/10/2010" data-date-format="dd/mm/yyyy">
                                         <input type="text" style="font-size:22px; color: blue" class="form-control" name="from" placeholder="từ ngày...">
                                         <span class="input-group-addon">
@@ -208,7 +207,7 @@
                                     <span class="input-group-addon input-circle-left">
                                         <i class="fa fa-search"></i>
                                     </span>
-                                    <input type="text" autocomplete="on" id="myInput" class="form-control input-circle-right">
+                                    <input type="text" autocomplete="on" id="myInput" placeholder="Nhập từ khóa tìm kiếm" class="form-control input-circle-right">
                                 </div>
                             </div>
                         </div>
@@ -237,15 +236,41 @@
                                 <div class="portlet light bordered" data-bind="with: $root.selectdCat">
                                     <div class="portlet-title">
                                         <div class="caption">
-                                            <span data-bind="text: NAME"> </span>
+                                            <span data-bind="text: Name"> </span>
                                         </div>
                                     </div>
                                     <div class="portlet-body">
-                                        <div class="caption">
-                                            <span> Danh mục chương trình</span>
+                                        <div>
+                                            <div >
+                                                <div class="row" id="style-3" style="max-height:550px; overflow:auto;">
+                                                    <div class="col-md-12" data-bind="foreach: $root.Projects">
+                                                        <div class="col-md-3 col-sm-3 col-xs-12" style="padding:0 4px; cursor:pointer;">
+                                                            <div style="position:relative">
+                                                                <div style="position:absolute; z-index:1001; left:2px; top:4px;border-radius: 4px; padding:4px 4px; text-align:center">
+                                                                    <span data-bind="text: moment(ModifyDate()).fromNow()" style="font-weight:600;cursor:pointer;font-size:16px; color:white;background-color:red;opacity: .8; padding: 4px 8px; border-radius: 4px;"></span>
+                                                                </div>
+                                                                <div style="position:absolute; z-index:1001; right:2px; bottom:2px;" data-bind="visible: (Duration() != null && Duration().length > 0)">
+                                                                    <span data-bind="text: Duration().substring(0,8)" style="color:hsl(0, 0%, 100%);background:hsl(0, 0%, 6.7%);opacity: .8; padding: 2px 4px; border-radius: 2px;"></span>
+                                                                </div>
+                                                                <img class="img-responsive" style="width:100%" data-bind="attr: {src: $root.isImageStorage($data), alt: Name()}">
+                                                            </div>
+                                                            <div data-bind="click: $root.onSelected" style="background-color:#050a3e; padding:2px; min-height:60px;">
+                                                                <div style="padding:10px;max-height: 1.1em;position: relative;width:95%" data-bind="click: $root.editProject">
+                                                                    <a href="#" style="font-size:16px;color:white;content: attr(title);position: absolute;top: 2px; left: 2px;right: 15px;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;" data-bind="text: Name"></a>
+                                                                </div>
+                                                                <div style="position:relative">
+                                                                    <a href="#" style="color:white;content: attr(title);position: absolute;top: 10px; left: 2px;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;" data-bind="text: Category.Name"></a>
+                                                                </div>
+                                                                <div style="background-color:#333; padding:2px; position:absolute; z-index:1001; right:6px; bottom:2px;" data-bind="visible: Selected(), click: $root.onSelected">
+                                                                    <i class="fa fa-check" style="font-size:26px; color:yellow; padding:4px;"></i>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -257,6 +282,7 @@
             </div>
         </div>
     </div>
+</div>
 </div>
 <div id="addLive" class="modal fade">
     <div class="modal-dialog">
@@ -272,7 +298,7 @@
             </div>
             <div class="modal-body">
                 <div class="scroller" style="height:300px" data-always-visible="1" data-rail-visible1="1">
-                    <div class="row" data-bind="with: valueLive">
+                    <div class="row" data-bind="with: $root.valueLive">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Thứ tự</label>
