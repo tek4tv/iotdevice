@@ -198,13 +198,13 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\DevicesContext.cs" />
-    <Compile Include="Models\GroupDevice.cs" />
     <Compile Include="Models\LiveDevice.cs" />
     <Compile Include="Models\LiveDeviceCategory.cs" />
     <Compile Include="Models\LiveGroup.cs" />
     <Compile Include="Models\LivePlaylist.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="RequestBody\RequestBodyVideo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="ApiJs\liveDeviceViewModel.js" />

@@ -12,7 +12,7 @@ using System.Web.Http;
 
 namespace Tek4TV.Devices.Apis
 {
-    [RoutePrefix("0")]
+    [RoutePrefix("api/iot")]
     public class IOTController : ApiController
     {
         private static string _appID = "bc6da08b-3ad4-4452-8f29-d56bc69e31995";
@@ -60,15 +60,16 @@ namespace Tek4TV.Devices.Apis
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, e.Message);
             }
         }
+       
         [Route("video")]
-        public async Task<HttpResponseMessage> PostVideoAsync(Array _listCategory, int _page, int _size)
+        public async Task<HttpResponseMessage> PostVideoAsync(RequestBodyVideo requestBodyVideo)
         {
             try
             {
                 string policyKey = "";
+                int[] _listCategory = { 3788 };
                 string _liveID = ConfigurationManager.AppSettings["LiveID"];
-                var data = new { AppID = _appID, ApiKey = _apiKey, AccountId = _accountID };
-                var valuePost = new { ListCategory= _listCategory, Page = _page, Size = _size };
+                var data = new { AppID = _appID, ApiKey = _apiKey, AccountId = _accountID };              
                 using (var httpClient = new HttpClient())
                 {
                     String domain = HttpContext.Current.Request.Url.Host;
@@ -84,7 +85,7 @@ namespace Tek4TV.Devices.Apis
                     httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", policyKey);
                     httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                     string url = _playbackUrl + "iot/v1/video";
-                    var responsePost = await httpClient.PostAsJsonAsync(url, valuePost);
+                    var responsePost = await httpClient.PostAsJsonAsync(url, requestBodyVideo);
                     if (responsePost.IsSuccessStatusCode)
                     {
                         string responseBody = await responsePost.Content.ReadAsStringAsync();

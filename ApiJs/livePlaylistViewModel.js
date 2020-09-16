@@ -23,7 +23,8 @@
         }).done(function (items) {
             self.playlists.removeAll();
             $.each(items, function (index, item) {
-                self.playlists.push(self.convertToKoObject(item))                
+                self.playlists.push(self.convertToKoObject(item))     
+                
             });       
         });
     }
@@ -110,11 +111,10 @@
         self.selectedPlaylist(item);    
         self.loadAddedPlaylist(item)
     }
-    self.modalAddPlaylist = function () {       
+    self.modalAddPlaylist = function () {  
         $('#addPlaylist').modal('show');
         self.loadIotCat();
     }
-
     self.valueLive = ko.observable();
     self.valueLives = ko.observableArray();
     self.modalAddLive = function () {      
@@ -194,21 +194,25 @@
             url: "/api/iot/category",
             type: "get"
         }).done(function (items) {
+            self.listIotCats.removeAll();
             $.each(items, function (index, item) {
                 self.listIotCats.push(self.convertToKoObject(item))
-            });
-            console.log(items)
-            console.log(self.listIotCats());
-            self.createTreeCat();
+            });          
+            self.createTreeCat();           
+            
+            
         });
     }
 
     self.selectdCat = ko.observable();
+    self.videoId = ko.observableArray();
     self.createTreeCat = function () {
         var data = [];
         $.each(self.listIotCats(), function (idx, item) {
             data.push({ id: item.ID(), text: item.Name(), parentID: item.ParentID() });
         });
+        
+        $('#treeCat').jstree("destroy");
         $("#treeCat").jstree({
             "core": {
                 "themes": {
@@ -235,28 +239,76 @@
         $("#treeCat").on("select_node.jstree",
             function (evt, data) {
                 var nodeId = $('#treeCat').jstree().get_selected("id")[0].id;
-                var nodeName = $('#treeCat').jstree().get_selected("id")[0].text;
-                var gr = { ID: nodeId, NAME: nodeName };
-                console.log(gr);
-                self.selectdCat(self.convertToKoObject(gr));
-                self.loadVideoByCat(self.selectedDeviceByGroup());
+                var nodeName = $('#treeCat').jstree().get_selected("id")[0].text;               
+                var gr = { ID: nodeId, Name: nodeName };              
+                self.selectdCat(self.convertToKoObject(gr));                          
+                self.videoId.removeAll(); 
+               
+                $.each(self.listIotCats(), function (index, item) {
+                    if (gr.ID == item.ParentID()) {                        
+                        self.videoId.push(item.ID())
+                    }                 
+                });              
+                $.each(self.listIotCats(), function (index1, item1) {
+                    $.each(self.videoId(), function (index2, item2) {
+                        if (item2 == item1.ParentID()) {
+                            self.videoId.push(item1.ID())
+                        } 
+                     });
+                });
+                self.videoId.push(gr.ID);
              
+                self.loadVideoByCat(self.videoId())
             }
         );
-
     }
-    self.loadVideoByCat = function (item) {
+
+    self.Projects = ko.observableArray()
+    self.loadVideoByCat = function (item) {            
+        var payload = { ListCategory: item, Page: 0, Size: 40 }
+      
         $.ajax({
-            url: '/api/group/device/' + item.ID(),
-            type: 'GET',
+            url: '/api/iot/video' ,
+            type: 'POST',
+            data: ko.mapping.toJSON(payload),
             contentType: 'application/json',
             dataType: 'json'
-        }).success(function (data) {
-            self.getDeviceByGroup.removeAll();
-            $.each(data, function (index, item) {
-                self.getDeviceByGroup.push(self.convertToKoObject(item))
-            });
+        }).success(function (items) {
+            self.Projects.removeAll();
+            $.each(items.Projects, function (index, item) {
+                self.Projects.push(self.convertToKoObject(item))
+            }); 
+           
         })
+    }
+
+
+    self.isImageStorage = function (item) {
+        if (item.ThumbNail() === null || item.ThumbNail().length === 0) {
+            return '/BackEnd/assets/global/img/no_thumb.jpg';
+        }
+        var ext = item.ThumbNail().split('.').pop().toLowerCase();
+        var fileExtension = ['jpeg', 'jpg', 'png', 'gif', 'bmp'];
+        if ($.inArray(ext, fileExtension, 0) === -1) {
+            return '/BackEnd/assets/global/img/no_thumb.jpg';
+        } else {
+            var listRemote = item.RemoteStorage().split('#');
+            var url = "https://storage.tek4tv.vn";
+            return url + "/" + item.ThumbNail();
+        }
+    };
+
+    self.isImageThumb = function (path) {
+        if (path == null || path.length == 0) {
+            return '/BackEnd/assets/global/img/no_thumb.jpg';
+        }
+        var ext = path.split('.').pop().toLowerCase();
+        var fileExtension = ['jpeg', 'jpg', 'png', 'gif', 'bmp']
+        if ($.inArray(ext, fileExtension, 0) == -1) {
+            return '/BackEnd/assets/global/img/no_thumb.jpg';
+        } else {
+            return 'Storage/' + path;
+        }
     }
 
     function getGroupModel(data) {
@@ -292,7 +344,7 @@
         //all[index].order = index;
         return getNestedGroup(++index, all);
     };
-
+    
 }
 $(function () {
     var playlistModel = new PlaylistModel();
