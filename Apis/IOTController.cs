@@ -66,8 +66,7 @@ namespace Tek4TV.Devices.Apis
         {
             try
             {
-                string policyKey = "";
-                int[] _listCategory = { 3788 };
+                string policyKey = "";              
                 string _liveID = ConfigurationManager.AppSettings["LiveID"];
                 var data = new { AppID = _appID, ApiKey = _apiKey, AccountId = _accountID };              
                 using (var httpClient = new HttpClient())

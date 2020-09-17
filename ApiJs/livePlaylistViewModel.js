@@ -82,8 +82,7 @@
             self.remove(item);
         }
     }
-    self.edit = function (item) {
-        console.log(item)
+    self.edit = function (item) {     
         self.mode('update');
         self.selectedPlaylist(item);
         $('#ghiLai').modal('show');
@@ -198,9 +197,7 @@
             $.each(items, function (index, item) {
                 self.listIotCats.push(self.convertToKoObject(item))
             });          
-            self.createTreeCat();           
-            
-            
+            self.createTreeCat();                                 
         });
     }
 
@@ -210,8 +207,7 @@
         var data = [];
         $.each(self.listIotCats(), function (idx, item) {
             data.push({ id: item.ID(), text: item.Name(), parentID: item.ParentID() });
-        });
-        
+        });       
         $('#treeCat').jstree("destroy");
         $("#treeCat").jstree({
             "core": {
@@ -256,17 +252,21 @@
                         } 
                      });
                 });
-                self.videoId.push(gr.ID);
-             
+                self.videoId.push(gr.ID);               
                 self.loadVideoByCat(self.videoId())
+                
             }
         );
     }
 
-    self.Projects = ko.observableArray()
-    self.loadVideoByCat = function (item) {            
-        var payload = { ListCategory: item, Page: 0, Size: 40 }
-      
+
+    //self.videoItem = ko.observableArray();
+    self.resultProject = ko.observable();
+    self.Projects = ko.observableArray();
+    self.sizeVideo = ko.observable(40);
+    self.QueryString = ko.observable();
+    self.loadVideoByCat = function (item) {
+        var payload = { ListCategory: item, Page: 0, Size: self.sizeVideo() };        
         $.ajax({
             url: '/api/iot/video' ,
             type: 'POST',
@@ -277,11 +277,51 @@
             self.Projects.removeAll();
             $.each(items.Projects, function (index, item) {
                 self.Projects.push(self.convertToKoObject(item))
-            }); 
-           
+            });          
+            self.resultProject(self.convertToKoObject(items));
+        })
+    }
+   
+   
+
+    self.updateToPlaylist = function (item) {    
+        $.each(self.resultProject().Projects(), function (idx, obj) {
+            if (obj.Selected()) {
+                var ips = obj.RemoteStorage().split('#');
+                var url = ips.length > 2 ? ips[2] : obj.FtpServer()[0].UrlStorage();
+                var path = (url + '/' + obj.Path()).toLowerCase();
+                var item = {
+                    Index: self.valueLives().length + 1, Category: {
+                        ID: obj.Category.ID(), Name: obj.Category.Name(), FtpInfo: { Path: obj.Path().toLowerCase() }
+                    }, ID: obj.ID(), Name: obj.Name, Duration: obj.Duration, Path: path, Start: '00:00:00', End: '00:00:00', Edit: false
+                };
+                self.valueLives.unshift(self.convertToKoObject(item));
+            } 
+            
+        })
+    }
+    self.onSelected = function (item) {
+        item.Selected(!item.Selected());
+        return item.Selected()
+    }
+
+    self.searchQueryString = function () {
+        var payload = { ListCategory: self.videoId(), Page: 0, Size: 40, QueryString: self.QueryString() };
+        $.ajax({
+            url: '/api/iot/video',
+            type: 'POST',
+            data: ko.mapping.toJSON(payload),
+            contentType: 'application/json',
+            dataType: 'json'
+        }).success(function (items) {
+            self.Projects.removeAll();
+            $.each(items.Projects, function (index, item) {
+                self.Projects.push(self.convertToKoObject(item))
+            });          
         })
     }
 
+    
 
     self.isImageStorage = function (item) {
         if (item.ThumbNail() === null || item.ThumbNail().length === 0) {
@@ -297,7 +337,6 @@
             return url + "/" + item.ThumbNail();
         }
     };
-
     self.isImageThumb = function (path) {
         if (path == null || path.length == 0) {
             return '/BackEnd/assets/global/img/no_thumb.jpg';
@@ -310,7 +349,6 @@
             return 'Storage/' + path;
         }
     }
-
     function getGroupModel(data) {
         var items = getNestedGroup(0, data);
         //<remove duplicates, for infinity nesting only>   
