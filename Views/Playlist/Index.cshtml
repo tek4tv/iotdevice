@@ -186,8 +186,7 @@
                     <div class="form-group">
                         <div class="row">
                             <div class="col-md-4">
-                                <div class="form-group">
-                                  
+                                <div class="form-group">                              
                                     <div class="input-group date-picker input-daterange" data-date="10/10/2010" data-date-format="dd/mm/yyyy">
                                         <input type="text" style="font-size:22px; color: blue" class="form-control" name="from" placeholder="từ ngày...">
                                         <span class="input-group-addon">
@@ -204,14 +203,13 @@
                             </div>
                             <div class="col-md-5">
                                 <div class="input-group">
-                                    <span class="input-group-addon input-circle-left">
+                                    <span data-bind="click: $root.searchQueryString" class="input-group-addon input-circle-left">
                                         <i class="fa fa-search"></i>
                                     </span>
-                                    <input type="text" autocomplete="on" id="myInput" placeholder="Nhập từ khóa tìm kiếm" class="form-control input-circle-right">
+                                    <input type="text" autocomplete="on" id="myInput" placeholder="Nhập từ khóa tìm kiếm" data-bind="value: $root.QueryString, valueUpdate: 'afterkeydown'"  class="form-control input-circle-right">
                                 </div>
                             </div>
                         </div>
-
                     </div>
                     <div class="form-group">
                         <div class="row">
@@ -239,13 +237,13 @@
                                             <span data-bind="text: Name"> </span>
                                         </div>
                                     </div>
-                                    <div class="portlet-body">
+                                    <div class="portlet-body" >
                                         <div>
-                                            <div >
-                                                <div class="row" id="style-3" style="max-height:550px; overflow:auto;">
-                                                    <div class="col-md-12" data-bind="foreach: $root.Projects">
-                                                        <div class="col-md-3 col-sm-3 col-xs-12" style="padding:0 4px; cursor:pointer;">
-                                                            <div style="position:relative">
+                                            <div data-bind="with: $root.resultProject">
+                                                <div class="row" id="style-3" style="max-height:550px; overflow:auto;" data-bind="click: $root.loadVideoItem">
+                                                    <div class="col-md-12" data-bind="foreach: Projects">
+                                                        <div class="col-md-3 col-sm-3 col-xs-12" style="padding:0 4px; cursor:pointer;" >
+                                                            <div style="position:relative"  data-bind="click: $root.onSelected">
                                                                 <div style="position:absolute; z-index:1001; left:2px; top:4px;border-radius: 4px; padding:4px 4px; text-align:center">
                                                                     <span data-bind="text: moment(ModifyDate()).fromNow()" style="font-weight:600;cursor:pointer;font-size:16px; color:white;background-color:red;opacity: .8; padding: 4px 8px; border-radius: 4px;"></span>
                                                                 </div>
@@ -254,14 +252,15 @@
                                                                 </div>
                                                                 <img class="img-responsive" style="width:100%" data-bind="attr: {src: $root.isImageStorage($data), alt: Name()}">
                                                             </div>
-                                                            <div data-bind="click: $root.onSelected" style="background-color:#050a3e; padding:2px; min-height:60px;">
-                                                                <div style="padding:10px;max-height: 1.1em;position: relative;width:95%" data-bind="click: $root.editProject">
+                                                            <div data-bind="click: $root.onSelected"  style="background-color:#050a3e; padding:2px; min-height:60px;">
+                                                                <div style="padding:10px;max-height: 1.1em;position: relative;width:95%">
                                                                     <a href="#" style="font-size:16px;color:white;content: attr(title);position: absolute;top: 2px; left: 2px;right: 15px;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;" data-bind="text: Name"></a>
                                                                 </div>
-                                                                <div style="position:relative">
-                                                                    <a href="#" style="color:white;content: attr(title);position: absolute;top: 10px; left: 2px;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;" data-bind="text: Category.Name"></a>
+                                                                <div style="position:relative"  data-bind="with: $root.selectdCat">
+                                                                    <a href="#" style="color:white;content: attr(title);position: absolute;top: 10px; left: 2px;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;"  data-bind="text: Name"></a>
                                                                 </div>
                                                                 <div style="background-color:#333; padding:2px; position:absolute; z-index:1001; right:6px; bottom:2px;" data-bind="visible: Selected(), click: $root.onSelected">
+                                                                   
                                                                     <i class="fa fa-check" style="font-size:26px; color:yellow; padding:4px;"></i>
                                                                 </div>
                                                             </div>
@@ -276,7 +275,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-info" data-dismiss="modal"> <i class="fa fa-check"></i> Cập nhật</button>
+                    <button type="button" class="btn btn-info" data-dismiss="modal" data-bind="click: $root.updateToPlaylist"> <i class="fa fa-check" ></i> Cập nhật</button>
                     <button type="button" class="btn btn-danger" data-dismiss="modal"> <i class="fa fa-close"></i> Đóng lại</button>
                 </div>
             </div>

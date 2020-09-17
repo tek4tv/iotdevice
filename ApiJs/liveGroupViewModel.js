@@ -370,6 +370,7 @@
             }
         });
     }
+    
 
     // searching playlist
     self.keySearchPlaylist = ko.observable();
@@ -424,7 +425,7 @@
         //all[index].order = index;
         return getNestedGroup(++index, all);
     };
-    }
+    
 }
 
 $(function () {
