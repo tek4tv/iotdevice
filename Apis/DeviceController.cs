@@ -19,16 +19,21 @@ namespace Tek4TV.Devices.Apis
             var outputs = from item in items
                          select new
                          {
-                             item.IMEI
+                             item.IMEI,
+                             item.ExpDate
                          };
             foreach (var output in outputs )
             {
-                if (output.IMEI == null)
+                if ( output.IMEI == null)
                 {
-                    return false;
+                    return true;
+                }
+                if (output.ExpDate == null)
+                {
+                    return true;
                 }
             }
-            return true;
+            return false;           
         }
         public bool checkExpDate(int id)
         {
@@ -44,10 +49,10 @@ namespace Tek4TV.Devices.Apis
             {
                 if (output.ExpDate < date)
                 {
-                    return false;
+                    return true;
                 }
             }
-            return true;
+            return false;
         }
         [Route("info")]
         public HttpResponseMessage GetInfo()
@@ -86,6 +91,42 @@ namespace Tek4TV.Devices.Apis
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e.Message);
             }
         }
+        [Route("{id}")]
+        public HttpResponseMessage GetById(int id)
+        {
+            try
+            {
+                var items = dbContext.LiveDevices;
+                var output = from item in items
+                             where item.ID == id
+                             select new
+                             {
+                                 item.ID,
+                                 item.IMEI,
+                                 item.LinkStream,
+                                 item.Name,
+                                 item.Description,
+                                 item.LiveCategoryID,
+                                 item.ExpDate
+                             };
+                if (checkIMEI(id) == true)
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "IMEI or ExpDate is null");
+                }
+                else if (checkExpDate(id) == true)
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "ExpDate is expired");
+                }
+                else
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, output, Configuration.Formatters.JsonFormatter);
+                }              
+            }
+            catch(Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e.Message);
+            }
+        }
         [Route("search/{content}")]
         public HttpResponseMessage GetByContent(string content)
         {
@@ -115,24 +156,24 @@ namespace Tek4TV.Devices.Apis
             }
         }
         [Route("category/{id}")]
-        public HttpResponseMessage GetDevice(int Id)
+        public HttpResponseMessage GetDeviceByCategory(int Id)
         {
             try
             {
                 var items = dbContext.LiveDevices;
-                var output = from item in items
-                             where item.LiveCategoryID == Id
-                             select new
-                             {
-                                 item.ID,
-                                 item.IMEI,
-                                 item.LinkStream,
-                                 item.Name,
-                                 item.Description,
-                                 item.LiveCategoryID,
-                                 item.ExpDate
-                             };
-                return Request.CreateResponse(HttpStatusCode.OK, output, Configuration.Formatters.JsonFormatter);
+               var output = from item in items
+                                 where item.LiveCategoryID == Id                                 
+                                 select new
+                                 {
+                                     item.ID,
+                                     item.IMEI,
+                                     item.LinkStream,
+                                     item.Name,
+                                     item.Description,
+                                     item.LiveCategoryID,
+                                     item.ExpDate
+                                 };
+             return Request.CreateResponse(HttpStatusCode.OK, output, Configuration.Formatters.JsonFormatter);               
             }
             catch (Exception e)
             {
