@@ -164,15 +164,12 @@
             function (evt, data) {
                 var nodeId = $('#tree_group0').jstree().get_selected("id")[0].id;
                 var nodeName = $('#tree_group0').jstree().get_selected("id")[0].text;
-                var gr = { ID: nodeId, NAME: nodeName };
-                console.log(gr);
-
+                var gr = { ID: nodeId, NAME: nodeName };              
                 self.selectedDeviceByGroup(self.convertToKoObject(gr));
                 self.loadDeviceByGroup(self.selectedDeviceByGroup());
-
                 self.selectedPlaylistByGroup(self.convertToKoObject(gr));
                 self.loadPlaylistByGroup(self.selectedPlaylistByGroup())
-                console.log()
+              
             }
         );
         
@@ -181,7 +178,6 @@
     self.selectedDeviceByGroup = ko.observable();
     self.getDeviceByGroup = ko.observableArray();
     self.loadDeviceByGroup = function (item) {
-      //  alert(item.ID());
         $.ajax({
             url: '/api/group/device/' + item.ID(),
             type: 'GET',
@@ -206,8 +202,7 @@
             self.devicesAdded.removeAll();
             $.each(data, function (index, item) {
                 self.devicesAdded.push(self.convertToKoObject(item))
-            })
-            
+            })          
         });
     }
     self.selectedDevice = ko.observable();
@@ -251,21 +246,21 @@
             contentType: 'application/json',
             dataType: 'json',
             success: function (data) {
-                $('#save-DeviceByGroup').modal('hide');
+                self.loadDeviceByGroup(self.selectedDeviceByGroup());
+                $('#save-DeviceByGroup').modal('hide');             
                 toastr.success("Đã thêm mới dữ liệu", "Thành công!");
             },
             error: function () {
                 toastr.error("Đã có lỗi", "Thất bại!");
+                $('#save-DeviceByGroup').modal('hide');
             }
         });        
     }
     self.confirmAddDevice = function (item) {
         var result = confirm("Bạn muốn thêm chứ ??");
-        if (result) {
-            self.addDevice(item);
+        if (result) {                   
+            self.addDevice(item); 
             self.loadDeviceByGroup(self.selectedDeviceByGroup());
-            $('#save-DeviceByGroup').modal('hide');
-           
         }
     }
 
@@ -283,7 +278,7 @@
             $.each(data, function (index, item) {
                 self.getPlaylistByGroup.push(self.convertToKoObject(item))
             });
-            console.log(self.getPlaylistByGroup())
+           
         })
     }
 
@@ -334,15 +329,17 @@
             type: 'POST',
             contentType: 'application/json',
             dataType: 'json',
-            success: function (data) {
-                self.loadPlaylistByGroup(self.selectedPlaylistByGroup());
+            success: function (data) {                      
                 $('#save-playlistByGroup').modal('hide');
-                toastr.success("Đã thêm mới dữ liệu", "Thành công!");
+                toastr.success("Đã thêm mới dữ liệu", "Thành công!");                  
+                self.loadPlaylistByGroup(self.selectedPlaylistByGroup());             
             },
             error: function () {
                 toastr.error("Đã có lỗi", "Thất bại!");
+                $('#save-playlistByGroup').modal('hide');
             }
         });
+        
     }
     self.confirmAddPlaylist = function (item) {
         var result = confirm("Bạn muốn thêm chứ ??");

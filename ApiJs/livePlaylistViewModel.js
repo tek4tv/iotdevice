@@ -110,9 +110,10 @@
         self.selectedPlaylist(item);    
         self.loadAddedPlaylist(item)
     }
-    self.modalAddPlaylist = function () {  
-        $('#addPlaylist').modal('show');
+    self.modalAddPlaylist = function () {
         self.loadIotCat();
+        $('#addPlaylist').modal('show');
+        
     }
     self.valueLive = ko.observable();
     self.valueLives = ko.observableArray();
@@ -134,11 +135,10 @@
     }
     self.savePlaylist = function (item) {
         self.valueLives.unshift(self.valueLive())
-        console.log(self.valueLives())
+       
     }
     self.editEvent = function (item) {
-        console.log(item);
-        console.log('ok');
+       
        self.valueLive(item);
        self.mode('editLive');
        $('#addLive').modal('show');
@@ -165,10 +165,7 @@
               dataType: 'json',
               success: function (data) {
                     toastr.success("Đã thêm playlist", "Thành công");
-              },
-              error: function () {
-                    toastr.error("Không thêm thành công", "Thất bại");
-                }
+              }
           })   
     }
     self.loadAddedPlaylist = function (item) {     
