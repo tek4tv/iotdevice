@@ -354,7 +354,7 @@
     self.resultAutoSearch = ko.observableArray();
     self.autoSearchDevice = function () {
         var valueString = self.keySearch();
-        console.log(valueString.length);        
+              
         $.ajax({
             url: "/api/device/search/" + valueString,
             type: 'get',
@@ -363,10 +363,14 @@
                 $.each(data, function (index, item) {
                     self.resultAutoSearch.push(self.convertToKoObject(item))
                 })
-                console.log(self.resultAutoSearch());
+               
             }
         });
     }
+    self.enterSearch = function (d, e) {
+        e.keyCode === 13 && self.autoSearchDevice();
+        return true;
+    };
     
 
     // searching playlist
@@ -383,10 +387,14 @@
                 $.each(data, function (index, item) {
                     self.resultAutoSearchPlaylist.push(self.convertToKoObject(item))
                 })
-                console.log(self.resultAutoSearchPlaylist());
+              
             }
         });
     }
+    self.enterSearchPlaylist = function (d, e) {
+        e.keyCode === 13 && self.autoSearchPlaylist();
+        return true;
+    };
 
 
     function getGroupModel(data) {      
