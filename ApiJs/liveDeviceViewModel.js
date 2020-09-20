@@ -21,8 +21,7 @@
         $.ajax({
             url: '/api/devicecatagory/all',
             type: 'GET'
-        }).done(function (items) {
-          //  self.categories.removeAll();
+        }).done(function (items) {           
             $.each(items, function (index, item) {
                 self.categories.push(self.convertToKoObject(item))
             });
@@ -65,11 +64,11 @@
                 var gr = { ID: nodeId, NAME: nodeName };
                 self.selectedGroup(self.convertToKoObject(gr));
                 self.loadDeviceByGroup(self.selectedGroup());
-                console.log(self.selectedGroup());
+               
             }
         );
     }
-    console.log(self.selectedGroup())
+   
     self.deviceByCategory = ko.observableArray();
     self.selectedDevice = ko.observable();
     self.loadDeviceByGroup = function (item) {
@@ -145,31 +144,29 @@
     }
 
     self.edit = function (item) {
-        self.mode('update');
-        self.selectedDevice(item);
+        self.mode('update');      
         $('#ghiLai').modal('show');
+        self.selectedDevice(item);
+       
     }
-
     self.update = function (item) {
+        var id = item.ID();
         $.ajax({
-            url: '/api/device/' + item.ID(),
-            type: 'PUT',
+            url: '/api/device/' + id,
             data: ko.mapping.toJSON(item),
+            type: 'PUT',
             contentType: 'application/json',
-            dataType: 'json',
-            success: function (data) {
-                $('#ghiLai').modal('hide');
-                self.loadDeviceByGroup(self.selectedGroup());
-                toastr.success("Đã sửa dữ liệu", "Thành công!");
-            },
-            error: function () {
-                toastr.error("Đã có lỗi", "Thất bại!");
-            }
+            dataType: 'json',           
+            
+        }).done( function (data) {
+            self.loadDeviceByGroup(self.selectedGroup());
+            toastr.success("Đã sửa dữ liệu", "Thành công!");
+            $('#ghiLai').modal('hide');
         });
+        $('#ghiLai').modal('hide');
     }
 
     function getGroupModel(data) {
-
         var items = getNestedGroup(0, data);
         //<remove duplicates, for infinity nesting only>   
         for (var i = 0; i < items.length; i++) {

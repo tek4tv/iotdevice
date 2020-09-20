@@ -16,114 +16,117 @@
     <div class="page-toolbar">
     </div>
 </div>
-<div class="portlet box green margin-top-10">
-    <div class="portlet-title">
-        <div class="caption">
-            <i class="fa fa-cogs"></i>Danh sách thiết bị
+<div class="row">
+    <div class="portlet box green margin-top-10">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-cogs"></i>Danh sách thiết bị
+            </div>
+            <div class="tools">
+                <a href="javascript:;" class="collapse">
+                </a>
+                <a href="#portlet-config" data-toggle="modal" class="config">
+                </a>
+                <a href="javascript:;" class="reload">
+                </a>
+                <a href="javascript:;" class="remove">
+                </a>
+            </div>
         </div>
-        <div class="tools">
-            <a href="javascript:;" class="collapse">
-            </a>
-            <a href="#portlet-config" data-toggle="modal" class="config">
-            </a>
-            <a href="javascript:;" class="reload">
-            </a>
-            <a href="javascript:;" class="remove">
-            </a>
-        </div>
-    </div>
-    <div class="portlet-body flip-scroll">
-        <div class="row margin-top-5">
-            <div class="col-md-12">
-                <div class="tabbable-line boxless tabbable-reversed">
-                    <div class="row">
-                        <div class="col-md-3 col-sm-12">
-                            <div class="portlet light bordered">
-                                <div class="portlet-title">
-                                    <div class="caption">
-                                        <i class="fa fa-folder-open"></i>
-                                        <span class="caption-subject bold uppercase">Loại thiết bị</span>
-                                    </div>
-                                </div>
-                                <div class="portlet-body">
-                                    <div class="form-group">
-                                        <div class="visible-md visible-lg">
-                                            <div id="tree_group2" class="tree-demo">
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-9 col-sm-12">
-                            <div class="portlet light bordered">
-                                <div class="note note-info" data-bind="visible: $root.selectedGroup() == null" style="display: none;">
-                                    <h4 class="block"> Thông báo! Hãy chọn loại thiết bị cần cập nhật...</h4>
-                                </div>
-                                <div class="portlet light" data-bind="visible: $root.selectedGroup() != null, with: $root.selectedGroup">
+        <div class="portlet-body">
+            <div class="row margin-top-5">
+                <div class="col-md-12">
+                    <div class="tabbable-line boxless tabbable-reversed">
+                        <div class="row">
+                            <div class="col-md-3 col-sm-12">
+                                <div class="portlet light bordered">
                                     <div class="portlet-title">
-                                        <div class="caption caption-md">
+                                        <div class="caption">
                                             <i class="fa fa-folder-open"></i>
-                                            <span class="caption-subject bold uppercase" data-bind="text: NAME"></span>
+                                            <span class="caption-subject bold uppercase">Loại thiết bị</span>
                                         </div>
                                     </div>
                                     <div class="portlet-body">
-                                        <div class="margin-top-10">
-                                            <a href="#" class="btn btn-sm green" data-bind="click: $root.showModel">Thêm mới <i class="fa fa-plus"></i></a>
-                                        </div>
-                                        <div class="portlet box  margin-top-10">
-                                            <div class="portlet-body flip-scroll">
-                                                <table class="table table-hover">
-                                                    <thead class="flip-content">
-                                                        <tr>
-                                                            <th style="width: 10%; text-align: center;">Tác vụ</th>
-                                                            <th style="width:20%;text-align: center;">Tên</th>
-                                                            <th style="width:35%;text-align: center;">IMEI</th>
-                                                            <th style="width:15%;text-align: center;">Ngày hết hạn</th>
-                                                            <th style="text-align: center;">Thuộc nhóm</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody data-bind="foreach: $root.deviceByCategory">
-                                                        <tr>
-                                                            <td style="text-align: center;">
-                                                                <div class="btn-group">
-                                                                    <i class="fa fa-hand-o-up" style="cursor: pointer; " data-toggle="dropdown"></i>
-                                                                    <ul class="dropdown-menu" role="menu">
-                                                                        <li>
-                                                                            <a href="#" data-bind="click: $root.edit">
-                                                                                Chỉnh sửa
-                                                                            </a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <a href="#" data-bind="click: $root.confirmRemove">
-                                                                                Xóa
-                                                                            </a>
-                                                                        </li>
-                                                                    </ul>
-                                                                </div>
-                                                            </td>
+                                        <div class="portlet-body">
+                                            <div id="style-3" style="max-height:450px; overflow:auto; padding:10px; background-color:hsl(0, 0%, 100%); box-shadow: rgb(69, 133, 191) 4px 5px 15px 5px">
+                                                <div id="tree_group2" class="tree-demo">
 
-                                                            <td style="text-align: center;">
-                                                                <span data-bind="text: Name" style="color:#006666"></span>
-                                                                <br />
-                                                                <span class="text-muted" data-bind="text: Description"></span>
-                                                            </td>
-                                                            <td style="text-align: center;"><span data-bind="text: IMEI"></span></td>
-                                                            <td style="text-align: center;"><span data-bind="text: moment(ExpDate()).fromNow()"></span></td>
-                                                            <td style="text-align: center;">
-                                                                <select class="form-control" data-bind="
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-9 col-sm-12">
+                                <div class="portlet light bordered">
+                                    <div class="note note-info" data-bind="visible: $root.selectedGroup() == null" style="display: none;">
+                                        <h4 class="block"> Thông báo! Hãy chọn loại thiết bị cần cập nhật...</h4>
+                                    </div>
+                                    <div class="portlet light" data-bind="visible: $root.selectedGroup() != null, with: $root.selectedGroup">
+                                        <div class="portlet-title">
+                                            <div class="caption caption-md">
+                                                <i class="fa fa-folder-open"></i>
+                                                <span class="caption-subject bold uppercase" data-bind="text: NAME"></span>
+                                            </div>
+                                        </div>
+                                        <div class="portlet-body">
+                                            <div class="margin-top-10">
+                                                <a href="#" class="btn btn-sm green" data-bind="click: $root.showModel">Thêm mới <i class="fa fa-plus"></i></a>
+                                            </div>
+                                            <div class="portlet box  margin-top-10">
+                                                <div class="portlet-body ">
+                                                    <table class="table table-hover">
+                                                        <thead >
+                                                            <tr>
+                                                                <th style="width: 10%; text-align: center;">Tác vụ</th>
+                                                                <th style="width:20%;text-align: center;">Tên</th>
+                                                                <th style="width:35%;text-align: center;">IMEI</th>
+                                                                <th style="width:15%;text-align: center;">Ngày hết hạn</th>
+                                                                <th style="text-align: center;">Thuộc nhóm</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody data-bind="foreach: $root.deviceByCategory">
+                                                            <tr>
+                                                                <td style="text-align: center;">
+                                                                    <div class="btn-group">
+                                                                        <i class="fa fa-hand-o-up" style="cursor: pointer; " data-toggle="dropdown"></i>
+                                                                        <ul class="dropdown-menu" role="menu">
+                                                                            <li>
+                                                                                <a href="#" data-bind="click: $root.edit">
+                                                                                    Chỉnh sửa
+                                                                                </a>
+                                                                            </li>
+                                                                            <li>
+                                                                                <a href="#" data-bind="click: $root.confirmRemove">
+                                                                                    Xóa
+                                                                                </a>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </td>
+
+                                                                <td style="text-align: center;">
+                                                                    <span data-bind="text: Name" style="color:#006666"></span>
+                                                                    <br />
+                                                                    <span class="text-muted" data-bind="text: Description"></span>
+                                                                </td>
+                                                                <td style="text-align: center;"><span data-bind="text: IMEI"></span></td>
+                                                                <td style="text-align: center;"><span data-bind="text: moment(ExpDate()).fromNow()"></span></td>
+                                                                <td style="text-align: center;">
+                                                                    <select class="form-control" data-bind="
                                                                         value: LiveCategoryID,
                                                                         options: $root.categories ,
                                                                         optionsText: 'Name',
                                                                         optionsValue: 'ID',
                                                                         optionsCaption: 'Chọn danh mục...',">
-                                                                </select>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
+                                                                    </select>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
 
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
