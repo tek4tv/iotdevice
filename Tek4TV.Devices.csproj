@@ -445,6 +445,7 @@
     <Content Include="assets\admin\layout\img\logo-big-white.png" />
     <Content Include="assets\admin\layout\img\logo-big.png" />
     <Content Include="assets\admin\layout\img\logo-invert.png" />
+    <Content Include="assets\admin\layout\img\logo-tek4.png" />
     <Content Include="assets\admin\layout\img\logo.png" />
     <Content Include="assets\admin\layout\img\menu-toggler.png" />
     <Content Include="assets\admin\layout\img\photo1.jpg" />

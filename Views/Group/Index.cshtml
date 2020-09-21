@@ -116,8 +116,8 @@
                                                                                     <span data-bind="text: IMEI"></span>
                                                                                 </td>
                                                                                 <td style="text-align: center;">
-                                                                                    <a data-bind="foreach: $root.groups">
-                                                                                        <span data-bind="text: Name"></span>
+                                                                                    <a data-bind="with: $root.selectedDeviceByGroup">
+                                                                                        <span data-bind="text: NAME"></span>
                                                                                     </a>
                                                                                    
                                                                                 </td>
