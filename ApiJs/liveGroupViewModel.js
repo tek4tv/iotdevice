@@ -362,8 +362,7 @@
                 self.resultAutoSearch.removeAll();
                 $.each(data, function (index, item) {
                     self.resultAutoSearch.push(self.convertToKoObject(item))
-                })
-               
+                })               
             }
         });
     }
