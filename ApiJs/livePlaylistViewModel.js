@@ -23,7 +23,7 @@
     self.playlists = ko.observableArray(); 
     self.getPlaylists= function () {
         $.ajax({
-            url: '/api/playlist/all/' + self.convertToJson(objToken)[0].Name,
+            url: '/api/playlist/all/' + self.convertToJson(objToken)[0].Name +"/" + user,
             type: 'GET'
         }).done(function (items) {
             self.playlists.removeAll();
