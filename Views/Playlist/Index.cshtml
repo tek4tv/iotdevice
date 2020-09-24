@@ -61,7 +61,9 @@
                                                                     </ul>
                                                                 </div>
                                                             </td>
-                                                            <td style="text-align: center;"><a href="#" data-bind="click: $root.loadPlaylistById,text: Name"></a></td>
+                                                            <td style="text-align: center;"><a href="#" data-bind="click: $root.loadPlaylistById,text: Name"></a>
+                                                            
+                                                            </td>
                                                             <td style="text-align: center;"><span data-bind="text: moment(StartPlaylist()).format('DD-MM-YYYY')"> </span></td>
                                                             <td style="text-align: center;"><span data-bind="text:  moment(EndPlaylist()).format('DD-MM-YYYY')"></span></td>
                                                         </tr>
@@ -344,6 +346,8 @@
         </div>
     </div>
 </div>
+ <input  hidden type="text"  value="@Session["role"].ToString()" id="decodeToken"/>
+<input hidden type="text" value="@Session["User"].ToString()" id="user"/>
 @section scripts {  
     <script src="~/ApiJs/livePlaylistViewModel.js"></script>
 }

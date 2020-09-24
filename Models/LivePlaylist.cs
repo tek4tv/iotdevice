@@ -22,7 +22,11 @@ namespace Tek4TV.Devices.Models
         [Column(TypeName = "nvarchar(MAX)")]
         public string Playlist { get; set; }
         public System.Nullable<bool> IsPublish { get; set; }
-        public System.Nullable<bool> IsDelete { get; set; }   
+        public System.Nullable<bool> IsDelete { get; set; }
+        [MaxLength(20)]
+        public string UniqueName { get; set; }
+        [Column(TypeName = "nvarchar(MAX)")]
+        public string role { get; set; }
         public virtual ICollection<LiveGroup> LiveGroups { get; set; }
     }
 }

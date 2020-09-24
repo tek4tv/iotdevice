@@ -11,7 +11,16 @@ namespace Tek4TV.Devices.Controllers
         // GET: Deive
         public ActionResult Index()
         {
-            return View();
+            if (Session["User"] != null)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
+            
         }
     }
 }

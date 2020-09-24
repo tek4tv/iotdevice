@@ -14,17 +14,21 @@
             return JSON.parse(item);
         }
     };
+    var objToken = $('#decodeToken').val();
+    var user = $('#user').val();
+    console.log(objToken)
+    console.log(self.convertToJson(objToken)[0].ID)
+    console.log(self.convertToJson(objToken)[0].Name)
 
     self.playlists = ko.observableArray(); 
     self.getPlaylists= function () {
         $.ajax({
-            url: '/api/playlist/all',
+            url: '/api/playlist/all/' + self.convertToJson(objToken)[0].Name,
             type: 'GET'
         }).done(function (items) {
             self.playlists.removeAll();
             $.each(items, function (index, item) {
-                self.playlists.push(self.convertToKoObject(item))     
-                
+                self.playlists.push(self.convertToKoObject(item))                    
             });       
         });
     }
@@ -42,7 +46,10 @@
         self.showPlaylistInfo();
         $('#ghiLai').modal('show');
     }
+   
     self.create = function (item) {
+        item.role = self.convertToJson(objToken)[0].Name;
+        item.UniqueName = user;
         $.ajax({
             url: '/api/playlist/add',
             type: 'POST',
@@ -55,7 +62,7 @@
                 toastr.success("Đã thêm mới dữ liệu", "Thành công!");
             },
             error: function () {
-                toastr.success("Đã có lỗi", "Thất bại!");
+                toastr.error("Đã có lỗi", "Thất bại!");
             }                
         });
     }
@@ -112,8 +119,7 @@
     }
     self.modalAddPlaylist = function () {
         self.loadIotCat();
-        $('#addPlaylist').modal('show');
-        
+        $('#addPlaylist').modal('show');       
     }
     self.valueLive = ko.observable();
     self.valueLives = ko.observableArray();
@@ -134,11 +140,9 @@
         $('#addLive').modal('show');
     }
     self.savePlaylist = function (item) {
-        self.valueLives.unshift(self.valueLive())
-       
+        self.valueLives.unshift(self.valueLive())    
     }
-    self.editEvent = function (item) {
-       
+    self.editEvent = function (item) {      
        self.valueLive(item);
        self.mode('editLive');
        $('#addLive').modal('show');

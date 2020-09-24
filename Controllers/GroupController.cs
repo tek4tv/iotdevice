@@ -11,7 +11,14 @@ namespace Tek4TV.Devices.Controllers
         // GET: Group
         public ActionResult Index()
         {
-            return View();
+            if (Session["User"] != null)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Login");
+            }
         }
     }
 }
