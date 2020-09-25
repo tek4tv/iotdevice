@@ -32,14 +32,16 @@ namespace Tek4TV.Devices.Apis
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e.Message);
             }
         }
-        [Route("all")]
-        public HttpResponseMessage GetAllPlaylists()
+        [Route("all/{role}/{UniqueName}")]
+        public HttpResponseMessage GetAllPlaylists(string role, string UniqueName)
         {
             try
             {
-                var items = dbContext.LivePlaylists;
-                var output = from item in items
-                             select new
+                var items = dbContext.LivePlaylists;                
+                var output= from item in items
+                            where item.role == role
+                            where item.UniqueName == UniqueName
+                            select new
                              {
                                  item.ID,
                                  item.Name,
@@ -47,8 +49,10 @@ namespace Tek4TV.Devices.Apis
                                  item.EndPlaylist,
                                  item.Playlist,
                                  item.IsPublish,
-                                 item.IsDelete
+                                 item.IsDelete,
+                                 item.UniqueName
                              };
+               
                 return Request.CreateResponse(HttpStatusCode.OK, output, Configuration.Formatters.JsonFormatter);
             }
             catch (Exception e)

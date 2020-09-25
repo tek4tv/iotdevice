@@ -59,8 +59,7 @@ namespace Tek4TV.Devices.Apis
             {
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, e.Message);
             }
-        }
-       
+        }  
         [Route("video")]
         public async Task<HttpResponseMessage> PostVideoAsync(RequestBodyVideo requestBodyVideo)
         {

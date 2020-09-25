@@ -8,6 +8,7 @@ using Tek4TV.Devices.Models;
 
 namespace Tek4TV.Devices.Apis
 {
+    
     [RoutePrefix("api/group")]
     public class GroupController : ApiController
     {

@@ -10,9 +10,14 @@ namespace Tek4TV.Devices.Controllers
     {
         public ActionResult Index()
         {
-            ViewBag.Title = "Home Page";
-
-            return View();
+            if (Session["User"] != null)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Index","Login");
+            }
         }
     }
 }

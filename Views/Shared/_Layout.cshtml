@@ -38,7 +38,25 @@
             <a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse">
             </a>         
             <div class="top-menu">
-
+                <ul class="nav navbar-nav pull-right">                  
+                    <li class="dropdown dropdown-user">
+                        <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                            <img alt="" class="img-circle" src="../../assets/admin/layout/img/avatar3_small.jpg" />
+                            <span class="username username-hide-on-mobile">
+                                @Session["User"].ToString()
+                            </span>
+                            <i class="fa fa-angle-down"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-default">
+                            
+                            <li>
+                                <a href="/Login/Logout">
+                                    <i class="icon-key"></i> Đăng xuất
+                                </a>
+                            </li>
+                        </ul>
+                    </li>                
+                </ul>
             </div>
         </div>    
     </div>  
