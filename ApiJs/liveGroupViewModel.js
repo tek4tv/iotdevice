@@ -269,7 +269,7 @@
     self.getPlaylistByGroup = ko.observableArray();
     self.loadPlaylistByGroup = function (item) {          
         $.ajax({
-            url: '/api/group/playlist/' + item.ID(),
+            url: '/api/group/playlist/'+self.convertToJson(objToken)[0].Name +"/" + item.ID(),
             type: 'GET',
             contentType: 'application/json',
             dataType: 'json'
@@ -358,7 +358,7 @@
         var valueString = self.keySearch();
               
         $.ajax({
-            url: "/api/device/search/" + valueString,
+            url: "/api/device/search/" +  valueString,
             type: 'get',
             success: function (data) {
                 self.resultAutoSearch.removeAll();
@@ -381,7 +381,7 @@
         var valueString = self.keySearchPlaylist();
        
         $.ajax({
-            url: "/api/playlist/search/" + valueString,
+            url: "/api/playlist/search/" + self.convertToJson(objToken)[0].Name + "/" + valueString,
             type: 'get',
             success: function (data) {
                 self.resultAutoSearchPlaylist.removeAll();

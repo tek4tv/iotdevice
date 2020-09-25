@@ -211,13 +211,14 @@ namespace Tek4TV.Devices.Apis
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e.Message);
             }
         }
-        [Route("playlist/{id}")]
-        public HttpResponseMessage GetPlaylistByGroup(int Id)
+        [Route("playlist/{role}/{id}")]
+        public HttpResponseMessage GetPlaylistByGroup(int Id, string role)
         {
             try
             {
                 var output = from pl in dbContext.LivePlaylists
                              where pl.LiveGroups.Any(g => g.ID == Id)
+                             where pl.role == role
                              select new
                              {
                                  pl.ID,

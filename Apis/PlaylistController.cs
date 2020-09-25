@@ -60,13 +60,14 @@ namespace Tek4TV.Devices.Apis
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e.Message);
             }
         }
-        [Route("search/{content}")]
-        public HttpResponseMessage GetByContent(string content)
+        [Route("search/{role}/{content}")]
+        public HttpResponseMessage GetByContent(string content, string role)
         {
             try
             {
                 var items = dbContext.LivePlaylists;
                 var output = from item in items
+                             where item.role == role
                              select new
                              {
                                  item.ID,
