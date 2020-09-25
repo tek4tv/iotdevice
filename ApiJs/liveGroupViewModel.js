@@ -13,7 +13,7 @@
             return JSON.parse(item);
         }
     };
-
+   
     // live group
     self.selectedGroup = ko.observable();
     self.groups = ko.observableArray();
@@ -308,10 +308,13 @@
     self.showModelPlaylist = function () {
         $('#save-playlistByGroup').modal('show');
     } 
+    var objToken = $('#decodeToken').val();
+    var user = $('#user').val();
     self.playlists = ko.observableArray();
+
     self.getPlaylists = function () {
         $.ajax({
-            url: '/api/playlist/all',
+            url: '/api/playlist/all/' + self.convertToJson(objToken)[0].Name + "/" + user,
             type: 'GET'
         }).done(function (items) {
             self.playlists.removeAll();
@@ -344,8 +347,7 @@
     self.confirmAddPlaylist = function (item) {
         var result = confirm("Bạn muốn thêm chứ ??");
         if (result) {
-            self.addPlaylist(item);
-           // self.loadDeviceByGroup(self.selectedDeviceByGroup());
+            self.addPlaylist(item);         
         }
     }
 
