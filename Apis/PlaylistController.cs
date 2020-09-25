@@ -32,15 +32,15 @@ namespace Tek4TV.Devices.Apis
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e.Message);
             }
         }
-        [Route("all/{role}/{UniqueName}")]
-        public HttpResponseMessage GetAllPlaylists(string role, string UniqueName)
+        [Route("all/{role}")]
+        public HttpResponseMessage GetAllPlaylists(string role)
         {
             try
             {
                 var items = dbContext.LivePlaylists;                
                 var output= from item in items
                             where item.role == role
-                            where item.UniqueName == UniqueName
+                           
                             select new
                              {
                                  item.ID,

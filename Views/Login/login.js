@@ -38,7 +38,10 @@
             }
         })
     }
-    
+    self.enterSubmit = function (d, e) {
+        e.keyCode === 13 && self.submit();
+        return true;
+    };
   
 }
 $(function () {

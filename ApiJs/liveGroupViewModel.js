@@ -314,7 +314,7 @@
 
     self.getPlaylists = function () {
         $.ajax({
-            url: '/api/playlist/all/' + self.convertToJson(objToken)[0].Name + "/" + user,
+            url: '/api/playlist/all/' + self.convertToJson(objToken)[0].Name ,
             type: 'GET'
         }).done(function (items) {
             self.playlists.removeAll();
