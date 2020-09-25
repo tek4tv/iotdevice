@@ -50,7 +50,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>                                   
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -112,14 +112,14 @@
                                                                                     <span class="text-muted" data-bind="text: Description"></span>
                                                                                 </td>
                                                                                 <td style="text-align: center;">
-                                                                                   
+
                                                                                     <span data-bind="text: IMEI"></span>
                                                                                 </td>
                                                                                 <td style="text-align: center;">
                                                                                     <a data-bind="with: $root.selectedDeviceByGroup">
                                                                                         <span data-bind="text: NAME"></span>
                                                                                     </a>
-                                                                                   
+
                                                                                 </td>
                                                                                 <td style="text-align: center;">
                                                                                     <span data-bind="text: moment(ExpDate()).format('DD/MM/YYYY')"></span>
@@ -464,6 +464,8 @@
         </div>
     </div>
 </div>
+<input hidden type="text" value="@Session["role"].ToString()" id="decodeToken" />
+<input hidden type="text" value="@Session["User"].ToString()" id="user" />
 @section scripts {
     <script src="~/ApiJs/liveGroupViewModel.js"></script>
 }
