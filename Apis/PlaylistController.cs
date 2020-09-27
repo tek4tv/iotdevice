@@ -65,6 +65,7 @@ namespace Tek4TV.Devices.Apis
         {
             try
             {
+               
                 var items = dbContext.LivePlaylists;
                 var output = from item in items
                              where item.role == role

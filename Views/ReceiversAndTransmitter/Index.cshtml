@@ -1,0 +1,115 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="fa fa-home"></i>
+            <a href="#">Hệ thống</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a href="#">Nguồn tiếp sóng</a>
+        </li>
+    </ul>
+    <div class="page-toolbar">
+    </div>
+</div>
+<div class="row">
+    <div class="portlet box green margin-top-10">
+        <div class="portlet-body ">
+            <div class="row margin-top-5">
+                <div class="col-md-12">
+                    <div class="tabbable-line boxless tabbable-reversed">
+                        <div class="row">
+                            <div class="col-md-4 col-sm-12">
+                                <div class="portlet light bordered">
+                                    <div class="portlet-title">
+                                        <div class="caption">Các nguồn tiếp sóng</div>
+                                    </div>
+                                    <div class="portlet-body">
+                                       
+                                        <div class="table-responsive">
+                                            <table class="table table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width: 5%; text-align: center;">#</th>
+                                                        <th style="width:25%;text-align: center;">Tên</th>                                                     
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td style="text-align: center;">1</td>
+                                                        <td style="text-align: center;"><a href="#">IP</a></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="text-align: center;">2</td>
+                                                        <td style="text-align: center;"><a href="#">FM</a></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="text-align: center;">3</td>
+                                                        <td style="text-align: center;"><a href="#">AM</a></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-8 col-sm-12" data-bind="with: $root.selectedPlaylist">
+                                <div class="portlet light bordered">
+                                    <div class="portlet-title">
+                                        <div class="caption">
+                                            <i class="icon-layers"></i>
+                                            <span data-bind="text: Name"></span>
+                                        </div>
+                                    </div>
+                                    <div class="portlet-body">
+                                        <div class="form-group">
+                                            <button data-bind="click: $root.addNewPlaylist" class="btn btn-sm btn-danger" type="button"><i class="fa fa-check"></i> <span>Lưu chỉnh sửa</span></button>
+                                            <button data-bind="click: $root.modalAddPlaylist" class="btn btn-sm btn-info" type="button"><i class="fa fa-plus"></i> <span>Thêm mới</span></button>
+                                            <button data-bind="click: $root.modalAddLive" class="btn btn-sm btn-info" type="button"><i class="fa fa-rss"></i> <span>Thêm Live</span></button>
+                                        </div>
+                                        <div class=" table-responsive">
+                                            <table class="table table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width:5%">#</th>
+                                                        <th style="width:45%">Tên chương trình</th>
+                                                        <th style="width:10%">Thời lượng</th>
+                                                        <th style="width:10%">Bắt đầu</th>
+                                                        <th style="width:10%">Kết thúc</th>
+                                                        <th style="width:20%">#</th>
+                                                    </tr>
+                                                </thead>
+
+                                                <tbody data-bind="foreach: $root.valueLives">
+                                                    <tr>
+                                                        <td data-bind="text: Index "></td>
+                                                        <td data-bind="text: Name "></td>
+                                                        <td data-bind="text: Duration"></td>
+                                                        <td data-bind="text: Start"></td>
+                                                        <td data-bind="text: End"></td>
+                                                        <td>
+                                                            <a href="#" class="btn btn-sm green" data-bind="click: $root.play"><i class="fa fa-play"></i></a>
+                                                            <a href="#" class="btn btn-sm green" data-bind="click: $root.editEvent"><i class="fa fa-edit"></i></a>
+                                                            <a href="#" class="btn btn-sm grey" data-bind="click: $root.removeEvent"><i class="fa  fa-trash-o"></i></a>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

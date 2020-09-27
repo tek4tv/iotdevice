@@ -62,8 +62,18 @@
                         Playlist = c.String(),
                         IsPublish = c.Boolean(),
                         IsDelete = c.Boolean(),
-                        UniqueName = c.String(),
+                        UniqueName = c.String(maxLength: 20),
                         role = c.String(),
+                    })
+                .PrimaryKey(t => t.ID);
+            
+            CreateTable(
+                "dbo.ReceiverTransmitters",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        Name = c.String(),
+                        InputSource = c.String(),
                     })
                 .PrimaryKey(t => t.ID);
             
@@ -109,6 +119,7 @@
             DropIndex("dbo.LiveDevices", new[] { "LiveCategoryID" });
             DropTable("dbo.LiveGroupPlaylist");
             DropTable("dbo.LiveGroupDevice");
+            DropTable("dbo.ReceiverTransmitters");
             DropTable("dbo.LivePlaylists");
             DropTable("dbo.LiveGroups");
             DropTable("dbo.LiveDevices");

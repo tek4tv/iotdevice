@@ -15,6 +15,7 @@ namespace Tek4TV.Devices.Models
         public DbSet<LiveGroup> LiveGroups { get; set; }
         public DbSet<LivePlaylist> LivePlaylists { get; set; }
         public DbSet<LiveDeviceCategory> liveDeviceCategories { get; set; }
+        public DbSet<ReceiverTransmitter> receiverTransmitter { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
