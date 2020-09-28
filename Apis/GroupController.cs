@@ -41,7 +41,8 @@ namespace Tek4TV.Devices.Apis
                                  item.ParentID,
                                  item.OrderID,
                                  item.IsShow,
-                                 item.Icon
+                                 item.Icon,
+                                 item.InputSource
                              };
                 return Request.CreateResponse(HttpStatusCode.OK, output, Configuration.Formatters.JsonFormatter);
             }
@@ -66,7 +67,8 @@ namespace Tek4TV.Devices.Apis
                                  item.ParentID,
                                  item.OrderID,
                                  item.IsShow,
-                                 item.Icon
+                                 item.Icon,
+                                 item.InputSource
                              };
                 return Request.CreateResponse(HttpStatusCode.OK, output, Configuration.Formatters.JsonFormatter);
             }
@@ -211,13 +213,14 @@ namespace Tek4TV.Devices.Apis
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e.Message);
             }
         }
-        [Route("playlist/{id}")]
-        public HttpResponseMessage GetPlaylistByGroup(int Id)
+        [Route("playlist/{role}/{id}")]
+        public HttpResponseMessage GetPlaylistByGroup(int Id, string role)
         {
             try
             {
                 var output = from pl in dbContext.LivePlaylists
                              where pl.LiveGroups.Any(g => g.ID == Id)
+                             where pl.role == role
                              select new
                              {
                                  pl.ID,
@@ -273,6 +276,21 @@ namespace Tek4TV.Devices.Apis
             catch (Exception e)
             {
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e.Message);
+            }
+        }
+        [Route("add/InputSource/{id}")]
+        public HttpResponseMessage PutInputSource(LiveGroup liveGroup, int id)
+        {
+            try
+            {
+                var item = dbContext.LiveGroups.FirstOrDefault(m => m.ID == id);               
+                    item.InputSource = liveGroup.InputSource;                 
+                    dbContext.SaveChanges();
+                    return Request.CreateResponse(HttpStatusCode.OK, item);               
+            }
+            catch (Exception e)
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, e.Message);
             }
         }
     }

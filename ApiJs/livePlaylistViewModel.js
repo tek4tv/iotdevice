@@ -16,14 +16,10 @@
     };
     var objToken = $('#decodeToken').val();
     var user = $('#user').val();
-    console.log(objToken)
-    console.log(self.convertToJson(objToken)[0].ID)
-    console.log(self.convertToJson(objToken)[0].Name)
-
     self.playlists = ko.observableArray(); 
     self.getPlaylists= function () {
         $.ajax({
-            url: '/api/playlist/all/' + self.convertToJson(objToken)[0].Name +"/" + user,
+            url: '/api/playlist/all/' + self.convertToJson(objToken)[0].Name ,
             type: 'GET'
         }).done(function (items) {
             self.playlists.removeAll();
@@ -185,7 +181,6 @@
            
         });
     }
-
     // cal api iot
     self.listIotCats = ko.observableArray();
     self.loadIotCat = function () {
@@ -320,7 +315,6 @@
             });          
         })
     }
-
     
 
     self.isImageStorage = function (item) {

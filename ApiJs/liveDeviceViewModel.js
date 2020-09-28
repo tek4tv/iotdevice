@@ -199,6 +199,23 @@
         //all[index].order = index;
         return getNestedGroup(++index, all);
     };
+    $(function () {
+        var connection = $.hubConnection("https://iot.tek4tv.vn");
+        var hub = connection.createHubProxy("echo");
+        hub.on("AddMessage", Method);
+        connection.start({ jsonp: true })
+            .done(function () {
+                console.log('connected');
+                hub.say("success?");
+            })
+            .fail(function (a) {
+                console.log('not connected' + a);
+            });
+    });
+
+    function Method(messageFromHub) {
+        alert(messageFromHub);
+    }
 }
 
 $(function () {
@@ -208,3 +225,4 @@ $(function () {
 
     ko.applyBindings(deviceModel);
 });
+

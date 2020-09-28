@@ -7,13 +7,13 @@ namespace Tek4TV.Devices.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class InitDatabase : IMigrationMetadata
+    public sealed partial class InitialCreate : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(InitDatabase));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(InitialCreate));
         
         string IMigrationMetadata.Id
         {
-            get { return "202009240834253_InitDatabase"; }
+            get { return "202009280911341_InitialCreate"; }
         }
         
         string IMigrationMetadata.Source
