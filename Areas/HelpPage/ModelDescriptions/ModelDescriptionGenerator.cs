@@ -28,18 +28,6 @@ namespace Tek4TV.Devices.Areas.HelpPage.ModelDescriptions
                     return String.Format(CultureInfo.CurrentCulture, "Range: inclusive between {0} and {1}", range.Minimum, range.Maximum);
                 }
             },
-            { typeof(MaxLengthAttribute), a =>
-                {
-                    MaxLengthAttribute maxLength = (MaxLengthAttribute)a;
-                    return String.Format(CultureInfo.CurrentCulture, "Max length: {0}", maxLength.Length);
-                }
-            },
-            { typeof(MinLengthAttribute), a =>
-                {
-                    MinLengthAttribute minLength = (MinLengthAttribute)a;
-                    return String.Format(CultureInfo.CurrentCulture, "Min length: {0}", minLength.Length);
-                }
-            },
             { typeof(StringLengthAttribute), a =>
                 {
                     StringLengthAttribute strLength = (StringLengthAttribute)a;

@@ -13,15 +13,10 @@ namespace Tek4TV.Devices.Models
         {
             this.LiveGroups = new HashSet<LiveGroup>();
         }
-        [Key]
         public int ID { get; set; }
-        [Column(TypeName = "nvarchar(MAX)")]
         public string  IMEI { get; set; }
-        [Column(TypeName = "nvarchar(MAX)")]
         public string LinkStream { get; set; }
-        [Column(TypeName = "nvarchar(MAX)")]
         public string Name { get; set; }
-        [Column(TypeName = "nvarchar(MAX)")]
         public string Description { get; set; }
         public int LiveCategoryID { get; set; }      
         public System.Nullable<DateTime> ExpDate { get; set; }     

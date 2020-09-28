@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Castle.MicroKernel.SubSystems.Conversion;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -13,19 +14,14 @@ namespace Tek4TV.Devices.Models
         {
             this.LiveGroups = new HashSet<LiveGroup>();
         }
-        [Key]
         public int ID { get; set; }
-        [Column(TypeName = "nvarchar(MAX)")]
         public string Name { get; set; }
         public System.Nullable<DateTime> StartPlaylist { get; set; }
         public System.Nullable<DateTime> EndPlaylist { get; set; }
-        [Column(TypeName = "nvarchar(MAX)")]
         public string Playlist { get; set; }
         public System.Nullable<bool> IsPublish { get; set; }
         public System.Nullable<bool> IsDelete { get; set; }
-        [MaxLength(20)]
         public string UniqueName { get; set; }
-        [Column(TypeName = "nvarchar(MAX)")]
         public string role { get; set; }
         public virtual ICollection<LiveGroup> LiveGroups { get; set; }
     }
