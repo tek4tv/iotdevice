@@ -3,7 +3,7 @@
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class InitDatabase : DbMigration
+    public partial class InitialCreate : DbMigration
     {
         public override void Up()
         {
@@ -48,6 +48,7 @@
                         OrderID = c.Int(),
                         IsShow = c.Boolean(),
                         Icon = c.String(maxLength: 500),
+                        InputSource = c.String(),
                     })
                 .PrimaryKey(t => t.ID);
             
@@ -68,14 +69,16 @@
                 .PrimaryKey(t => t.ID);
             
             CreateTable(
-                "dbo.ReceiverTransmitters",
+                "dbo.SiteMapGroups",
                 c => new
                     {
                         ID = c.Int(nullable: false, identity: true),
-                        Name = c.String(),
-                        InputSource = c.String(),
+                        GroupID = c.Int(nullable: false),
+                        SiteMapID = c.Int(nullable: false),
                     })
-                .PrimaryKey(t => t.ID);
+                .PrimaryKey(t => t.ID)
+                .ForeignKey("dbo.LiveGroups", t => t.GroupID, cascadeDelete: true)
+                .Index(t => t.GroupID);
             
             CreateTable(
                 "dbo.LiveGroupDevice",
@@ -107,6 +110,7 @@
         
         public override void Down()
         {
+            DropForeignKey("dbo.SiteMapGroups", "GroupID", "dbo.LiveGroups");
             DropForeignKey("dbo.LiveGroupPlaylist", "GroupID", "dbo.LiveGroups");
             DropForeignKey("dbo.LiveGroupPlaylist", "PlaylistID", "dbo.LivePlaylists");
             DropForeignKey("dbo.LiveGroupDevice", "DeviceID", "dbo.LiveDevices");
@@ -116,10 +120,11 @@
             DropIndex("dbo.LiveGroupPlaylist", new[] { "PlaylistID" });
             DropIndex("dbo.LiveGroupDevice", new[] { "DeviceID" });
             DropIndex("dbo.LiveGroupDevice", new[] { "GroupID" });
+            DropIndex("dbo.SiteMapGroups", new[] { "GroupID" });
             DropIndex("dbo.LiveDevices", new[] { "LiveCategoryID" });
             DropTable("dbo.LiveGroupPlaylist");
             DropTable("dbo.LiveGroupDevice");
-            DropTable("dbo.ReceiverTransmitters");
+            DropTable("dbo.SiteMapGroups");
             DropTable("dbo.LivePlaylists");
             DropTable("dbo.LiveGroups");
             DropTable("dbo.LiveDevices");

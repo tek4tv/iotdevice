@@ -17,7 +17,7 @@ namespace Tek4TV.Devices.Controllers
             }
             else
             {
-                return RedirectToAction("Login");
+                return RedirectToAction("Index","Login");
             }
         }
     }

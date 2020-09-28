@@ -41,7 +41,8 @@ namespace Tek4TV.Devices.Apis
                                  item.ParentID,
                                  item.OrderID,
                                  item.IsShow,
-                                 item.Icon
+                                 item.Icon,
+                                 item.InputSource
                              };
                 return Request.CreateResponse(HttpStatusCode.OK, output, Configuration.Formatters.JsonFormatter);
             }
@@ -66,7 +67,8 @@ namespace Tek4TV.Devices.Apis
                                  item.ParentID,
                                  item.OrderID,
                                  item.IsShow,
-                                 item.Icon
+                                 item.Icon,
+                                 item.InputSource
                              };
                 return Request.CreateResponse(HttpStatusCode.OK, output, Configuration.Formatters.JsonFormatter);
             }
@@ -274,6 +276,21 @@ namespace Tek4TV.Devices.Apis
             catch (Exception e)
             {
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e.Message);
+            }
+        }
+        [Route("add/InputSource/{id}")]
+        public HttpResponseMessage PutInputSource(LiveGroup liveGroup, int id)
+        {
+            try
+            {
+                var item = dbContext.LiveGroups.FirstOrDefault(m => m.ID == id);               
+                    item.InputSource = liveGroup.InputSource;                 
+                    dbContext.SaveChanges();
+                    return Request.CreateResponse(HttpStatusCode.OK, item);               
+            }
+            catch (Exception e)
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, e.Message);
             }
         }
     }

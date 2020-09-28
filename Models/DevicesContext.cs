@@ -14,8 +14,8 @@ namespace Tek4TV.Devices.Models
         public DbSet<LiveDevice> LiveDevices { get; set; }
         public DbSet<LiveGroup> LiveGroups { get; set; }
         public DbSet<LivePlaylist> LivePlaylists { get; set; }
-        public DbSet<LiveDeviceCategory> liveDeviceCategories { get; set; }
-        public DbSet<ReceiverTransmitter> receiverTransmitter { get; set; }
+        public DbSet<LiveDeviceCategory> liveDeviceCategories { get; set; }  
+        public DbSet<SiteMapGroup> SiteMapGroups { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -23,6 +23,11 @@ namespace Tek4TV.Devices.Models
                 .HasRequired<LiveDeviceCategory>(s => s.LiveDeviceCategory)
                 .WithMany(g => g.LiveDevices)
                 .HasForeignKey<int>(s => s.LiveCategoryID);
+
+            modelBuilder.Entity<SiteMapGroup>()
+               .HasRequired<LiveGroup>(s => s.LiveGroup)
+               .WithMany(g => g.SiteMapGroups)
+               .HasForeignKey<int>(s => s.GroupID);
 
             modelBuilder.Entity<LiveGroup>()
                 .HasMany<LiveDevice>(s => s.LiveDevices)

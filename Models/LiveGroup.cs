@@ -25,7 +25,10 @@ namespace Tek4TV.Devices.Models
         public System.Nullable<bool> IsShow { get; set; }      
         [MaxLength(500)]
         public string Icon { get; set; }
+        [Column(TypeName = "nvarchar(MAX)")]
+        public string InputSource { get; set; }
         public virtual ICollection<LiveDevice> LiveDevices { get; set; }
         public virtual ICollection<LivePlaylist> LivePlaylists { get; set; }
+        public ICollection<SiteMapGroup> SiteMapGroups { get; set; }
     }
 }

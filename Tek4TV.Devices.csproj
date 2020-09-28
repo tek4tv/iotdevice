@@ -165,7 +165,7 @@
     <Compile Include="Apis\GroupController.cs" />
     <Compile Include="Apis\IOTController.cs" />
     <Compile Include="Apis\PlaylistController.cs" />
-    <Compile Include="Apis\ReceiverTransmitterController.cs" />
+    <Compile Include="Apis\SitemapGroupController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -203,14 +203,13 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\PlaylistController.cs" />
-    <Compile Include="Controllers\ReceiversAndTransmitterController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202009240834253_InitDatabase.cs" />
-    <Compile Include="Migrations\202009240834253_InitDatabase.designer.cs">
-      <DependentUpon>202009240834253_InitDatabase.cs</DependentUpon>
+    <Compile Include="Migrations\202009280911341_InitialCreate.cs" />
+    <Compile Include="Migrations\202009280911341_InitialCreate.designer.cs">
+      <DependentUpon>202009280911341_InitialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\DevicesContext.cs" />
@@ -218,7 +217,7 @@
     <Compile Include="Models\LiveDeviceCategory.cs" />
     <Compile Include="Models\LiveGroup.cs" />
     <Compile Include="Models\LivePlaylist.cs" />
-    <Compile Include="Models\ReceiverTransmitter.cs" />
+    <Compile Include="Models\SiteMapGroup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RequestBody\RequestBodyLogin.cs" />
     <Compile Include="Startup.cs" />
@@ -4978,7 +4977,6 @@
     <Content Include="Views\Playlist\Index.cshtml" />
     <Content Include="Views\Shared\_Login.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
-    <Content Include="Views\ReceiversAndTransmitter\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -5013,8 +5011,8 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202009240834253_InitDatabase.resx">
-      <DependentUpon>202009240834253_InitDatabase.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202009280911341_InitialCreate.resx">
+      <DependentUpon>202009280911341_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

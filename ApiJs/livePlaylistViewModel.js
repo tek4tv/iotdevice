@@ -181,7 +181,6 @@
            
         });
     }
-
     // cal api iot
     self.listIotCats = ko.observableArray();
     self.loadIotCat = function () {
@@ -316,7 +315,6 @@
             });          
         })
     }
-
     
 
     self.isImageStorage = function (item) {

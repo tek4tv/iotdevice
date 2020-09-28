@@ -7,13 +7,13 @@ using System.Web;
 
 namespace Tek4TV.Devices.Models
 {
-    public class ReceiverTransmitter
+    public class SiteMapGroup
     {
-        [Key]
+        [Key]       
         public int ID { get; set; }
-        [Column(TypeName = "nvarchar(MAX)")]
-        public string Name { get; set; }
-        [Column(TypeName = "nvarchar(MAX)")]
-        public string InputSource { get; set; }
+        public int GroupID { get; set; }
+        public int SiteMapID { get; set; }
+        public LiveGroup LiveGroup { get; set; }
+       
     }
 }
