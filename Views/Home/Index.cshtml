@@ -97,7 +97,6 @@
         </div>
     </div>
     <div id="ghiLai" class="modal fade" data-bind="with: selectedCategory">
-
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -139,11 +138,13 @@
                                     <label>Mô tả</label>
                                     <textarea class="form-control" data-bind="value: Descripton" rows="3"></textarea>
                                 </div>
+                               
                                 <div class="form-check">
                                     <label class="form-check-label">Trạng thái</label>
-                                    <div>
-                                        <input type="checkbox" class="form-check-input" data-bind="checked: IsShow">
-                                        <label class="form-check-label">Hoạt động</label>
+                                    <div class="checker">
+                                        <span data-bind="css:{checked: IsShow}" class="">
+                                            <input type="checkbox" class="form-control" data-bind="checked: IsShow">
+                                        </span>
                                     </div>
                                 </div>
                             </div>

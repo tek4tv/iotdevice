@@ -37,22 +37,17 @@ namespace Tek4TV.Devices.Apis
         {
             try
             {
-                var items = dbContext.LivePlaylists;                
-                var output= from item in items
-                            where item.role == role
-                           
-                            select new
-                             {
-                                 item.ID,
-                                 item.Name,
-                                 item.StartPlaylist,
-                                 item.EndPlaylist,
-                                 item.Playlist,
-                                 item.IsPublish,
-                                 item.IsDelete,
-                                 item.UniqueName
-                             };
-               
+                var output = dbContext.LivePlaylists.AsQueryable().Where(m => m.role == role).Select(item => new
+                {
+                    item.ID,
+                    item.Name,
+                    item.StartPlaylist,
+                    item.EndPlaylist,                    
+                    item.IsPublish,
+                    item.IsDelete,
+                    item.UniqueName,
+                    item.Playlist
+                });     
                 return Request.CreateResponse(HttpStatusCode.OK, output, Configuration.Formatters.JsonFormatter);
             }
             catch (Exception e)
@@ -64,8 +59,7 @@ namespace Tek4TV.Devices.Apis
         public HttpResponseMessage GetByContent(string content, string role)
         {
             try
-            {
-               
+            {              
                 var items = dbContext.LivePlaylists;
                 var output = from item in items
                              where item.role == role
@@ -95,20 +89,33 @@ namespace Tek4TV.Devices.Apis
         {
             try
             {
-                var items = dbContext.LivePlaylists;
-                var output = from item in items
-                             where item.ID == Id
-                             select new
+               
+                var item = dbContext.LivePlaylists.Where(m => m.ID == Id).FirstOrDefault();
+                var output =  new
                              {
                                  item.ID,
                                  item.Name,
                                  item.StartPlaylist,
                                  item.EndPlaylist,
-                                 item.Playlist,
+                                 item.Playlist ,
                                  item.IsPublish,
                                  item.IsDelete
                              };
                 return Request.CreateResponse(HttpStatusCode.OK, output, Configuration.Formatters.JsonFormatter);
+            }
+            catch (Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e.Message);
+            }
+        }
+        [Route("detail/{id}")]
+        public HttpResponseMessage GetPlaylistDetail(int Id)
+        {
+            try
+            {
+                var item = dbContext.LivePlaylists.Where(m => m.ID == Id).FirstOrDefault();
+                var  playlist = JsonConvert.DeserializeObject<dynamic>(item.Playlist);
+                return Request.CreateResponse(HttpStatusCode.OK, (Object)playlist, Configuration.Formatters.JsonFormatter);
             }
             catch (Exception e)
             {

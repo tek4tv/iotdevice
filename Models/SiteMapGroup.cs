@@ -9,7 +9,7 @@ namespace Tek4TV.Devices.Models
 {
     public class SiteMapGroup
     {
-        [Key]       
+            
         public int ID { get; set; }
         public int GroupID { get; set; }
         public int SiteMapID { get; set; }

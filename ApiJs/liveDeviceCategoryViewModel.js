@@ -1,7 +1,7 @@
 ﻿var DeviceCategoryModel = function () {
     var self = this;
     self.mode = ko.observable();
-  
+    self.IsShow = ko.observable(true)
     self.convertToKoObject = function (data) {
         var newObj = ko.mapping.fromJS(data);      
         return newObj;

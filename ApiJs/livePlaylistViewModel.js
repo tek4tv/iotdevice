@@ -154,9 +154,10 @@
             data.push({
                 Index: obj.Index, Category: { ID: obj.Category.ID(), Name: obj.Category.Name() }, ID: obj.ID(), Name: obj.Name, Duration: obj.Duration(), Path: obj.Path(), Start: obj.Start, End: obj.End, Edit: false
             });
-        })        
-        var payload = { ID: item.ID(), Playlist: ko.toJSON(data)};       
-        item.Playlist = JSON.stringify(payload);     
+        })
+       // var payload = { ID: item.ID(), Playlist: ko.toJSON() };       
+        item.Playlist = ko.toJSON(data);     
+        console.log(data)
           $.ajax({
               url: "/api/playlist/"+id,
               type: 'PUT',
@@ -174,7 +175,8 @@
             type: 'GET'
         }).done(function (data) {
             self.valueLives.removeAll();
-            var items = self.convertToJson(self.convertToJson(data[0].Playlist).Playlist);
+            var items = self.convertToJson(data.Playlist);
+            console.log(items)
             $.each(items, function (index, item) {
                 self.valueLives.push(self.convertToKoObject(item))
             }); 

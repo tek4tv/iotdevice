@@ -55,22 +55,7 @@ namespace Tek4TV.Devices.Apis
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e.Message);
             }
         }
-        //[Route("add")]
-        //public HttpResponseMessage PostElement(SiteMapGroup siteMapGroup)
-        //{
-        //    try
-        //    {        
 
-        //        dbContext.SiteMapGroups.Add(siteMapGroup);
-        //        dbContext.SaveChanges();
-
-        //        return Request.CreateResponse(HttpStatusCode.OK);
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        return Request.CreateResponse(HttpStatusCode.InternalServerError, e.Message);
-        //    }
-        //}
 
         [Route("add")]
         public HttpResponseMessage PostAdd(dynamic obj)
