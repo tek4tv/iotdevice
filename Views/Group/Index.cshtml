@@ -554,9 +554,10 @@
                             </div>
                             <div class="form-check">
                                 <label class="form-check-label">Trạng thái</label>
-                                <div>
-                                    <input type="checkbox" class="form-check-input" data-bind="checked: IsSchedule">
-                                    <label class="form-check-label">Hoạt động</label>
+                                <div class="checker">
+                                    <span data-bind="css:{checked: IsSchedule}" class="">
+                                        <input type="checkbox" class="form-control" data-bind="checked: IsSchedule">
+                                    </span>
                                 </div>
                             </div>
                         </div>
