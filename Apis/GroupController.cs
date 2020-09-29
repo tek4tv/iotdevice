@@ -1,9 +1,12 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Script.Serialization;
 using Tek4TV.Devices.Models;
 
 namespace Tek4TV.Devices.Apis
@@ -32,7 +35,7 @@ namespace Tek4TV.Devices.Apis
             try
             {
                 var items = dbContext.LiveGroups;
-                var output = from item in items
+                var output = from item in items.AsQueryable()
                              select new
                              {
                                  item.ID,
@@ -42,7 +45,7 @@ namespace Tek4TV.Devices.Apis
                                  item.OrderID,
                                  item.IsShow,
                                  item.Icon,
-                                 item.InputSource
+                                 InputSource = JsonConvert.DeserializeObject(item.InputSource)
                              };
                 return Request.CreateResponse(HttpStatusCode.OK, output, Configuration.Formatters.JsonFormatter);
             }
