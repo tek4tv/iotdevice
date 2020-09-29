@@ -4,8 +4,10 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Data.Entity;
 
 using Tek4TV.Devices.Models;
+using Newtonsoft.Json;
 
 namespace Tek4TV.Devices.Apis
 {
@@ -246,6 +248,37 @@ namespace Tek4TV.Devices.Apis
             catch (Exception e)
             {
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, e.Message);
+            }
+        }
+        [Route("imei/{imei}")]
+        public HttpResponseMessage GetImei( string imei)
+        {
+            try
+            {
+
+                var output = dbContext.LiveDevices.AsEnumerable().Where(m => m.IMEI.Contains(imei)).Select(i => new
+                {
+                    LiveGroup = i.LiveGroups.Select(g => new
+                    {
+                        g.ID,
+                        g.Name,
+                        LivePlaylist = g.LivePlaylists.Select(p => new
+                        {
+                            Playlist = JsonConvert.DeserializeObject(p.Playlist)
+                        })
+                    })
+                });
+              
+
+
+                return Request.CreateResponse(HttpStatusCode.OK,output, Configuration.Formatters.JsonFormatter);
+            
+
+
+            }
+            catch (Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e.Message);
             }
         }
     }
