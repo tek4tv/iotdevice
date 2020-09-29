@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using System;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -8,7 +8,7 @@ using Tek4TV.Devices.Models;
 
 namespace Tek4TV.Devices.Apis
 {
-    
+
     [RoutePrefix("api/group")]
     public class GroupController : ApiController
     {
@@ -18,7 +18,7 @@ namespace Tek4TV.Devices.Apis
         {
             try
             {
-                var output = new LiveGroup();           
+                var output = new LiveGroup();
                 return Request.CreateResponse(HttpStatusCode.OK, output, Configuration.Formatters.JsonFormatter);
             }
             catch (Exception e)
@@ -31,19 +31,17 @@ namespace Tek4TV.Devices.Apis
         {
             try
             {
-                var items = dbContext.LiveGroups;
-                var output = from item in items
-                             select new
-                             {
-                                 item.ID,
-                                 item.Name,
-                                 item.Description,
-                                 item.ParentID,
-                                 item.OrderID,
-                                 item.IsShow,
-                                 item.Icon,
-                                 item.InputSource
-                             };
+                var output = dbContext.LiveGroups.AsEnumerable().Select(item => new
+                {
+                    item.ID,
+                    item.Name,
+                    item.Description,
+                    item.ParentID,
+                    item.OrderID,
+                    item.IsShow,
+                    item.Icon,
+                    InputSource =  String.IsNullOrEmpty(item.InputSource) != true ? JsonConvert.DeserializeObject(item.InputSource) : item.InputSource,
+                });
                 return Request.CreateResponse(HttpStatusCode.OK, output, Configuration.Formatters.JsonFormatter);
             }
             catch (Exception e)
@@ -152,7 +150,7 @@ namespace Tek4TV.Devices.Apis
             {
                 var output = from d in dbContext.LiveDevices
                              where d.LiveGroups.Any(g => g.ID == Id)
-                             select new 
+                             select new
                              {
                                  d.ID,
                                  d.IMEI,
@@ -175,7 +173,7 @@ namespace Tek4TV.Devices.Apis
         public HttpResponseMessage DeleteDeviceByGroup(int idDevice, int idGroup)
         {
             try
-            {             
+            {
                 var group = dbContext.LiveGroups.Find(idGroup);
                 var device = dbContext.LiveDevices.Find(idDevice);
                 dbContext.Entry(group).Collection("LiveDevices").Load();
@@ -283,10 +281,10 @@ namespace Tek4TV.Devices.Apis
         {
             try
             {
-                var item = dbContext.LiveGroups.FirstOrDefault(m => m.ID == id);               
-                    item.InputSource = liveGroup.InputSource;                 
-                    dbContext.SaveChanges();
-                    return Request.CreateResponse(HttpStatusCode.OK, item);               
+                var item = dbContext.LiveGroups.FirstOrDefault(m => m.ID == id);
+                item.InputSource = liveGroup.InputSource;
+                dbContext.SaveChanges();
+                return Request.CreateResponse(HttpStatusCode.OK, item);
             }
             catch (Exception e)
             {
