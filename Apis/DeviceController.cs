@@ -5,9 +5,9 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Data.Entity;
-
 using Tek4TV.Devices.Models;
 using Newtonsoft.Json;
+using Tek4TV.Devices.RequestBody;
 
 namespace Tek4TV.Devices.Apis
 {
@@ -250,36 +250,39 @@ namespace Tek4TV.Devices.Apis
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, e.Message);
             }
         }
-        [Route("imei/{imei}")]
-        public HttpResponseMessage GetImei( string imei)
+        [Route("imei")]
+        public HttpResponseMessage PostImei(LiveDevice body)
         {
             try
             {
-
-                var output = dbContext.LiveDevices.AsEnumerable().Where(m => m.IMEI.Contains(imei)).Select(i => new
+                var item = dbContext.LiveDevices.Where(x => x.IMEI == body.IMEI)
+                    .Include(x => x.LiveGroups.Select(y => y.LivePlaylists))
+                    .FirstOrDefault();
+                if (item != null)
                 {
-                    LiveGroup = i.LiveGroups.Select(g => new
+                    var group = item.LiveGroups.FirstOrDefault().LivePlaylists.FirstOrDefault();
+                    if (group != null)
                     {
-                        g.ID,
-                        g.Name,
-                        LivePlaylist = g.LivePlaylists.Select(p => new
+                        var livePlaylist = group.Playlist;
+                        if(livePlaylist != null)
                         {
-                            Playlist = JsonConvert.DeserializeObject(p.Playlist)
-                        })
-                    })
-                });
-              
-
-
-                return Request.CreateResponse(HttpStatusCode.OK,output, Configuration.Formatters.JsonFormatter);
-            
-
-
+                            var output = JsonConvert.DeserializeObject(livePlaylist);
+                            return Request.CreateResponse(HttpStatusCode.OK, output, Configuration.Formatters.JsonFormatter);
+                        }                       
+                        return Request.CreateResponse(HttpStatusCode.OK, "", Configuration.Formatters.JsonFormatter);
+                    }
+                    return Request.CreateResponse(HttpStatusCode.OK, "", Configuration.Formatters.JsonFormatter);
+                }
+                else
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, "", Configuration.Formatters.JsonFormatter);
+                }
             }
             catch (Exception e)
             {
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e.Message);
             }
         }
+        
     }
 }

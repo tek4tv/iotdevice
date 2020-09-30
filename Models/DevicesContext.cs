@@ -16,6 +16,7 @@ namespace Tek4TV.Devices.Models
         public DbSet<LivePlaylist> LivePlaylists { get; set; }
         public DbSet<LiveDeviceCategory> liveDeviceCategories { get; set; }  
         public DbSet<SiteMapGroup> SiteMapGroups { get; set; }
+        public DbSet<LiveInputSource> LiveInputSources { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -48,6 +49,9 @@ namespace Tek4TV.Devices.Models
                    cs.MapRightKey("GroupID");
                    cs.ToTable("LiveGroupPlaylist");
                });
+           
+          
+
         }
     }
 }

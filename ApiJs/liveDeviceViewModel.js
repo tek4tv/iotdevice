@@ -67,8 +67,7 @@
                
             }
         );
-    }
-   
+    }  
     self.deviceByCategory = ko.observableArray();
     self.selectedDevice = ko.observable();
     self.loadDeviceByGroup = function (item) {
@@ -93,13 +92,11 @@
             self.selectedDevice(data)
         });
     }
-
     self.showModel = function () {
        self.mode('create');
          self.showInfo();
         $('#ghiLai').modal('show');
     }
-
     self.create = function (item) {      
         item.LiveCategoryID = self.selectedGroup().ID()
         console.log(item)
@@ -142,7 +139,6 @@
             self.remove(item);
         }
     }
-
     self.edit = function (item) {
         self.mode('update');      
         $('#ghiLai').modal('show');
@@ -165,6 +161,7 @@
         });
         $('#ghiLai').modal('hide');
     }
+
 
     function getGroupModel(data) {
         var items = getNestedGroup(0, data);
@@ -212,7 +209,6 @@
                 console.log('not connected' + a);
             });
     });
-
     function Method(messageFromHub) {
         alert(messageFromHub);
     }
@@ -220,9 +216,7 @@
 
 $(function () {
     var deviceModel = new DeviceModel();  
-
     deviceModel.getCategories();
-
     ko.applyBindings(deviceModel);
 });
 

@@ -246,6 +246,7 @@
     <Compile Include="Apis\DeviceCategoryController.cs" />
     <Compile Include="Apis\DeviceController.cs" />
     <Compile Include="Apis\GroupController.cs" />
+    <Compile Include="Apis\InputSourceController.cs" />
     <Compile Include="Apis\IOTController.cs" />
     <Compile Include="Apis\PlaylistController.cs" />
     <Compile Include="Apis\SitemapGroupController.cs" />
@@ -284,16 +285,23 @@
     <Compile Include="Controllers\DeviceController.cs" />
     <Compile Include="Controllers\GroupController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\InputSourceController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\PlaylistController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202009301110382_initDb.cs" />
+    <Compile Include="Migrations\202009301110382_initDb.designer.cs">
+      <DependentUpon>202009301110382_initDb.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\DevicesContext.cs" />
     <Compile Include="Models\LiveDevice.cs" />
     <Compile Include="Models\LiveDeviceCategory.cs" />
     <Compile Include="Models\LiveGroup.cs" />
+    <Compile Include="Models\LiveInputSource.cs" />
     <Compile Include="Models\LivePlaylist.cs" />
     <Compile Include="Models\SiteMapGroup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -5536,6 +5544,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\InputSource\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -5565,6 +5574,11 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202009301110382_initDb.resx">
+      <DependentUpon>202009301110382_initDb.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
