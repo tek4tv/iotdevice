@@ -27,10 +27,8 @@
             });
             self.createTreeCategory();         
         });
-    }
-  
-    self.selectedGroup = ko.observable();
-   
+    } 
+    self.selectedGroup = ko.observable();  
     self.createTreeCategory = function () {
         var data = [];
         $.each(self.categories(), function (idx, item) {
@@ -161,6 +159,8 @@
         });
         $('#ghiLai').modal('hide');
     }
+
+   
 
 
     function getGroupModel(data) {

@@ -13,7 +13,7 @@
             return JSON.parse(item);
         }
     };
-   
+
     // live group
     self.selectedGroup = ko.observable();
     self.groups = ko.observableArray();
@@ -60,7 +60,7 @@
             error: function () {
                 toastr.error("Đã có lỗi", "Thất bại!");
             }
-                
+
         }).success();
     }
 
@@ -113,7 +113,7 @@
 
 
 
-   
+
 
     self.playlistGroups = ko.observableArray();
 
@@ -158,13 +158,13 @@
 
         $('#tree_group0').on('ready.jstree', function () {
             $("#tree_group0").jstree("open_all");
-        });      
-        
+        });
+
         $("#tree_group0").on("select_node.jstree",
             function (evt, data) {
                 var nodeId = $('#tree_group0').jstree().get_selected("id")[0].id;
                 var nodeName = $('#tree_group0').jstree().get_selected("id")[0].text;
-                var gr = { ID: nodeId, NAME: nodeName };              
+                var gr = { ID: nodeId, NAME: nodeName };
                 self.selectedDeviceByGroup(self.convertToKoObject(gr));
                 self.loadDeviceByGroup(self.selectedDeviceByGroup());
                 self.selectedPlaylistByGroup(self.convertToKoObject(gr));
@@ -174,7 +174,7 @@
                 self.loadInputSource(self.convertToKoObject(gr))
                 console.log(gr)
             }
-        );        
+        );
     }
     // Thiết bị
     self.selectedDeviceByGroup = ko.observable();
@@ -194,7 +194,7 @@
     }
     self.showDeviceByGroup = function () {
         $('#save-DeviceByGroup').modal('show');
-    }   
+    }
     self.devicesAdded = ko.observableArray();
     self.getAllDevices = function () {
         $.ajax({
@@ -204,7 +204,7 @@
             self.devicesAdded.removeAll();
             $.each(data, function (index, item) {
                 self.devicesAdded.push(self.convertToKoObject(item))
-            })          
+            })
         });
     }
     self.selectedDevice = ko.observable();
@@ -218,9 +218,9 @@
     }
     self.removeDevice = function (item) {
         var idGroup = self.selectedDeviceByGroup().ID();
-        var idDevice = item.ID();     
+        var idDevice = item.ID();
         $.ajax({
-            url: '/api/group/'+idGroup+'/device/' + idDevice,
+            url: '/api/group/' + idGroup + '/device/' + idDevice,
             type: 'DELETE',
             contentType: 'application/json',
             dataType: 'json',
@@ -231,7 +231,7 @@
             error: function () {
                 toastr.error("Đã có lỗi", "Thất bại!");
             }
-        });      
+        });
     }
     self.confirmRemoveDevice = function (item) {
         var result = confirm("Bạn muốn xóa chứ ??");
@@ -239,7 +239,7 @@
             self.removeDevice(item);
         }
     }
-    self.addDevice= function (item) {
+    self.addDevice = function (item) {
         var idGroup = self.selectedDeviceByGroup().ID();
         var idDevice = item.ID();
         $.ajax({
@@ -249,19 +249,19 @@
             dataType: 'json',
             success: function (data) {
                 self.loadDeviceByGroup(self.selectedDeviceByGroup());
-                $('#save-DeviceByGroup').modal('hide');             
+                $('#save-DeviceByGroup').modal('hide');
                 toastr.success("Đã thêm mới dữ liệu", "Thành công!");
             },
             error: function () {
                 toastr.error("Đã có lỗi", "Thất bại!");
                 $('#save-DeviceByGroup').modal('hide');
             }
-        });        
+        });
     }
     self.confirmAddDevice = function (item) {
         var result = confirm("Bạn muốn thêm chứ ??");
-        if (result) {                   
-            self.addDevice(item); 
+        if (result) {
+            self.addDevice(item);
             self.loadDeviceByGroup(self.selectedDeviceByGroup());
         }
     }
@@ -269,9 +269,9 @@
     // lịch phát sóng
     self.selectedPlaylistByGroup = ko.observable();
     self.getPlaylistByGroup = ko.observableArray();
-    self.loadPlaylistByGroup = function (item) {          
+    self.loadPlaylistByGroup = function (item) {
         $.ajax({
-            url: '/api/group/playlist/'+self.convertToJson(objToken)[0].Name +"/" + item.ID(),
+            url: '/api/group/playlist/' + self.convertToJson(objToken)[0].Name + "/" + item.ID(),
             type: 'GET',
             contentType: 'application/json',
             dataType: 'json'
@@ -280,7 +280,7 @@
             $.each(data, function (index, item) {
                 self.getPlaylistByGroup.push(self.convertToKoObject(item))
             });
-           
+
         })
     }
 
@@ -309,21 +309,21 @@
     }
     self.showModelPlaylist = function () {
         $('#save-playlistByGroup').modal('show');
-    } 
+    }
     var objToken = $('#decodeToken').val();
     var user = $('#user').val();
     self.playlists = ko.observableArray();
 
     self.getPlaylists = function () {
         $.ajax({
-            url: '/api/playlist/all/' + self.convertToJson(objToken)[0].Name ,
+            url: '/api/playlist/all/' + self.convertToJson(objToken)[0].Name,
             type: 'GET'
         }).done(function (items) {
             self.playlists.removeAll();
             $.each(items, function (index, item) {
                 self.playlists.push(self.convertToKoObject(item))
             });
-           
+
         });
     }
     self.addPlaylist = function (item) {
@@ -334,39 +334,39 @@
             type: 'POST',
             contentType: 'application/json',
             dataType: 'json',
-            success: function (data) {                      
+            success: function (data) {
                 $('#save-playlistByGroup').modal('hide');
-                toastr.success("Đã thêm mới dữ liệu", "Thành công!");                  
-                self.loadPlaylistByGroup(self.selectedPlaylistByGroup());             
+                toastr.success("Đã thêm mới dữ liệu", "Thành công!");
+                self.loadPlaylistByGroup(self.selectedPlaylistByGroup());
             },
             error: function () {
                 toastr.error("Đã có lỗi", "Thất bại!");
                 $('#save-playlistByGroup').modal('hide');
             }
         });
-        
+
     }
     self.confirmAddPlaylist = function (item) {
         var result = confirm("Bạn muốn thêm chứ ??");
         if (result) {
-            self.addPlaylist(item);         
+            self.addPlaylist(item);
         }
     }
 
     // searching devices
-    self.keySearch = ko.observable(); 
+    self.keySearch = ko.observable();
     self.resultAutoSearch = ko.observableArray();
     self.autoSearchDevice = function () {
         var valueString = self.keySearch();
-              
+
         $.ajax({
-            url: "/api/device/search/" +  valueString,
+            url: "/api/device/search/" + valueString,
             type: 'get',
             success: function (data) {
                 self.resultAutoSearch.removeAll();
                 $.each(data, function (index, item) {
                     self.resultAutoSearch.push(self.convertToKoObject(item))
-                })               
+                })
             }
         });
     }
@@ -374,14 +374,14 @@
         e.keyCode === 13 && self.autoSearchDevice();
         return true;
     };
-    
+
 
     // searching playlist
     self.keySearchPlaylist = ko.observable();
     self.resultAutoSearchPlaylist = ko.observableArray();
     self.autoSearchPlaylist = function () {
         var valueString = self.keySearchPlaylist();
-       
+
         $.ajax({
             url: "/api/playlist/search/" + self.convertToJson(objToken)[0].Name + "/" + valueString,
             type: 'get',
@@ -390,7 +390,7 @@
                 $.each(data, function (index, item) {
                     self.resultAutoSearchPlaylist.push(self.convertToKoObject(item))
                 })
-              
+
             }
         });
     }
@@ -400,33 +400,33 @@
     };
 
     // các nguồn tiếp sóng: IP, FM, AM cho từng cụm thu/phát
-    
-    
+
+
     var typeName = function (name) {
-        this.name = name;      
+        this.name = name;
     };
     self.viewTypeModel = {
         type: ko.observableArray(["Tuner", "IP"]),
         selectType: ko.observable()
-    }  
+    }
     self.valueInputSoure = ko.observable();
     self.valueInputSoures = ko.observableArray();
     self.addInputSource = function () {
         var obj = {
             Name: "ten",
             Type: "",
-            Param: "0",           
-            IsSchedule: "", 
+            Param: "0",
+            IsSchedule: "",
             Start: "00:00:00",
             End: "00:00:00"
         };
         self.valueInputSoure(self.convertToKoObject(obj));
-        self.mode('createInputSource');       
+        self.mode('createInputSource');
         $('#save-inputSource').modal('show');
     }
-    
-    self.saveInputSource = function (item) {  
-       self.valueInputSoures.unshift(self.valueInputSoure())       
+
+    self.saveInputSource = function (item) {
+        self.valueInputSoures.unshift(self.valueInputSoure())
     }
     self.removeInputSource = function (item) {
         self.valueInputSoures.remove(item);
@@ -440,7 +440,7 @@
         var id = item.ID();
         var data = [];
         $.each(self.valueInputSoures(), function (i, obj) {
-            data.push({                
+            data.push({
                 Name: obj.Name(),
                 Type: obj.Type(),
                 Param: obj.Param(),
@@ -449,7 +449,7 @@
                 End: obj.End
             });
         })
-        var payload = { "InputSource" : ko.toJSON(data) }
+        var payload = { "InputSource": ko.toJSON(data) }
         console.log(ko.mapping.toJSON(payload))
         $.ajax({
             url: "/api/group/add/InputSource/" + id,
@@ -460,15 +460,15 @@
             success: function (data) {
                 toastr.success("Đã thêm playlist", "Thành công");
             }
-        })   
-        
+        })
+
     }
     self.loadInputSource = function (item) {
         $.ajax({
             url: "/api/group/" + item.ID(),
             type: 'GET'
         }).done(function (data) {
-            self.valueInputSoures.removeAll();          
+            self.valueInputSoures.removeAll();
             var items = self.convertToJson(data[0].InputSource);
             $.each(items, function (index, item) {
                 self.valueInputSoures.push(self.convertToKoObject(item))
@@ -477,7 +477,7 @@
         });
     }
 
-    function getGroupModel(data) {      
+    function getGroupModel(data) {
         var items = getNestedGroup(0, data);
         //<remove duplicates, for infinity nesting only>   
         for (var i = 0; i < items.length; i++) {
@@ -512,15 +512,14 @@
     };
 
 
-    
+
 }
 
 $(function () {
     var groupPlaylistModel = new GroupPlaylistModel();
     groupPlaylistModel.getGroupAll();
-    groupPlaylistModel.getPlaylists();   
+    groupPlaylistModel.getPlaylists();
     groupPlaylistModel.getTreeGroups();
     groupPlaylistModel.getAllDevices();
     ko.applyBindings(groupPlaylistModel);
 });
-

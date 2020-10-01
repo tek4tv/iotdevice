@@ -27,7 +27,7 @@
             dataType: 'json',
             success: function (response) {
                 if (response.Success) {
-                    window.location.href = '/Home/Index'
+                    window.location.href = '/HomeControl/Index'
                 }
                 else {
                     toastr.error("Sai tài khoản hoặc mật khẩu", "Vui lòng nhập lại!");

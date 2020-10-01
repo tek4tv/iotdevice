@@ -30,15 +30,17 @@ namespace Tek4TV.Devices.Apis
         {
             try
             {
-                var output = dbContext.LiveInputSources.Select(i => new {
+                var item = dbContext.LiveInputSources.Select(i => new {
                     i.ID,
                     i.Name,
+                    i.Type,
                     i.Param,
                     i.IsSchedule,
                     i.StartInput,
                     i.EndInput
-                });                             
-                return Request.CreateResponse(HttpStatusCode.OK, output, Configuration.Formatters.JsonFormatter);
+                });
+              
+                return Request.CreateResponse(HttpStatusCode.OK, item, Configuration.Formatters.JsonFormatter);
             }
             catch (Exception e)
             {
@@ -100,6 +102,7 @@ namespace Tek4TV.Devices.Apis
             {
                 var item = dbContext.LiveInputSources.FirstOrDefault(m => m.ID == id);
                 dbContext.LiveInputSources.Remove(item);
+                dbContext.SaveChanges();
                 return Request.CreateResponse(HttpStatusCode.OK, "deleted");
             }
             catch(Exception e)

@@ -284,6 +284,7 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\DeviceController.cs" />
     <Compile Include="Controllers\GroupController.cs" />
+    <Compile Include="Controllers\HomeControlController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InputSourceController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
@@ -310,9 +311,11 @@
     <Compile Include="RequestBody\RequestBodyVideo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ApiJs\home.js" />
     <Content Include="ApiJs\liveDeviceViewModel.js" />
     <Content Include="ApiJs\liveDeviceCategoryViewModel.js" />
     <Content Include="ApiJs\liveGroupViewModel.js" />
+    <Content Include="ApiJs\liveInputSoruce.js" />
     <Content Include="ApiJs\livePlaylistViewModel.js" />
     <Content Include="ApiJs\login.js" />
     <Content Include="Areas\HelpPage\HelpPage.css" />
@@ -5541,10 +5544,11 @@
     <Content Include="Views\Playlist\Index.cshtml" />
     <Content Include="Views\Shared\_Login.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
+    <Content Include="Views\InputSource\Index.cshtml" />
+    <Content Include="Views\HomeControl\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\InputSource\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

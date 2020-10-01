@@ -6,9 +6,9 @@ using System.Web.Mvc;
 
 namespace Tek4TV.Devices.Controllers
 {
-    public class InputSourceController : Controller
+    public class HomeControlController : Controller
     {
-        // GET: InputSource
+        // GET: HomeControl
         public ActionResult Index()
         {
             if (Session["User"] != null)

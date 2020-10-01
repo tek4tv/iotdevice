@@ -30,7 +30,7 @@
                         Quản lý nhóm
                     </a>
                 </li>
-                
+
             </ul>
             <div class="tab-content">
                 <div class="tab-pane active" id="tab_0">
@@ -89,7 +89,7 @@
                                                 </ul>
                                                 <div class="tab-content">
                                                     <div class="tab-pane active" id="tab_3">
-                                                        <div class="portlet box green">
+                                                        <div class="portlet box light">
                                                             <div class="portlet-body">
                                                                 <div class="margin-bottom-10">
                                                                     <a href="#" class="btn btn-sm green" data-bind="click: $root.showDeviceByGroup">Thêm mới <i class="fa fa-plus"></i></a>
@@ -138,7 +138,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="tab-pane" id="tab_4">
-                                                        <div class="portlet box green">
+                                                        <div class="portlet box light">
                                                             <div class="portlet-body ">
                                                                 <div class="margin-bottom-10">
                                                                     <a href="#" class="btn btn-sm green" data-bind="click: $root.showModelPlaylist">Thêm mới <i class="fa fa-plus"></i></a>
@@ -180,7 +180,7 @@
                                                         <div class="portlet box green">
                                                             <div class="portlet-body">
                                                                 <div class="margin-bottom-10">
-                                                                     <button data-bind="click: $root.addNewInputSource" class="btn btn-sm btn-danger" type="button"><i class="fa fa-check"></i> <span>Lưu chỉnh sửa</span></button>
+                                                                    <button data-bind="click: $root.addNewInputSource" class="btn btn-sm btn-danger" type="button"><i class="fa fa-check"></i> <span>Lưu chỉnh sửa</span></button>
                                                                     <a href="#" class="btn btn-sm green" data-bind="click: $root.addInputSource">Thêm mới <i class="fa fa-plus"></i></a>
                                                                 </div>
                                                                 <div class="table-responsive">
@@ -197,20 +197,20 @@
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody data-bind="foreach: $root.valueInputSoures">
-                                                                          
+
                                                                             <tr>
                                                                                 <td data-bind="text: $index() +1"></td>
                                                                                 <td data-bind="text: Name "></td>
-                                                                                <td data-bind="text: Type "></td>                                                                              
+                                                                                <td data-bind="text: Type "></td>
                                                                                 <td data-bind="  text: moment(Start()).format('DD-MM-YYYY')"></td>
                                                                                 <td data-bind="text: moment(End()).format('DD-MM-YYYY')"></td>
                                                                                 <td data-bind="text: IsSchedule() == true ? 'Đã đặt' : 'Chưa đặt' "></td>
-                                                                                <td>                                                                                  
-                                                                                    <a href="#" class="btn btn-sm green" data-bind="click: $root.editInputSource"><i class="fa fa-edit" ></i></a>
+                                                                                <td>
+                                                                                    <a href="#" class="btn btn-sm green" data-bind="click: $root.editInputSource"><i class="fa fa-edit"></i></a>
                                                                                     <a href="#" class="btn btn-sm grey" data-bind="click: $root.removeInputSource"><i class="fa  fa-trash-o"></i></a>
                                                                                 </td>
                                                                             </tr>
-                                                                            
+
                                                                         </tbody>
                                                                     </table>
                                                                 </div>
@@ -227,7 +227,7 @@
                     </div>
                 </div>
                 <div class="tab-pane" id="tab_1">
-                    <div class="portlet box green">
+                    <div class="portlet box light">
                         <div class="portlet-body ">
                             <div class="margin-bottom-10">
                                 <a href="#" class="btn btn-sm green" data-bind="click: $root.showModelGroup">Thêm mới <i class="fa fa-plus"></i></a>
@@ -345,7 +345,7 @@
                             <div class="form-check">
                                 <label class="form-check-label">Trạng thái</label>
                                 <div>
-                                    <input type="checkbox" class="form-check-input" data-bind="checked: IsShow" >
+                                    <input type="checkbox" class="form-check-input" data-bind="checked: IsShow">
                                     <label class="form-check-label">Hoạt động</label>
                                 </div>
                             </div>
@@ -511,7 +511,7 @@
         </div>
     </div>
 </div>
-<div id="save-inputSource" class="modal fade" >
+<div id="save-inputSource" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -528,7 +528,7 @@
                             </div>
                             <div>
                                 <label for="price">Bắt đầu</label>
-                                <input  class="form-control"  type="datetime-local" data-bind="value: Start" />
+                                <input class="form-control" type="datetime-local" data-bind="value: Start" />
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -537,20 +537,20 @@
                                 <select id="selectType" class="form-control" data-bind="
                                         value: Type,
                                         options: $root.viewTypeModel.type ,
-                                        optionsText: $root.typeName,   
-                                        optionsValue: $root.typeName 
+                                        optionsText: $root.typeName,
+                                        optionsValue: $root.typeName
                                        ">
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label>Kết thúc</label>
                                 <input class="form-control" type="datetime-local" data-bind="value: End" />
-                            </div>                           
+                            </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="price">Tham số</label>
-                                <input class="form-control" type="text" data-bind="value: Param"/>
+                                <input class="form-control" type="text" data-bind="value: Param" />
                             </div>
                             <div class="form-check">
                                 <label class="form-check-label">Trạng thái</label>
@@ -579,11 +579,6 @@
 <input hidden type="text" value="@Session["role"].ToString()" id="decodeToken" />
 <input hidden type="text" value="@Session["User"].ToString()" id="user" />
 @section scripts {
+    
     <script src="~/ApiJs/liveGroupViewModel.js"></script>
 }
-
-
-
-
-
-
