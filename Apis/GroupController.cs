@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using Tek4TV.Devices.Models;
+using System.Data.Entity;
 
 namespace Tek4TV.Devices.Apis
 {
@@ -168,7 +169,7 @@ namespace Tek4TV.Devices.Apis
             {
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, e.Message);
             }
-        }
+        }     
         [Route("{idGroup}/device/{idDevice}")]
         public HttpResponseMessage DeleteDeviceByGroup(int idDevice, int idGroup)
         {
@@ -289,6 +290,32 @@ namespace Tek4TV.Devices.Apis
             catch (Exception e)
             {
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, e.Message);
+            }
+        }
+        [Route("playlist")]
+        public HttpResponseMessage PostNameGroup(LiveGroup body)
+        {
+            try
+            {
+                var items = dbContext.LiveGroups.Where(x => x.ID == body.ID)
+                    .Include(x => x.LivePlaylists).FirstOrDefault();
+                if (items != null)
+                {
+                    var livePlaylist = items.LivePlaylists.FirstOrDefault();
+                    if(livePlaylist != null)
+                    {
+                        var output = JsonConvert.DeserializeObject(livePlaylist.Playlist);
+                        return Request.CreateResponse(HttpStatusCode.OK, output, Configuration.Formatters.JsonFormatter);
+                    }
+                    return Request.CreateResponse(HttpStatusCode.OK, "", Configuration.Formatters.JsonFormatter);
+                }
+                
+                return Request.CreateResponse(HttpStatusCode.OK, "", Configuration.Formatters.JsonFormatter);
+
+            }
+            catch (Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e.Message);
             }
         }
     }

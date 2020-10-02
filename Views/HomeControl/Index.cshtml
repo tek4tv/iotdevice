@@ -3,79 +3,27 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div class="row">
+<div class="row" data-bind="foreach: valueInputSoures">
     <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
         <div class="dashboard-stat blue-madison">
             <div class="visual">
                 <i class="fa fa-comments"></i>
             </div>
             <div class="details">
-                <div class="number">
-                    1349
+                <div class="number" data-bind="text: Name">
+                   
                 </div>
-                <div class="desc">
-                    New Feedbacks
+                <div class="desc" data-bind="text: Type">
+                    
                 </div>
             </div>
+            <div data-bind="with: $root.selectedDeviceByGroup">
             <a class="more" href="javascript:;">
-                View more <i class="m-icon-swapright m-icon-white"></i>
+               <span data-bind="text: NAME"></span> <i class="m-icon-swapright m-icon-white"></i>
             </a>
+            </div>
         </div>
-    </div>
-    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-        <div class="dashboard-stat red-intense">
-            <div class="visual">
-                <i class="fa fa-bar-chart-o"></i>
-            </div>
-            <div class="details">
-                <div class="number">
-                    12,5M$
-                </div>
-                <div class="desc">
-                    Total Profit
-                </div>
-            </div>
-            <a class="more" href="javascript:;">
-                View more <i class="m-icon-swapright m-icon-white"></i>
-            </a>
-        </div>
-    </div>
-    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-        <div class="dashboard-stat green-haze">
-            <div class="visual">
-                <i class="fa fa-shopping-cart"></i>
-            </div>
-            <div class="details">
-                <div class="number">
-                    549
-                </div>
-                <div class="desc">
-                    New Orders
-                </div>
-            </div>
-            <a class="more" href="javascript:;">
-                View more <i class="m-icon-swapright m-icon-white"></i>
-            </a>
-        </div>
-    </div>
-    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-        <div class="dashboard-stat purple-plum">
-            <div class="visual">
-                <i class="fa fa-globe"></i>
-            </div>
-            <div class="details">
-                <div class="number">
-                    +89%
-                </div>
-                <div class="desc">
-                    Brand Popularity
-                </div>
-            </div>
-            <a class="more" href="javascript:;">
-                View more <i class="m-icon-swapright m-icon-white"></i>
-            </a>
-        </div>
-    </div>
+    </div>   
 </div>
 <div class="row">
     <div class="col-md-3 col-sm-3">
@@ -100,17 +48,13 @@
         <div class="portlet light ">
             <div class="portlet-title" data-bind="with: $root.selectedDeviceByGroup">              
                 <div class="col-md-12">
-                    <div class="col-md-9">
+                    <div >
                         <div class="caption caption-md">
                             <i class="fa fa-folder-open"></i>
-                            <span class="caption-subject bold uppercase" data-bind="text: NAME"></span>
+                            <span class="caption-subject bold uppercase">Thiết bị</span>: <span data-bind="text: NAME"></span>
                         </div>
                     </div>
-                    <div class="col-md-3 ">
-                        <div class="caption caption-md ">                            
-                            <span class="caption-subject bold uppercase" >Thiết bị</span>
-                        </div>
-                    </div>
+                    
                 </div>
             </div>
             <div class="portlet-body">
@@ -125,7 +69,7 @@
                                 <th style="text-align: center;">Ngày hết hạn</th>
                             </tr>
                         </thead>
-                        <tbody data-bind="foreach: getDeviceByGroup">
+                        <tbody data-bind="foreach: $root.getDeviceByGroup">
                             <tr>
                                 <td style="text-align: center;">
                                     <span data-bind="text: $index() +1"></span>
@@ -137,13 +81,12 @@
                                 </td>
                                 <td style="text-align: center;">
 
-                                    <span data-bind="text: IMEI"></span>
+                                    <a href="#" data-bind="click: $root.getPlaylistByImei"><span data-bind="text: IMEI"></span></a>
                                 </td>
                                 <td style="text-align: center;">
                                     <a data-bind="with: $root.selectedDeviceByGroup">
                                         <span data-bind="text: NAME"></span>
                                     </a>
-
                                 </td>
                                 <td style="text-align: center;">
                                     <span data-bind="text: moment(ExpDate()).format('DD/MM/YYYY')"></span>
@@ -157,19 +100,14 @@
     </div>
     <div class="col-md-4 col-sm-4">
         <div class="portlet light ">
-            <div class="portlet-title" data-bind="with: $root.selectedDeviceByGroup">
-                <div class="col-md-12">
-                    <div class="col-md-6">
+            <div class="portlet-title" >
+                <div class="col-md-12" data-bind="with: $root.selectedDeviceByGroup">
+                    <div >
                         <div class="caption caption-md">
                             <i class="fa fa-folder-open"></i>
-                            <span class="caption-subject bold uppercase" data-bind="text: NAME"></span>
+                            <span class="caption-subject bold uppercase">Lịch phát sóng</span>: <span data-bind="text: NAME"></span>
                         </div>
-                    </div>
-                    <div class="col-md-6 ">
-                        <div class="caption caption-md ">
-                            <span class="caption-subject bold uppercase">Lịch phát sóng</span>
-                        </div>
-                    </div>
+                    </div>                   
                 </div>
             </div>
             <div class="portlet-body">
@@ -177,75 +115,38 @@
                     <table class="table table-hover">
                         <thead class="flip-content">
                             <tr>
-                                <th style="width: 5%; text-align: center;">#</th>
-                                <th style="width:20%;text-align: center;">Tên</th>
-                                <th style="width:35%;text-align: center;">Bắt đầu</th>
-                                <th style="width: 20%; text-align: center;">Kết thúc</th>
+                                <th style=" text-align: center;">#</th>
+                                <th style="text-align: center;">Thời lượng</th>
+                                <th style=" text-align: center;">Bắt đầu</th>
+                                <th style=" text-align: center;">Kết thúc</th>
+                                <th style="text-align: center;">Tên</th>
                             </tr>
                         </thead>
-                        <tbody data-bind="foreach: getPlaylistByGroup">
+                        <tbody data-bind="foreach: playlistByGroupNames">
                             <tr>
                                 <td style="text-align: center;">
                                     <span data-bind="text: $index() +1"></span>
                                 </td>
                                 <td style="text-align: center;">
+                                    <span data-bind="text: Duration"></span>
+                                </td>
+
+                                <td style="text-align: center;">
+                                    <span data-bind="text: Start"></span>
+                                </td>
+                                <td style="text-align: center;">
+                                    <span data-bind="text: End"></span>
+                                </td>
+                                <td style="text-align: center;">
                                     <span data-bind="text: Name"></span>
                                 </td>
-                                <td style="text-align: center;">
-                                    <span data-bind="text: moment(StartPlaylist()).format('DD/MM/YYYY HH:mm')"></span>
-                                </td>
-                                <td style="text-align: center;">
-                                    <span data-bind="text: moment(EndPlaylist()).format('DD/MM/YYYY HH:mm')"></span>
-                                </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
-        <div class="portlet light ">
-            <div class="portlet-title" data-bind="with: $root.selectedDeviceByGroup">
-                <div class="col-md-12">
-                    <div class="col-md-6">
-                        <div class="caption caption-md">
-                            <i class="fa fa-folder-open"></i>
-                            <span class="caption-subject bold uppercase" data-bind="text: NAME"></span>
-                        </div>
-                    </div>
-                    <div class="col-md-6 ">
-                        <div class="caption caption-md ">
-                            <span class="caption-subject bold uppercase">Nguồn tiếp sóng</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="portlet-body">
-                <div class="table-responsive">
-                    <table class="table table-hover">
-                        <thead class="flip-content">
-                            <tr>
-                                <th style="width:5%">#</th>
-                                <th style="width:30%">Tên </th>
-                                <th style="width:10%">Kiểu</th>
-                                <th style="width:15%">Bắt đầu</th>
-                                <th style="width:15%">Kết thúc</th>
-
-
-                            </tr>
-                        </thead>
-                        <tbody data-bind="foreach: valueInputSoures">
-                            <tr>
-                                <td data-bind="text: $index() +1"></td>
-                                <td data-bind="text: Name "></td>
-                                <td data-bind="text: Type "></td>
-                                <td data-bind="  text: moment(Start()).format('DD-MM-YYYY')"></td>
-                                <td data-bind="text: moment(End()).format('DD-MM-YYYY')"></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+       
     </div>
 </div>
 <input hidden type="text" value="@Session["role"].ToString()" id="decodeToken" />

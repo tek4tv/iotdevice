@@ -64,11 +64,14 @@
                 self.selectedDeviceByGroup(self.convertToKoObject(gr));
                 self.loadDeviceByGroup(self.selectedDeviceByGroup());
 
-                self.selectedPlaylistByGroup(self.convertToKoObject(gr));
-                self.loadPlaylistByGroup(self.selectedPlaylistByGroup());
+               /* self.selectedPlaylistByGroup(self.convertToKoObject(gr));
+                self.loadPlaylistByGroup(self.selectedPlaylistByGroup());*/
 
                 //các nguồn tiếp sóng: IP, FM, AM cho từng cụm thu / phát
                 self.loadInputSource(self.convertToKoObject(gr))
+
+                self.getPlaylistByGroupName(gr)
+                
                
             }
         );
@@ -83,31 +86,32 @@
             contentType: 'application/json',
             dataType: 'json'
         }).success(function (data) {
-            console.log(data)
+            
             self.getDeviceByGroup.removeAll();
             $.each(data, function (index, item) {
                 self.getDeviceByGroup.push(self.convertToKoObject(item))
             });
-        })
-       
+        })     
     }
-    var objToken = $('#decodeToken').val();
-    self.selectedPlaylistByGroup = ko.observable();
-    self.getPlaylistByGroup = ko.observableArray();
-    self.loadPlaylistByGroup = function (item) {
+    
+    self.playlistByGroupNames = ko.observableArray();
+    self.getPlaylistByGroupName = function (item) {    
+        var name = { ID: item.ID };
+        console.log(name)
         $.ajax({
-            url: '/api/group/playlist/' + self.convertToJson(objToken)[0].Name + "/" + item.ID(),
-            type: 'GET',
+            url: '/api/group/playlist' ,
+            type: 'POST',
+            data: ko.mapping.toJSON(name),
             contentType: 'application/json',
-            dataType: 'json'
+            dataType: 'json',
         }).success(function (data) {
-            self.getPlaylistByGroup.removeAll();
+            self.playlistByGroupNames.removeAll();
             $.each(data, function (index, item) {
-                self.getPlaylistByGroup.push(self.convertToKoObject(item))
+                self.playlistByGroupNames.push(self.convertToKoObject(item))
             });
-
+            console.log(self.playlistByGroupNames())
         })
-    }
+    }  
 
     self.valueInputSoures = ko.observableArray();
     self.loadInputSource = function (item) {
@@ -120,9 +124,15 @@
             $.each(items, function (index, item) {
                 self.valueInputSoures.push(self.convertToKoObject(item))
             })
-            
+            console.log(self.valueInputSoures())
         });
     }
+
+    //get playlist by imei
+    self.loadPlaylistByImei = function (item) {
+        console.log(item.IMEI())
+    }
+
 
     function getGroupModel(data) {
         var items = getNestedGroup(0, data);

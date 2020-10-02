@@ -105,7 +105,7 @@
                 toastr.success("Đã sửa dữ liệu", "Thành công!");
             },
             error: function () {
-                toastr.success("Đã có lỗi", "Thất bại!");
+                $('#ghiLai').modal('hide');
             }
         });
     }

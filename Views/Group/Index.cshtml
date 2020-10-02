@@ -16,6 +16,7 @@
     <div class="page-toolbar">
     </div>
 </div>
+
 <div class="row margin-top-15">
     <div class="col-md-12">
         <div class="tabbable-line boxless tabbable-reversed">
@@ -82,7 +83,7 @@
                                                         </a>
                                                     </li>
                                                     <li>
-                                                        <a href="#tab_5" data-toggle="tab">
+                                                        <a href="#tab_5" data-toggle="tab" data-bind="click: $root.bindingSlect2">
                                                             Nguồn tiếp sóng
                                                         </a>
                                                     </li>
@@ -180,8 +181,12 @@
                                                         <div class="portlet box green">
                                                             <div class="portlet-body">
                                                                 <div class="margin-bottom-10">
-                                                                    <button data-bind="click: $root.addNewInputSource" class="btn btn-sm btn-danger" type="button"><i class="fa fa-check"></i> <span>Lưu chỉnh sửa</span></button>
-                                                                    <a href="#" class="btn btn-sm green" data-bind="click: $root.addInputSource">Thêm mới <i class="fa fa-plus"></i></a>
+                                                                    <div class="margin-bottom-10">
+                                                                        <select class="js-example-basic-multiple form-control" name="data[]" multiple="multiple">
+                                                                        </select>
+                                                                    </div>
+                                                                    <button data-bind="click: $root.saveInputSource" class="btn btn-sm btn-danger" type="button"><i class="fa fa-check"></i> <span>Lưu chỉnh sửa</span></button>
+                                                                    <button data-bind="click: $root.addNewInputSource " class="btn btn-sm green" type="button"><i class="fa fa-plus"></i> <span>Thêm mới</span></button>
                                                                 </div>
                                                                 <div class="table-responsive">
                                                                     <table class="table table-hover">
@@ -192,23 +197,21 @@
                                                                                 <th style="width:10%">Kiểu</th>
                                                                                 <th style="width:15%">Bắt đầu</th>
                                                                                 <th style="width:15%">Kết thúc</th>
-                                                                                <th style="width:10%">Trạng Thái</th>
-                                                                                <th>#</th>
+                                                                               
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody data-bind="foreach: $root.valueInputSoures">
 
                                                                             <tr>
-                                                                                <td data-bind="text: $index() +1"></td>
+                                                                                <td>
+                                                                                    <a href="#" class="btn btn-sm grey" data-bind="click: $root.removeInputSource"><i class="fa  fa-trash-o"></i></a>
+                                                                                </td>
                                                                                 <td data-bind="text: Name "></td>
                                                                                 <td data-bind="text: Type "></td>
                                                                                 <td data-bind="  text: moment(Start()).format('DD-MM-YYYY')"></td>
                                                                                 <td data-bind="text: moment(End()).format('DD-MM-YYYY')"></td>
-                                                                                <td data-bind="text: IsSchedule() == true ? 'Đã đặt' : 'Chưa đặt' "></td>
-                                                                                <td>
-                                                                                    <a href="#" class="btn btn-sm green" data-bind="click: $root.editInputSource"><i class="fa fa-edit"></i></a>
-                                                                                    <a href="#" class="btn btn-sm grey" data-bind="click: $root.removeInputSource"><i class="fa  fa-trash-o"></i></a>
-                                                                                </td>
+                                                                              
+
                                                                             </tr>
 
                                                                         </tbody>
@@ -290,11 +293,8 @@
                                     </tbody>
                                 </table>
                             </div>
-
-
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -579,6 +579,7 @@
 <input hidden type="text" value="@Session["role"].ToString()" id="decodeToken" />
 <input hidden type="text" value="@Session["User"].ToString()" id="user" />
 @section scripts {
-    
+
     <script src="~/ApiJs/liveGroupViewModel.js"></script>
+
 }

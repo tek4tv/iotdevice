@@ -106,7 +106,8 @@
                 toastr.success("Đã sửa dữ liệu", "Thành công!");
             },
             error: function () {
-                toastr.error("Đã có lỗi", "Thất bại!");
+                $('#ghilai-group').modal('hide');
+               
             }
         });
     }
@@ -172,7 +173,7 @@
 
                 //các nguồn tiếp sóng: IP, FM, AM cho từng cụm thu / phát
                 self.loadInputSource(self.convertToKoObject(gr))
-                console.log(gr)
+
             }
         );
     }
@@ -425,9 +426,9 @@
         $('#save-inputSource').modal('show');
     }
 
-    self.saveInputSource = function (item) {
+   /* self.saveInputSource = function (item) {
         self.valueInputSoures.unshift(self.valueInputSoure())
-    }
+    }*/
     self.removeInputSource = function (item) {
         self.valueInputSoures.remove(item);
     }
@@ -436,7 +437,7 @@
         self.mode('updateInputSource');
         $('#save-inputSource').modal('show');
     }
-    self.addNewInputSource = function (item) {
+    /*self.addNewInputSource = function (item) {
         var id = item.ID();
         var data = [];
         $.each(self.valueInputSoures(), function (i, obj) {
@@ -462,7 +463,7 @@
             }
         })
 
-    }
+    }*/
     self.loadInputSource = function (item) {
         $.ajax({
             url: "/api/group/" + item.ID(),
@@ -475,6 +476,72 @@
             })
 
         });
+    }
+
+    self.bindingSlect2 = function () {  
+        
+        $.ajax({
+            url: "/api/inputsource/all" ,
+            type: 'get',            
+            contentType: 'application/json',
+            dataType: 'json',
+            success: function (items) {  
+                var data = [];
+                $.each(items, function (index, item) {
+                    var obj = {
+                        id: item.ID,
+                        text: item.Name
+                    }
+                    data.push(obj)
+                })
+                
+                $('.js-example-basic-multiple').select2({
+                    data : data
+                });              
+            }
+        })   
+        
+    }
+    self.arraySelect2 = ko.observable();
+    self.arraySelect2s = ko.observableArray();
+    self.addNewInputSource = function () {      
+        var array = $(".js-example-basic-multiple").select2("val");    
+        $.each(array, function (index, item) {
+            $.ajax({
+                url: "/api/inputsource/"+item,
+                type: 'get',
+                contentType: 'application/json',
+                dataType: 'json',
+                success: function (item) {
+                    self.arraySelect2s.unshift(self.convertToKoObject(item))
+                }
+            })
+        })      
+    }
+    self.saveInputSource = function (item) {    
+        var data = [];
+        $.each(self.arraySelect2s(), function (i, obj) {
+            data.push({
+                Name: obj.Name(),
+                Type: obj.Type(),
+                Param: obj.Param(),
+                IsSchedule: obj.IsSchedule(),
+                Start: obj.StartInput(),
+                End: obj.EndInput()
+            });
+        })        
+        var payload = { "InputSource": ko.toJSON(data) }        
+        $.ajax({
+            url: "/api/group/add/InputSource/" + item.ID(),
+            type: 'PUT',
+            data: ko.mapping.toJSON(payload),
+            contentType: 'application/json',
+            dataType: 'json',
+            success: function (data) {
+                toastr.success("Đã thêm dữ liệu", "Thành công");
+                self.loadInputSource(item)
+            }
+        })
     }
 
     function getGroupModel(data) {

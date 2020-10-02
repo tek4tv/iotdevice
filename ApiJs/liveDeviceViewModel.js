@@ -25,7 +25,8 @@
             $.each(items, function (index, item) {
                 self.categories.push(self.convertToKoObject(item))
             });
-            self.createTreeCategory();         
+            self.createTreeCategory();
+            
         });
     } 
     self.selectedGroup = ko.observable();  
@@ -77,11 +78,26 @@
         }).success(function (data) {
             self.deviceByCategory.removeAll();
             $.each(data, function (index, item) {
-                self.deviceByCategory.push(self.convertToKoObject(item))
-            });
-          
+                self.deviceByCategory.push(self.convertToKoObject(item))                
+                var id = item.ID;
+                $.ajax({
+                    url: '/api/group/selectedgroup/' + id,
+                    type: 'GET',
+                    contentType: 'application/json',
+                    dataType: 'json'
+                }).success(function (data) {
+                   // self.nameGroups.removeAll();
+                    $.each(data, function (index, item) {
+                        self.nameGroups.push(self.convertToKoObject(item))
+                    })
+                    console.log(self.nameGroups())
+                })
+            });          
+            
         })
     }
+    self.nameGroups = ko.observableArray();
+    console.log(self.nameGroups())
     self.showInfo = function () {
         $.ajax({
             url: '/api/device/info',
@@ -160,8 +176,10 @@
         $('#ghiLai').modal('hide');
     }
 
+    
+    
    
-
+    
 
     function getGroupModel(data) {
         var items = getNestedGroup(0, data);
