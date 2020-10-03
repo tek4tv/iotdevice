@@ -119,7 +119,8 @@
     }
     self.valueLive = ko.observable();
     self.valueLives = ko.observableArray();
-    self.modalAddLive = function () {      
+
+    self.modalAddLive = function () {     
         var obj = {
             Category: { ID: - 1, Name: 'Live' },
             Duration: "02:00:00",
@@ -146,7 +147,7 @@
     self.removeEvent = function (item) {
         self.valueLives.remove(item);
     }
-    self.addNewPlaylist = function (item) {
+    self.addNewPlaylist = function (item) {        
         var id = item.ID();
         self.valueLives(self.valueLives().sort(function (l, r) { return l.Index() - r.Index() }));
         var data = [];
@@ -155,19 +156,18 @@
                 Index: obj.Index, Category: { ID: obj.Category.ID(), Name: obj.Category.Name() }, ID: obj.ID(), Name: obj.Name, Duration: obj.Duration(), Path: obj.Path(), Start: obj.Start, End: obj.End, Edit: false
             });
         })
-       // var payload = { ID: item.ID(), Playlist: ko.toJSON() };       
-        item.Playlist = ko.toJSON(data);     
-        console.log(data)
-          $.ajax({
-              url: "/api/playlist/"+id,
-              type: 'PUT',
-              data: ko.mapping.toJSON(item),
-              contentType: 'application/json',
-              dataType: 'json',
-              success: function (data) {
-                    toastr.success("Đã thêm playlist", "Thành công");
-              }
-          })   
+        item.Playlist = ko.toJSON(data);
+        $.ajax({
+            url: "/api/playlist/" + id,
+            type: 'PUT',
+            data: ko.mapping.toJSON(item),
+            contentType: 'application/json',
+            dataType: 'json',
+            success: function (data) {
+                toastr.success("Đã ghi lại", "Thành công");
+            }
+        })
+        
     }
     self.loadAddedPlaylist = function (item) {     
         $.ajax({
@@ -176,12 +176,45 @@
         }).done(function (data) {
             self.valueLives.removeAll();
             var items = self.convertToJson(data.Playlist);
-            console.log(items)
             $.each(items, function (index, item) {
                 self.valueLives.push(self.convertToKoObject(item))
             }); 
            
         });
+       
+    }
+    self.totalTime = function (time1, time2) {
+        var start = time1;
+        var a = start.split(':');
+        var secondsStart = (+a[0]) * 60 * 60 + (+a[1]) * 60 + (+a[2]);
+        var Duration = time2;
+        var b = Duration.split(':');
+        var secondsDuration = (+b[0]) * 60 * 60 + (+b[1]) * 60 + (+b[2]);
+        let totalSeconds = secondsStart + secondsDuration;
+        let hours = Math.floor(totalSeconds / 3600);
+        totalSeconds %= 3600;
+        let minutes = Math.floor(totalSeconds / 60);
+        let seconds = totalSeconds % 60;
+        minutes = String(minutes).padStart(2, "0");
+        hours = String(hours).padStart(2, "0");
+        seconds = String(seconds).padStart(2, "0");
+        return (hours + ":" + minutes + ":" + seconds);
+    }
+    self.sortTime = function (item) {
+        var array = self.valueLives();
+        var data=[]
+        for (var i = 0; i < self.valueLives().length; i++) {
+            var x = self.totalTime(array[i].Start(), array[i].Duration() )                      
+            data.push(x)
+        }
+        array1 = data.map((elem, index) => data.slice(0, index + 1).reduce((a, b) => self.totalTime(a, b)));
+        for (var i = 1; i < array.length; i++) {
+            array[i]['Start'] = array1[i - 1];            
+        }
+        self.addNewPlaylist(item)
+        self.loadAddedPlaylist (item)
+        
+        
     }
     // cal api iot
     self.listIotCats = ko.observableArray();
