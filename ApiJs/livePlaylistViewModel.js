@@ -212,9 +212,15 @@
             array[i]['Start'] = array1[i - 1];            
         }
         self.addNewPlaylist(item)
-        self.loadAddedPlaylist (item)
-        
-        
+        self.loadAddedPlaylist (item)        
+    }
+    self.unSortTime = function (item) {
+        var array = self.valueLives();
+        for (var i = 1; i < array.length; i++) {
+            array[i]['Start'] = "00:00:00";
+        }
+        self.addNewPlaylist(item)
+        self.loadAddedPlaylist(item)
     }
     // cal api iot
     self.listIotCats = ko.observableArray();
