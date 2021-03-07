@@ -1,0 +1,134 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-6">
+        <h3 style="margin-top:5px;"><a href="/Time"><i class="fa fa-arrow-circle-left" style="cursor:pointer"></i></a> Tạo mới/ Chỉnh sửa khung thời gian </h3>
+    </div>
+    <div class="col-md-6 " style="margin-bottom:15px; display:flex; justify-content:flex-end">
+        <button type="button" class="btn btn btn-danger btn-sm">Hủy</button>
+        <button type="button" class="btn btn-info btn-sm">Cập nhật</button>
+        <button type="button" class="btn btn-success btn-sm">Hoàn tất</button>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-3">
+        <!-- BEGIN Portlet PORTLET-->
+        <div class="portlet light">
+            <div class="portlet-body">
+                <div>
+                    <label>Tên khung thời gian *</label>
+                    <input type="text" class="form-control">
+                </div>
+                <div style="margin-top: 2em">
+                    <label>Loại màn hình *</label>
+                    <input type="text" class="form-control" placeholder="Dọc">
+                </div>
+                <div style="margin-top: 2em">
+                    <label>Thời gian bắt đầu *</label>
+                    <input type="text" class="form-control" placeholder="hh:mm:ss dd/mm/year">
+                </div>
+                <div style="margin-top: 2em">
+                    <label>Thời gian kết thúc *</label>
+                    <input type="text" class="form-control" placeholder="hh:mm:ss dd/mm/year">
+                </div>
+                <div style="margin-top: 2em">
+                    <label>Số lượng file *</label>
+                    <input type="text" class="form-control" placeholder="2">
+                </div>
+                <div style="margin-top: 2em">
+                    <label>Dung lượng *</label>
+                    <input type="text" class="form-control" placeholder="50mb">
+                </div>
+                <div style="margin-top: 2em">
+                    <label>Người tạo *</label>
+                    <input type="text" class="form-control" placeholder="mai.toan">
+                </div>
+                <div style="margin-top: 2em">
+                    <label>Ngày tạo *</label>
+                    <input type="text" class="form-control"  placeholder="dd/mm/year">
+                </div>
+            </div>
+        </div>
+        <!-- END Portlet PORTLET-->
+    </div>
+    <div class="col-md-6">
+        <!-- BEGIN Portlet PORTLET-->
+        <div class="portlet light">
+            <div class="portlet-body">
+                <table class=" table-hover">
+                    <thead>
+                        <tr>
+                            <th style="width:5%"></th>
+                            <th style="width:65%"  >Danh sách nội dung</th>
+                          
+                            <th style="width:25%"> <button type="button" class="btn btn-success btn-sm">Thêm mới</button></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>
+                                <div class="row">
+                                    <div class="col-md-12" style="margin-left:15px;"> <label>Nội dung A *</label></div>
+                                    <div class="col-md-12">
+                                        <div class="col-md-6">
+                                            <label>Tần xuất hiển thị *</label>
+                                            <input type="text" class="form-control" placeholder="1" />
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label>Lựa chọn âm thanh *</label>
+                                            <input type="text" class="form-control" placeholder="Bật" />
+                                        </div>
+                                    </div>
+                                </div>
+                               
+                                
+                            </td>
+                            
+                            <td>
+                                <div style="width:100%; height:6.5em; background-color:#C4C4C4;">Preview Content</div>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- END SAMPLE TABLE PORTLET-->
+    </div>
+    <div class="col-md-3">
+        <!-- BEGIN Portlet PORTLET-->
+        <div class="portlet light">
+
+            <div class="portlet-body">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width:80%"><input type="checkbox" class="icheck"> Danh sách kịch bản tổng</th>
+                            <th style="width:2%">
+                                Brand
+                            </th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><input type="checkbox" class="icheck"> Box1</td>
+                            <td>
+                                Gogi
+                            </td>
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- END Portlet PORTLET-->
+    </div>
+</div>
+
+
